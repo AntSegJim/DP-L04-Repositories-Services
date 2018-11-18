@@ -4,9 +4,9 @@ package repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import domain.SpamWord;
+import domain.CreditCard;
 
 @Repository
-public interface SpamWordRepository extends JpaRepository<SpamWord, Integer> {
+public interface CreditCardRepository extends JpaRepository<CreditCard, Integer> {
 
 }

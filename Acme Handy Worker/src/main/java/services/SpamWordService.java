@@ -29,7 +29,7 @@ public class SpamWordService {
 		return res;
 	}
 	public Collection<SpamWord> findAll() {
-		return this.spamWordRepository.findAllSpamWord();
+		return this.spamWordRepository.findAll();
 	}
 	public SpamWord findOne(final int spamWordId) {
 		return this.spamWordRepository.findOne(spamWordId);
