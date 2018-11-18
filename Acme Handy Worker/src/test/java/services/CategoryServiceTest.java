@@ -53,12 +53,17 @@ public class CategoryServiceTest extends AbstractTest {
 
 	@Test
 	public void testDeleteCategory() {
+		final Category category, saved;
 		Collection<Category> categories;
 
+		final Collection<Category> collection = new HashSet<>();
+		category = this.categoryService.create("Sillón", this.categoryService.findOne(396), collection);
+
+		saved = this.categoryService.save(category);
+		this.categoryService.delete(saved);
+
 		categories = this.categoryService.findAll();
-		this.categoryService.delete(this.categoryService.findOne(398));
 
-		Assert.isTrue(!categories.contains(this.categoryService.findOne(398)));
+		Assert.isTrue(!categories.contains(saved));
 	}
-
 }
