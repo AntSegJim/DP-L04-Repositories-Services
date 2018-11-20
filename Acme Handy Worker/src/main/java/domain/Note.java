@@ -8,8 +8,10 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -21,6 +23,7 @@ public class Note extends DomainEntity {
 	private Date				moment;			//: Date {NotBlank}
 	private String				comment;			// : String {NotBlank}
 	private Collection<String>	optionalComments;	// Opcional  //Cmabiar 
+	private Report				report;
 
 
 	@NotNull
@@ -48,6 +51,16 @@ public class Note extends DomainEntity {
 
 	public void setOptionalComments(final Collection<String> optionalComments) {
 		this.optionalComments = optionalComments;
+	}
+
+	@Valid
+	@ManyToOne(optional = false)
+	public Report getReport() {
+		return this.report;
+	}
+
+	public void setReport(final Report report) {
+		this.report = report;
 	}
 
 }

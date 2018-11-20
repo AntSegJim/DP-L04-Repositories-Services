@@ -8,7 +8,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
@@ -23,8 +23,8 @@ public class Report extends DomainEntity {
 	private Date					moment;		// : Date {NotBlank}
 	private String					description;	// : String {NotBlank}
 	private int						published;		//: Integer {NotBlank}
-	private Collection<Note>		note;
 	private Collection<Attachment>	attachment;
+	private Complaint				complaint;
 
 
 	@NotNull
@@ -52,15 +52,7 @@ public class Report extends DomainEntity {
 	public void setPublished(final int published) {
 		this.published = published;
 	}
-	@Valid
-	@OneToMany
-	public Collection<Note> getNote() {
-		return this.note;
-	}
 
-	public void setNote(final Collection<Note> note) {
-		this.note = note;
-	}
 	@Valid
 	@ManyToMany
 	public Collection<Attachment> getAttachment() {
@@ -69,6 +61,16 @@ public class Report extends DomainEntity {
 
 	public void setAttachment(final Collection<Attachment> attachment) {
 		this.attachment = attachment;
+	}
+
+	@Valid
+	@ManyToOne(optional = false)
+	public Complaint getComplaint() {
+		return this.complaint;
+	}
+
+	public void setComplaint(final Complaint complaint) {
+		this.complaint = complaint;
 	}
 
 }
