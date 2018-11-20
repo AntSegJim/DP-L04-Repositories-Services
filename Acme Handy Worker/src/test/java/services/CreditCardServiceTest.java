@@ -28,14 +28,7 @@ public class CreditCardServiceTest {
 	@Test
 	public void testCreateCreditCard() {
 		CreditCard creditCard;
-		creditCard = this.CCService.create();
-		creditCard.setBrandName("VISA");
-		creditCard.setHolderName("raul");
-		creditCard.setNumber(101);
-		creditCard.setExpirationMonth(2);
-		creditCard.setExpirationYear(2019);
-		creditCard.setCW(201);
-
+		creditCard = this.CCService.create("VISA", "raul", 101, 2, 2019, 201);
 		Assert.isTrue(creditCard.getBrandName().equals("VISA") && creditCard.getHolderName().equals("raul") && creditCard.getNumber() == 101 && creditCard.getExpirationMonth() == 2 && creditCard.getExpirationYear() == 2019 && creditCard.getCW() == 201);
 	}
 
@@ -43,14 +36,7 @@ public class CreditCardServiceTest {
 	public void testSaveCreditCard() {
 		CreditCard creditCard, saved;
 		Collection<CreditCard> creditCards;
-		creditCard = this.CCService.create();
-
-		creditCard.setBrandName("VISA");
-		creditCard.setHolderName("antonio");
-		creditCard.setNumber(102);
-		creditCard.setExpirationMonth(2);
-		creditCard.setExpirationYear(2019);
-		creditCard.setCW(202);
+		creditCard = this.CCService.create("VISA", "antonio", 102, 2, 2019, 202);
 
 		saved = this.CCService.save(creditCard);
 		creditCards = this.CCService.finaAll();
@@ -60,17 +46,10 @@ public class CreditCardServiceTest {
 	public void testDeleteCreditCard() {
 		CreditCard creditCard, saved;
 		Collection<CreditCard> creditCards;
-		creditCard = this.CCService.create();
-
-		creditCard.setBrandName("VISA");
-		creditCard.setHolderName("cristian");
-		creditCard.setNumber(103);
-		creditCard.setExpirationMonth(2);
-		creditCard.setExpirationYear(2019);
-		creditCard.setCW(203);
+		creditCard = this.CCService.create("VISA", "cristian", 103, 2, 2019, 203);
 
 		saved = this.CCService.save(creditCard);
-		this.CCService.delete(creditCard);
+		this.CCService.delete(saved);
 		creditCards = this.CCService.finaAll();
 		Assert.isTrue(!creditCards.contains(saved));
 	}

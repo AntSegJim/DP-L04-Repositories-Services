@@ -20,11 +20,11 @@ public class SectionService {
 
 
 	//Metodo create
-	public Section create() {
+	public Section create(final int number, final String title, final String pieceOfText) {
 		final Section s = new Section();
-		s.setNumber(0);
-		s.setTitle("");
-		s.setPieceOfText("");
+		s.setNumber(number);
+		s.setTitle(title);
+		s.setPieceOfText(pieceOfText);
 		return s;
 	}
 

@@ -20,9 +20,9 @@ public class PictureService {
 
 
 	//Metodo create
-	public Picture create() {
+	public Picture create(final String picture) {
 		final Picture pic = new Picture();
-		pic.setPicture("");
+		pic.setPicture(picture);
 		return pic;
 	}
 

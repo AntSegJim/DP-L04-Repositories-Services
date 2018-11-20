@@ -20,14 +20,14 @@ public class CreditCardService {
 
 
 	//Metodo create
-	public CreditCard create() {
+	public CreditCard create(final String brandName, final String holderName, final int number, final int expirationMonth, final int expirationYear, final int CW) {
 		final CreditCard cc = new CreditCard();
-		cc.setBrandName("");
-		cc.setHolderName("");
-		cc.setNumber(0);
-		cc.setExpirationMonth(0);
-		cc.setExpirationYear(0);
-		cc.setCW(0);
+		cc.setBrandName(brandName);
+		cc.setHolderName(holderName);
+		cc.setNumber(number);
+		cc.setExpirationMonth(expirationMonth);
+		cc.setExpirationYear(expirationYear);
+		cc.setCW(CW);
 		return cc;
 	}
 
