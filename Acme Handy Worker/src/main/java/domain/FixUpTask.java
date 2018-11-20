@@ -34,6 +34,8 @@ public class FixUpTask extends DomainEntity {
 	private Collection<Complaint>	complaint;
 	private Collection<Application>	application;
 
+	private Customer				customer;
+
 
 	//Getters and Setters
 
@@ -127,4 +129,15 @@ public class FixUpTask extends DomainEntity {
 	public void setApplication(final Collection<Application> application) {
 		this.application = application;
 	}
+
+	@Valid
+	@ManyToOne(optional = false)
+	public Customer getCustomer() {
+		return this.customer;
+	}
+
+	public void setCustomer(final Customer customer) {
+		this.customer = customer;
+	}
+
 }

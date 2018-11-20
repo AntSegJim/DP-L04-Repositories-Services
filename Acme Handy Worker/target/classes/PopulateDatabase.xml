@@ -772,33 +772,20 @@
 		<property name="moment" value="06/06/2018" />
 		<property name="description" value="Primera queja de prueba" />
 		<property name="numberAttachments" value="1" />
-		<property name="report">
-			<list>
-				<ref bean="report1" />
-			</list>
-		</property>
 	</bean>
+	
 	<bean id="complaint2" class="domain.Complaint">
 		<property name="ticker" value="041109-A1B2C4" />
 		<property name="moment" value="06/07/2018" />
 		<property name="description" value="segunda queja de prueba" />
 		<property name="numberAttachments" value="1" />
-		<property name="report">
-			<list>
-				<ref bean="report2" />
-			</list>
-		</property>
 	</bean>
+	
 	<bean id="complaint3" class="domain.Complaint">
 		<property name="ticker" value="041109-A1B2C5" />
 		<property name="moment" value="06/08/2018" />
 		<property name="description" value="tercera queja de prueba" />
 		<property name="numberAttachments" value="2" />
-		<property name="report">
-			<list>
-				<ref bean="report3" />
-			</list>
-		</property>
 	</bean>
 	
 	<!-- Report -->
@@ -806,46 +793,36 @@
 		<property name="moment" value="04/06/2018" />
 		<property name="description" value="Primer report de prueba" />
 		<property name="published" value="0" />
-		<property name="note">
-			<list>
-				<ref bean="note1" />
-			</list>
-		</property>
 		<property name="attachment">
 			<list>
 				<ref bean="attachment1" />
 			</list>
 		</property>
+		<property name="complaint" ref="complaint1" />
 	</bean>
+	
 	<bean id="report2" class="domain.Report">
 		<property name="moment" value="04/06/2018" />
 		<property name="description" value="Primer report de prueba" />
 		<property name="published" value="0" />
-		<property name="note">
-			<list>
-				<ref bean="note2" />
-				<ref bean="note3" />
-			</list>
-		</property>
 		<property name="attachment">
 			<list>
 				<ref bean="attachment2" />
 			</list>
 		</property>
+		<property name="complaint" ref="complaint2" />
+		
 	</bean>
 	<bean id="report3" class="domain.Report">
 		<property name="moment" value="04/06/2018" />
 		<property name="description" value="Primer report de prueba" />
 		<property name="published" value="0" />
-		<property name="note">
-			<list>
-			</list>
-		</property>
 		<property name="attachment">
 			<list>
 				<ref bean="attachment3" />
 			</list>
 		</property>
+		<property name="complaint" ref="complaint3" />
 	</bean>
 	<!-- <bean id="report2" class="domain.Report"> <property name="moment" value="04/06/2017" 
 		/> <property name="description" value="segundo report de prueba" /> <property 
@@ -862,7 +839,9 @@
 				<value> Segundo comentario de prueba</value>
 			</list>
 		</property>
+		<property name="report" ref="report1" />
 	</bean>
+	
 	<bean id="note2" class="domain.Note">
 		<property name="moment" value="07/09/2015" />
 		<property name="comment" value="segundo comentario de prueba" />
@@ -870,13 +849,16 @@
 			<list>
 			</list>
 		</property>
+		<property name="report" ref="report2" />
 	</bean>
+	
 	<bean id="note3" class="domain.Note">
 		<property name="moment" value="08/06/2018" />
 		<property name="comment" value="tercer comentario de prueba" />
 		<property name="optionalComments">
 			<null/>
 		</property>
+		<property name="report" ref="report3" />
 	</bean>
 	
 	
@@ -1011,12 +993,6 @@
 		<property name="name" value="Anton"></property>
 		<property name="surname" value="Seg"></property>
 		<property name="score" value="10" />
-		<property name="fixUpTask">
-			<list>
-				<ref bean="fixUpTask1" />
-				
-			</list>
-		</property>
 		<property name="endorseCustomer">
 			<list>
 				<ref bean="endorsement1" />
@@ -1036,14 +1012,7 @@
 		<property name="name" value="Jesus"></property>
 		<property name="surname" value="Elias"></property>
 		<property name="score" value="9" />
-		<property name="fixUpTask">
-			<list>
-			
-				<ref bean="fixUpTask2" />
-				<ref bean="fixUpTask3"/>
-				
-			</list>
-		</property>
+		
 		<property name="endorseCustomer">
 			<list>
 				<ref bean="endorsement5" />
@@ -1105,6 +1074,7 @@
 				<ref bean="application2" />
 			</list>
 		</property>
+		<property name="customer" ref="customer1" />
 
 	</bean>
 	<bean id="fixUpTask2" class="domain.FixUpTask"> 
@@ -1127,8 +1097,11 @@
 	    <ref bean="application2" />
 	     </list> 
 	     </property> 
+	     <property name="customer" ref="customer2" />
+	     
 		</bean> 
 		
+		<!--
 		<bean id="fixUpTask3" class="domain.FixUpTask"> 
 	<property name="ticker" value="1234ABYZ" /> 
 	<property name="moment" value="01/02/2014 23:59" />
@@ -1149,7 +1122,10 @@
 	    <ref bean="application3" />
 	     </list> 
 	     </property> 
+	     		<property name="customer" ref="customer3" />
+	     
 		</bean> 
+		-->
 	<!-- HandyWorker -->
 	<bean id="handyWorker1" class="domain.HandyWorker">
 		<property name="name" value="Anton"></property>

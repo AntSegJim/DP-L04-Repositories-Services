@@ -1,28 +1,24 @@
 
 package domain;
 
-import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Access(AccessType.PROPERTY)
 public class Complaint extends DomainEntity {
 
-	private String				ticker;			// : String{Pattern(^[0-9]{6}[-][A-Z0-9] {6}$)}
-	private Date				moment;
-	private String				description;
-	private int					numberAttachments;
-	private Collection<Report>	report;
+	private String	ticker;			// : String{Pattern(^[0-9]{6}[-][A-Z0-9] {6}$)}
+	private Date	moment;
+	private String	description;
+	private int		numberAttachments;
 
 
 	//	@Pattern(regexp = "^[0-9]{6}[-][A-Z0-9] {6}$)")
@@ -55,16 +51,6 @@ public class Complaint extends DomainEntity {
 	}
 	public void setNumberAttachments(final int numberAttachments) {
 		this.numberAttachments = numberAttachments;
-	}
-
-	@Valid
-	@OneToMany
-	public Collection<Report> getReport() {
-		return this.report;
-	}
-
-	public void setReport(final Collection<Report> report) {
-		this.report = report;
 	}
 
 }

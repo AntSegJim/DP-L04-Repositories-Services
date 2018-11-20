@@ -14,7 +14,6 @@ import javax.validation.Valid;
 public class Customer extends Actor {
 
 	private int						score;
-	private Collection<FixUpTask>	fixUpTask;
 	private Collection<Endorsement>	endorseCustomer;
 	private Collection<Endorsement>	receiveEndorseFromCustomer;
 
@@ -44,14 +43,6 @@ public class Customer extends Actor {
 
 	public void setReceiveEndorseFromCustomer(final Collection<Endorsement> receiveEndorseFromCustomer) {
 		this.receiveEndorseFromCustomer = receiveEndorseFromCustomer;
-	}
-	@OneToMany
-	public Collection<FixUpTask> getFixUpTask() {
-		return this.fixUpTask;
-	}
-
-	public void setFixUpTask(final Collection<FixUpTask> fixUpTask) {
-		this.fixUpTask = fixUpTask;
 	}
 
 }
