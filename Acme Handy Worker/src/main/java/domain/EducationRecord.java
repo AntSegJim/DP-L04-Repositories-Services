@@ -8,8 +8,10 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
@@ -26,6 +28,7 @@ public class EducationRecord extends DomainEntity {
 	private String				institution;
 	private String				link;
 	private Collection<String>	comment;
+	private Curricula			curricula;
 
 
 	@NotBlank
@@ -87,6 +90,16 @@ public class EducationRecord extends DomainEntity {
 
 	public void setComment(final Collection<String> comment) {
 		this.comment = comment;
+	}
+
+	@NotNull
+	@Valid
+	@ManyToOne(optional = false)
+	public Curricula getCurricula() {
+		return this.curricula;
+	}
+	public void setCurricula(final Curricula curri) {
+		this.curricula = curri;
 	}
 
 }

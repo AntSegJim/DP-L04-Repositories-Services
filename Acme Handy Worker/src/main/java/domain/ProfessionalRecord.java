@@ -8,8 +8,10 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
@@ -25,6 +27,7 @@ public class ProfessionalRecord extends DomainEntity {
 	private String				role;
 	private String				link;
 	private Collection<String>	comments;
+	private Curricula			curricula;
 
 
 	public String getNameCompany() {
@@ -84,4 +87,13 @@ public class ProfessionalRecord extends DomainEntity {
 		this.comments = comments;
 	}
 
+	@NotNull
+	@Valid
+	@ManyToOne(optional = false)
+	public Curricula getCurricula() {
+		return this.curricula;
+	}
+	public void setCurricula(final Curricula curri) {
+		this.curricula = curri;
+	}
 }

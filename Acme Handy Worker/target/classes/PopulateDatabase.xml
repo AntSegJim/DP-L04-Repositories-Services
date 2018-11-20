@@ -489,6 +489,7 @@
 		<property name="email" value="raulrma97@gmail.com"></property>
 		<property name="phone" value="+34 666666666"></property>
 		<property name="linkedInProfile" value=""></property>
+		<property name="curricula" ref="curricula1"></property>
 	</bean>
 	<bean id="personalRecord2" class="domain.PersonalRecord">
 		<property name="nameHandyWorker" value="Antonio"></property>
@@ -496,6 +497,7 @@
 		<property name="email" value="antonio@gmail.com"></property>
 		<property name="phone" value="+100 666666662"></property>
 		<property name="linkedInProfile" value=""></property>
+		<property name="curricula" ref="curricula2"></property>
 	</bean>
 	<bean id="personalRecord3" class="domain.PersonalRecord">
 		<property name="nameHandyWorker" value="Cristian"></property>
@@ -503,6 +505,7 @@
 		<property name="email" value="cristian@gmail.com"></property>
 		<property name="phone" value="+100 666666661"></property>
 		<property name="linkedInProfile"> <null/> </property>
+		<property name="curricula" ref="curricula3"></property>
 	</bean>
 
 
@@ -521,6 +524,7 @@
 				<value>Mal</value>
 			</list>
 		</property>
+		<property name="curricula" ref="curricula1"></property>
 	</bean>
 	<bean id="professionalRecord2" class="domain.ProfessionalRecord">
 		<property name="nameCompany" value="Aliexpress"></property>
@@ -532,6 +536,7 @@
 			<list>
 			</list>
 		</property>
+		<property name="curricula" ref="curricula2"></property>
 	</bean>
 	<bean id="professionalRecord3" class="domain.ProfessionalRecord">
 		<property name="nameCompany" value="Aliex"></property>
@@ -544,6 +549,7 @@
 				<value>NO</value>
 			</list>
 		</property>
+		<property name="curricula" ref="curricula3"></property>
 	</bean>
 		<bean id="professionalRecord4" class="domain.ProfessionalRecord">
 		<property name="nameCompany" value="Tile Management"></property>
@@ -556,6 +562,7 @@
 				<value>Claro que no</value>
 			</list>
 		</property>
+		<property name="curricula" ref="curricula1"></property>
 	</bean>
 
 	<!-- Bean que dan error -->
@@ -576,6 +583,7 @@
 				<value>"Adios jesús"</value>
 			</list>
 		</property>
+		<property name="curricula" ref="curricula1"></property>
 	</bean>
 	<bean id="miscellaneousRecord2" class="domain.MiscellaneousRecord">
 		<property name="title" value="titulo2"></property>
@@ -586,6 +594,7 @@
 				<value>Adios cristian</value>
 			</list>
 		</property>
+		<property name="curricula" ref="curricula2"></property>
 	</bean>
 	<bean id="miscellaneousRecord3" class="domain.MiscellaneousRecord">
 		<property name="title" value="titulo3"></property>
@@ -594,6 +603,7 @@
 			<list>
 			</list>
 		</property>
+		<property name="curricula" ref="curricula3"></property>
 	</bean>
 <bean id="miscellaneousRecord4" class="domain.MiscellaneousRecord">
 		<property name="title" value="titulo4"></property>
@@ -602,6 +612,7 @@
 			<list>
 			</list>
 		</property>
+		<property name="curricula" ref="curricula1"></property>
 	</bean>
 
 
@@ -617,6 +628,7 @@
 				<value>Adios antonio</value>
 			</list>
 		</property>
+		<property name="curricula" ref="curricula1"></property>
 	</bean>
 	<bean id="endoserRecord2" class="domain.EndoserRecord">
 		<property name="name" value="titulo2"></property>
@@ -629,6 +641,7 @@
 				<value>Adios raúl</value>
 			</list>
 		</property>
+		<property name="curricula" ref="curricula2"></property>
 	</bean>
 	<bean id="endoserRecord3" class="domain.EndoserRecord">
 		<property name="name" value="titulo3"></property>
@@ -639,6 +652,7 @@
 			<list>
 			</list>
 		</property>
+		<property name="curricula" ref="curricula3"></property>
 	</bean>
 	<bean id="endoserRecord4" class="domain.EndoserRecord">
 		<property name="name" value="titulo4"></property>
@@ -649,6 +663,7 @@
 			<list>
 			</list>
 		</property>
+		<property name="curricula" ref="curricula1"></property>
 	</bean>
 
 	<!-- EducationRecord -->
@@ -664,6 +679,7 @@
 				<value>Está bien</value>
 			</list>
 		</property>
+		<property name="curricula" ref="curricula1"></property>
 	</bean>
 	<bean id="educationRecord2" class="domain.EducationRecord">
 		<property name="titleDiploma" value="titulo2"></property>
@@ -679,6 +695,7 @@
 				<value>Adios</value>
 			</list>
 		</property>
+		<property name="curricula" ref="curricula2"></property>
 	</bean>
 	<bean id="educationRecord3" class="domain.EducationRecord">
 		<property name="titleDiploma" value="titulo3"></property>
@@ -692,6 +709,7 @@
 			<list>
 			</list>
 		</property>
+		<property name="curricula" ref="curricula3"></property>
 	</bean>
 		<bean id="educationRecord4" class="domain.EducationRecord">
 		<property name="titleDiploma" value="titulo4"></property>
@@ -705,6 +723,7 @@
 			<list>
 			</list>
 		</property>
+		<property name="curricula" ref="curricula1"></property>
 	</bean>
 	
 
@@ -720,79 +739,12 @@
 	<!-- Curricula -->
 	<bean id="curricula1" class="domain.Curricula">
 		<property name="ticker" value="123456"></property>
-		<property name="personalRecord" ref="personalRecord1"></property>
-		<property name="educationRecord">
-			<list>
-				<ref bean="educationRecord1" />
-				<ref bean="educationRecord2" />
-			</list>
-		</property>
-		<property name="professionalRecord">
-			<list>
-				<ref bean="professionalRecord1" />
-				<ref bean="professionalRecord2" />
-			</list>
-		</property>
-		<property name="endoserRecord">
-			<list>
-				<ref bean="endoserRecord1" />
-				<ref bean="endoserRecord2" />
-			</list>
-		</property>
-		<property name="miscellaneousRecord">
-			<list>
-				<ref bean="miscellaneousRecord1" />
-				<ref bean="miscellaneousRecord2" />
-			</list>
-		</property>
 	</bean>
 	<bean id="curricula2" class="domain.Curricula">
 		<property name="ticker" value="123457"></property>
-		<property name="personalRecord" ref="personalRecord2"></property>
-		<property name="educationRecord">
-			<list>
-				<ref bean="educationRecord3" />
-			</list>
-		</property>
-		<property name="professionalRecord">
-			<list>
-				<ref bean="professionalRecord3" />
-			</list>
-		</property>
-		<property name="endoserRecord">
-			<list>
-				<ref bean="endoserRecord3" />
-			</list>
-		</property>
-		<property name="miscellaneousRecord">
-			<list>
-				<ref bean="miscellaneousRecord3" />
-			</list>
-		</property>
 	</bean>
 	<bean id="curricula3" class="domain.Curricula">
 		<property name="ticker" value="123458"></property>
-		<property name="personalRecord" ref="personalRecord3"></property>
-		<property name="educationRecord">
-			<list>
-				<ref bean="educationRecord4" />
-			</list>
-		</property>
-		<property name="professionalRecord">
-			<list>
-				<ref bean="professionalRecord4" />
-			</list>
-		</property>
-		<property name="endoserRecord">
-			<list>
-				<ref bean="endoserRecord4" />
-			</list>
-		</property>
-		<property name="miscellaneousRecord">
-			<list>
-				<ref bean="miscellaneousRecord4" />
-			</list>
-		</property>
 	</bean>
 	
 

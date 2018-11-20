@@ -4,6 +4,8 @@ package domain;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -15,11 +17,12 @@ import org.hibernate.validator.constraints.URL;
 @Access(AccessType.PROPERTY)
 public class PersonalRecord extends DomainEntity {
 
-	private String	nameHandyWorker;
-	private String	photo;
-	private String	email;
-	private String	phone;
-	private String	linkedInProfile;
+	private String		nameHandyWorker;
+	private String		photo;
+	private String		email;
+	private String		phone;
+	private String		linkedInProfile;
+	private Curricula	curricula;
 
 
 	@NotBlank
@@ -73,4 +76,13 @@ public class PersonalRecord extends DomainEntity {
 		this.linkedInProfile = linkedInProfile;
 	}
 
+	@Valid
+	@NotNull
+	@OneToOne(optional = false)
+	public Curricula getCurricula() {
+		return this.curricula;
+	}
+	public void setCurricula(final Curricula curri) {
+		this.curricula = curri;
+	}
 }

@@ -7,6 +7,8 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -23,6 +25,7 @@ public class EndoserRecord extends DomainEntity {
 	private String				phoneNumber;
 	private String				linkedln;
 	private Collection<String>	comments;
+	private Curricula			curricula;
 
 
 	@NotBlank
@@ -74,6 +77,16 @@ public class EndoserRecord extends DomainEntity {
 
 	public void setComments(final Collection<String> comments) {
 		this.comments = comments;
+	}
+
+	@NotNull
+	@Valid
+	@ManyToOne(optional = false)
+	public Curricula getCurricula() {
+		return this.curricula;
+	}
+	public void setCurricula(final Curricula curri) {
+		this.curricula = curri;
 	}
 
 }
