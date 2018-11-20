@@ -109,11 +109,6 @@
 				<ref bean="profileSocialNetwork1" />
 			</list>
 		</property>
-		<property name="messageBox">
-			<list>
-				<ref bean="messageBox1" />
-			</list>
-		</property>
 	</bean>
 
 	<bean id="actor2" class="domain.Actor">
@@ -131,11 +126,7 @@
 				<ref bean="profileSocialNetwork2" />
 			</list>
 		</property>
-		<property name="messageBox">
-			<list>
-				<ref bean="messageBox2" />
-			</list>
-		</property>
+		
 	</bean>
 
 	<bean id="actor3" class="domain.Actor">
@@ -153,11 +144,6 @@
 				<ref bean="profileSocialNetwork3" />
 			</list>
 		</property>
-		<property name="messageBox">
-			<list>
-				<ref bean="messageBox3" />
-			</list>
-		</property>
 	</bean>
 
 
@@ -169,6 +155,7 @@
 				<ref bean="message1" />
 			</list>
 		</property>
+		<property name="actor" ref="actor1" />
 	</bean>
 
 	<bean id="messageBox2" class="domain.MessageBox">
@@ -178,6 +165,7 @@
 				<ref bean="message1" />
 			</list>
 		</property>
+		<property name="actor" ref="actor2" />
 	</bean>
 
 	<bean id="messageBox3" class="domain.MessageBox">
@@ -187,6 +175,7 @@
 				<ref bean="message1" />
 			</list>
 		</property>
+		<property name="actor" ref="actor3" />
 	</bean>
 
 	<!-- Message -->

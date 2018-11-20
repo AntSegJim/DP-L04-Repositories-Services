@@ -36,7 +36,6 @@ public class Actor extends DomainEntity {
 	private Integer								numberSocialProfiles;
 	private UserAccount							userAccount;
 	private Collection<ProfileSocialNetwork>	profileSocialNetwork;
-	private Collection<MessageBox>				messageBox;
 
 
 	//Getters and Setters
@@ -134,15 +133,6 @@ public class Actor extends DomainEntity {
 
 	public void setProfileSocialNetwork(final Collection<ProfileSocialNetwork> profileSocialNetwork) {
 		this.profileSocialNetwork = profileSocialNetwork;
-	}
-	@Valid
-	@OneToMany
-	public Collection<MessageBox> getMessageBox() {
-		return this.messageBox;
-	}
-
-	public void setMessageBox(final Collection<MessageBox> messageBox) {
-		this.messageBox = messageBox;
 	}
 
 }
