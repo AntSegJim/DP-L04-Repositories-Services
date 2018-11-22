@@ -7,8 +7,10 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -19,8 +21,18 @@ public class Complaint extends DomainEntity {
 	private Date	moment;
 	private String	description;
 	private int		numberAttachments;
+	private Referee	referee;
 
 
+	@Valid
+	@ManyToOne(optional = false)
+	public Referee getReferee() {
+		return this.referee;
+	}
+
+	public void setReferee(final Referee referee) {
+		this.referee = referee;
+	}
 	//	@Pattern(regexp = "^[0-9]{6}[-][A-Z0-9] {6}$)")
 	@Column(unique = true)
 	public String getTicker() {
