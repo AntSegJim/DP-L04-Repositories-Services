@@ -6,8 +6,10 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
@@ -17,11 +19,22 @@ import org.hibernate.validator.constraints.NotBlank;
 @Access(AccessType.PROPERTY)
 public class Phase extends DomainEntity {
 
-	private String	title;
-	private String	description;
-	private Date	startMoment;
-	private Date	endMoment;
+	private String		title;
+	private String		description;
+	private Date		startMoment;
+	private Date		endMoment;
+	private Application	application;
 
+
+	@Valid
+	@ManyToOne(optional = false)
+	public Application getApplication() {
+		return this.application;
+	}
+
+	public void setApplication(final Application application) {
+		this.application = application;
+	}
 
 	@NotNull
 	@NotBlank

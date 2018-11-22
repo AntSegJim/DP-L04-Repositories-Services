@@ -915,11 +915,7 @@
 		</property>
 		<property name="fixUpTask" ref="fixUpTask1" />
 		<property name="creditCard" ref="creditCard1" />
-		<property name="phases">
-			<list>
-				<ref bean="phase1" />
-			</list>
-		</property>
+		
 	</bean>
 	<bean id="application2" class="domain.Application"> 
 	<property name="moment" value="02/06/2017 20:12" />
@@ -934,11 +930,7 @@
 	</property> 
 	<property name="fixUpTask" ref="fixUpTask2" />
 	<property 	name="creditCard" ref="creditCard2" /> 
-	<property name="phases"> 
-		<list> 
-			<ref bean="phase2" /> 
-		</list> 
-	</property> 
+
 	</bean> 
 	
 	<bean id="application3" class="domain.Application"> 
@@ -954,11 +946,7 @@
 	</property> 
 	<property name="fixUpTask" ref="fixUpTask2" />
 	<property 	name="creditCard" ref="creditCard2" /> 
-	<property name="phases"> 
-		<list> 
-			<ref bean="phase3" /> 
-		</list> 
-	</property> 
+
 	</bean> 
 	<!-- phase -->
 	<bean id="phase1" class="domain.Phase">
@@ -966,18 +954,24 @@
 		<property name="description" value="Ejemplo de descripción" />
 		<property name="startMoment" value="02/06/2018 20:00" />
 		<property name="endMoment" value="02/06/2018 20:10" />
+		<property name="application" ref="application1"></property>
+		
 	</bean>
 	<bean id="phase2" class="domain.Phase">
 		<property name="title" value="Titulo Ejemplo fase 2" />
 		<property name="description" value="Ejemplo de descripción" />
 		<property name="startMoment" value="02/06/2017 20:00" />
 		<property name="endMoment" value="02/06/2017 20:10" />
+		<property name="application" ref="application2"></property>
+
 	</bean>
 	<bean id="phase3" class="domain.Phase">
 		<property name="title" value="Titulo Ejemplo fase 3" />
 		<property name="description" value="" />
 		<property name="startMoment" value="02/06/2016 20:00" />
 		<property name="endMoment" value="02/06/2016 20:10" />
+		<property name="application" ref="application2"></property>
+		
 	</bean>
 	<bean id="phase4" class="domain.Phase">
 		<property name="title" value="Titulo Ejemplo fase 4" />
@@ -986,6 +980,8 @@
 		<property name="endMoment">
 			<null />
 		</property>
+		<property name="application" ref="application3"></property>
+	
 	</bean>
 
 	<!-- Customer -->
