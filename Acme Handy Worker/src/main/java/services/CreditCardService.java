@@ -32,7 +32,7 @@ public class CreditCardService {
 	}
 
 	//Metodo findAll
-	public Collection<CreditCard> finaAll() {
+	public Collection<CreditCard> findAll() {
 		return this.CCRepo.findAll();
 	}
 	public CreditCard findOne(final int CreditCardId) {

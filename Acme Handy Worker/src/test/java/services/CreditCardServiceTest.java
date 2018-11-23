@@ -39,7 +39,7 @@ public class CreditCardServiceTest {
 		creditCard = this.CCService.create("VISA", "antonio", 102, 2, 2019, 202);
 
 		saved = this.CCService.save(creditCard);
-		creditCards = this.CCService.finaAll();
+		creditCards = this.CCService.findAll();
 		Assert.isTrue(creditCards.contains(saved));
 	}
 	@Test
@@ -50,7 +50,7 @@ public class CreditCardServiceTest {
 
 		saved = this.CCService.save(creditCard);
 		this.CCService.delete(saved);
-		creditCards = this.CCService.finaAll();
+		creditCards = this.CCService.findAll();
 		Assert.isTrue(!creditCards.contains(saved));
 	}
 
