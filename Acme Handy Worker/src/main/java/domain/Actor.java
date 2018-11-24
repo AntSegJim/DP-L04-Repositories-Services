@@ -117,6 +117,7 @@ public class Actor extends DomainEntity {
 		this.numberSocialProfiles = numberSocialProfiles;
 	}
 	@Valid
+	@NotNull
 	@OneToOne(cascade = CascadeType.ALL)
 	public UserAccount getUserAccount() {
 		return this.userAccount;

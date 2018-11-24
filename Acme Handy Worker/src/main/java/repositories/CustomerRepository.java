@@ -10,15 +10,6 @@ import domain.Customer;
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
-	@Query("select max(c.fixUpTask.size) from Customer c")
-	public Integer maxFixUpTaskNumber();
-
-	@Query("select min(c.fixUpTask.size) from Customer c")
-	public Integer minFixUpTaskNumber();
-
-	@Query("select avg(c.fixUpTask.size) from Customer c")
-	public Integer avgFixUpTaskNumber();
-
-	@Query("select sqrt(sum(c.fixUpTask.size * c.fixUpTask.size) / count(c.fixUpTask.size) - (avg(c.fixUpTask.size) * avg(c.fixUpTask.size))) from Customer c")
-	public Integer devFixUpTaskNumber();
+	@Query("select c from Customer c where c.userAccount.id = ?1")
+	public Customer customerUserAccount(Integer id);
 }

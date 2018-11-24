@@ -17,11 +17,12 @@ import javax.validation.constraints.NotNull;
 @Access(AccessType.PROPERTY)
 public class Complaint extends DomainEntity {
 
-	private String	ticker;			// : String{Pattern(^[0-9]{6}[-][A-Z0-9] {6}$)}
-	private Date	moment;
-	private String	description;
-	private int		numberAttachments;
-	private Referee	referee;
+	private String		ticker;			// : String{Pattern(^[0-9]{6}[-][A-Z0-9] {6}$)}
+	private Date		moment;
+	private String		description;
+	private int			numberAttachments;
+	private Referee		referee;
+	private FixUpTask	fixUpTask;
 
 
 	@Valid
@@ -63,6 +64,15 @@ public class Complaint extends DomainEntity {
 	}
 	public void setNumberAttachments(final int numberAttachments) {
 		this.numberAttachments = numberAttachments;
+	}
+	@Valid
+	@ManyToOne(optional = false)
+	public FixUpTask getFixUpTask() {
+		return this.fixUpTask;
+	}
+
+	public void setFixUpTask(final FixUpTask fixUpTask) {
+		this.fixUpTask = fixUpTask;
 	}
 
 }
