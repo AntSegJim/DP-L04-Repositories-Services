@@ -20,14 +20,14 @@ public class CreditCardService {
 
 
 	//Metodo create
-	public CreditCard create(final String brandName, final String holderName, final int number, final int expirationMonth, final int expirationYear, final int CW) {
+	public CreditCard create() {
 		final CreditCard cc = new CreditCard();
-		cc.setBrandName(brandName);
-		cc.setHolderName(holderName);
-		cc.setNumber(number);
-		cc.setExpirationMonth(expirationMonth);
-		cc.setExpirationYear(expirationYear);
-		cc.setCW(CW);
+		cc.setBrandName("");
+		cc.setHolderName("");
+		cc.setNumber(0);
+		cc.setExpirationMonth(0);
+		cc.setExpirationYear(0);
+		cc.setCW(0);
 		return cc;
 	}
 
@@ -39,7 +39,12 @@ public class CreditCardService {
 		return this.CCRepo.findOne(CreditCardId);
 	}
 	public CreditCard save(final CreditCard cc) {
-		return this.CCRepo.save(cc);
+		CreditCard res = null;
+		if (cc.getBrandName() != null && cc.getHolderName() != null && cc.getBrandName() != "" && cc.getHolderName() != "")
+			res = this.CCRepo.save(cc);
+		return res;
+		//return this.CCRepo.save(cc);
+
 	}
 	public void delete(final CreditCard cc) {
 		this.CCRepo.delete(cc);

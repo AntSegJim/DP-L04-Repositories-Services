@@ -1,8 +1,10 @@
 
 package services;
 
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 
 import javax.transaction.Transactional;
 
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import repositories.EducationRecordRepository;
+import domain.Curricula;
 import domain.EducationRecord;
 
 @Service
@@ -18,16 +21,22 @@ public class EducationRecordService {
 
 	@Autowired
 	private EducationRecordRepository	ERRepo;
+	@Autowired
+	private CurriculaService			curriS;
 
 
-	public EducationRecord create(final String titleDiploma, final Date startDate, final Date endDate, final String institution, final String link, final Collection<String> comments) {
+	public EducationRecord create() {
 		final EducationRecord educationRecord = new EducationRecord();
-		educationRecord.setTitleDiploma(titleDiploma);
-		educationRecord.setStartDate(startDate);
-		educationRecord.setEndDate(endDate);
-		educationRecord.setInstitution(institution);
-		educationRecord.setLink(link);
+		final Collection<String> comments = new HashSet<String>();
+		final Curricula c = this.curriS.create();
+
+		educationRecord.setTitleDiploma("");
+		educationRecord.setStartDate(new Date());
+		educationRecord.setEndDate(new Date());
+		educationRecord.setInstitution("");
+		educationRecord.setLink("");
 		educationRecord.setComment(comments);
+		educationRecord.setCurricula(c);
 		return educationRecord;
 	}
 
@@ -41,7 +50,12 @@ public class EducationRecordService {
 
 	//updating
 	public EducationRecord save(final EducationRecord educationRecord) {
-		return this.ERRepo.save(educationRecord);
+		EducationRecord res = null;
+		if (educationRecord.getTitleDiploma() != null && educationRecord.getTitleDiploma() != "" && educationRecord.getStartDate() != null && educationRecord.getStartDate().before(Calendar.getInstance().getTime())
+			&& educationRecord.getEndDate().before(Calendar.getInstance().getTime()) && educationRecord.getInstitution() != null && educationRecord.getInstitution() != "" && educationRecord.getCurricula() != null)
+			res = this.ERRepo.save(educationRecord);
+		return res;
+		//return this.ERRepo.save(educationRecord);
 	}
 
 	//deleting

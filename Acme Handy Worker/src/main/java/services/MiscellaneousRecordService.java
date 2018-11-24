@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 import javax.transaction.Transactional;
 
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import repositories.MiscellaneousRecordRepository;
+import domain.Curricula;
 import domain.MiscellaneousRecord;
 
 @Service
@@ -17,13 +19,19 @@ public class MiscellaneousRecordService {
 
 	@Autowired
 	private MiscellaneousRecordRepository	MRRepo;
+	@Autowired
+	private CurriculaService				curriS;
 
 
-	public MiscellaneousRecord create(final String title, final String link, final Collection<String> comments) {
+	public MiscellaneousRecord create() {
 		final MiscellaneousRecord miscellaneousRecord = new MiscellaneousRecord();
-		miscellaneousRecord.setTitle(title);
-		miscellaneousRecord.setLink(link);
+		final Collection<String> comments = new HashSet<String>();
+		final Curricula c = this.curriS.create();
+
+		miscellaneousRecord.setTitle("");
+		miscellaneousRecord.setLink("");
 		miscellaneousRecord.setComments(comments);
+		miscellaneousRecord.setCurricula(c);
 		return miscellaneousRecord;
 	}
 
@@ -37,7 +45,11 @@ public class MiscellaneousRecordService {
 
 	//updating
 	public MiscellaneousRecord save(final MiscellaneousRecord miscellaneousRecord) {
-		return this.MRRepo.save(miscellaneousRecord);
+		MiscellaneousRecord res = null;
+		if (miscellaneousRecord.getTitle() != null && miscellaneousRecord.getTitle() != "" && miscellaneousRecord.getCurricula() != null)
+			res = this.MRRepo.save(miscellaneousRecord);
+		return res;
+		//return this.MRRepo.save(miscellaneousRecord);
 	}
 
 	//deleting

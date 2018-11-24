@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 import javax.transaction.Transactional;
 
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import repositories.EndoserRecordRepository;
+import domain.Curricula;
 import domain.EndoserRecord;
 
 @Service
@@ -17,15 +19,21 @@ public class EndoserRecordService {
 
 	@Autowired
 	private EndoserRecordRepository	ERRepo;
+	@Autowired
+	private CurriculaService		curriS;
 
 
-	public EndoserRecord create(final String name, final String email, final String phone, final String linkedln, final Collection<String> comments) {
+	public EndoserRecord create() {
 		final EndoserRecord endoserRecord = new EndoserRecord();
-		endoserRecord.setName(name);
-		endoserRecord.setEmail(email);
-		endoserRecord.setPhoneNumber(phone);
-		endoserRecord.setLinkedln(linkedln);
+		final Collection<String> comments = new HashSet<String>();
+		final Curricula c = this.curriS.create();
+
+		endoserRecord.setName("");
+		endoserRecord.setEmail("");
+		endoserRecord.setPhoneNumber("");
+		endoserRecord.setLinkedln("");
 		endoserRecord.setComments(comments);
+		endoserRecord.setCurricula(c);
 		return endoserRecord;
 	}
 
@@ -38,8 +46,11 @@ public class EndoserRecordService {
 	}
 
 	//updating
-	public EndoserRecord save(final EndoserRecord endoserRecors) {
-		return this.ERRepo.save(endoserRecors);
+	public EndoserRecord save(final EndoserRecord endoserRecord) {
+		EndoserRecord res = null;
+		if (endoserRecord.getName() != null && endoserRecord.getName() != "" && endoserRecord.getCurricula() != null)
+			res = this.ERRepo.save(endoserRecord);
+		return res;
 	}
 
 	//deleting

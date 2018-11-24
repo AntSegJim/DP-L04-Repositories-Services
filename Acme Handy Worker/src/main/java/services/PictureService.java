@@ -20,9 +20,9 @@ public class PictureService {
 
 
 	//Metodo create
-	public Picture create(final String picture) {
+	public Picture create() {
 		final Picture pic = new Picture();
-		pic.setPicture(picture);
+		pic.setPicture("");
 		return pic;
 	}
 
@@ -33,11 +33,15 @@ public class PictureService {
 	public Picture findOne(final int PictureId) {
 		return this.PRepo.findOne(PictureId);
 	}
-	public Picture save(final Picture pic) {
-		return this.PRepo.save(pic);
+	public Picture save(final Picture picture) {
+		Picture res = null;
+		if (picture.getPicture() != null && picture.getPicture() != "")
+			res = this.PRepo.save(picture);
+		return res;
+		//return this.PRepo.save(picture);
 	}
-	public void delete(final Picture pic) {
-		this.PRepo.delete(pic);
+	public void delete(final Picture picture) {
+		this.PRepo.delete(picture);
 	}
 
 }

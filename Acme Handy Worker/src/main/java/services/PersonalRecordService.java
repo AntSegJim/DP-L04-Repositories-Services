@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import repositories.PersonalRecordRepository;
+import domain.Curricula;
 import domain.PersonalRecord;
 
 @Service
@@ -17,15 +18,20 @@ public class PersonalRecordService {
 
 	@Autowired
 	private PersonalRecordRepository	PRRepo;
+	@Autowired
+	private CurriculaService			curriS;
 
 
-	public PersonalRecord create(final String nameHandyWorker, final String photo, final String email, final String phone, final String linkedInProfile) {
+	public PersonalRecord create() {
 		final PersonalRecord personalRecord = new PersonalRecord();
-		personalRecord.setNameHandyWorker(nameHandyWorker);
-		personalRecord.setPhoto(photo);
-		personalRecord.setEmail(email);
-		personalRecord.setPhone(phone);
-		personalRecord.setLinkedInProfile(linkedInProfile);
+		final Curricula c = this.curriS.create();
+
+		personalRecord.setNameHandyWorker("");
+		personalRecord.setPhoto("");
+		personalRecord.setEmail("");
+		personalRecord.setPhone("");
+		personalRecord.setLinkedInProfile("");
+		personalRecord.setCurricula(c);
 		return personalRecord;
 	}
 
@@ -39,7 +45,11 @@ public class PersonalRecordService {
 
 	//updating
 	public PersonalRecord save(final PersonalRecord personalRecord) {
-		return this.PRRepo.save(personalRecord);
+		PersonalRecord res = null;
+		if (personalRecord.getNameHandyWorker() != null && personalRecord.getNameHandyWorker() != "" && personalRecord.getCurricula() != null)
+			res = this.PRRepo.save(personalRecord);
+		return res;
+		//return this.PRRepo.save(personalRecord);
 	}
 
 	//deleting

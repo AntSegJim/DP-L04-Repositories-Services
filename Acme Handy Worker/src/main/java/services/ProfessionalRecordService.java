@@ -1,8 +1,10 @@
 
 package services;
 
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 
 import javax.transaction.Transactional;
 
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import repositories.ProfessionalRecordRepository;
+import domain.Curricula;
 import domain.ProfessionalRecord;
 
 @Service
@@ -18,16 +21,22 @@ public class ProfessionalRecordService {
 
 	@Autowired
 	private ProfessionalRecordRepository	PRRepo;
+	@Autowired
+	private CurriculaService				curriS;
 
 
-	public ProfessionalRecord create(final String nameCompany, final Date startDate, final Date endDate, final String link, final String role, final Collection<String> comments) {
+	public ProfessionalRecord create() {
 		final ProfessionalRecord professionalRecord = new ProfessionalRecord();
-		professionalRecord.setNameCompany(nameCompany);
-		professionalRecord.setStartDate(startDate);
-		professionalRecord.setEndDate(endDate);
-		professionalRecord.setLink(link);
-		professionalRecord.setRole(role);
+		final Collection<String> comments = new HashSet<String>();
+		final Curricula c = this.curriS.create();
+
+		professionalRecord.setNameCompany("");
+		professionalRecord.setStartDate(new Date());
+		professionalRecord.setEndDate(new Date());
+		professionalRecord.setLink("");
+		professionalRecord.setRole("");
 		professionalRecord.setComments(comments);
+		professionalRecord.setCurricula(c);
 		return professionalRecord;
 	}
 
@@ -41,7 +50,11 @@ public class ProfessionalRecordService {
 
 	//updating
 	public ProfessionalRecord save(final ProfessionalRecord professionalRecord) {
-		return this.PRRepo.save(professionalRecord);
+		ProfessionalRecord res = null;
+		if (professionalRecord.getStartDate() != null && professionalRecord.getStartDate().before(Calendar.getInstance().getTime()) && professionalRecord.getEndDate().before(Calendar.getInstance().getTime()) && professionalRecord.getCurricula() != null)
+			res = this.PRRepo.save(professionalRecord);
+		return res;
+		//return this.PRRepo.save(professionalRecord);
 	}
 
 	//deleting

@@ -20,11 +20,11 @@ public class SectionService {
 
 
 	//Metodo create
-	public Section create(final int number, final String title, final String pieceOfText) {
+	public Section create() {
 		final Section s = new Section();
-		s.setNumber(number);
-		s.setTitle(title);
-		s.setPieceOfText(pieceOfText);
+		s.setNumber(0);
+		s.setTitle("");
+		s.setPieceOfText("");
 		return s;
 	}
 
@@ -35,8 +35,12 @@ public class SectionService {
 	public Section findOne(final int SectionId) {
 		return this.SRepo.findOne(SectionId);
 	}
-	public Section save(final Section s) {
-		return this.SRepo.save(s);
+	public Section save(final Section section) {
+		Section res = null;
+		if (section.getTitle() != null && section.getTitle() != "")
+			res = this.SRepo.save(section);
+		return res;
+		//return this.SRepo.save(section);
 	}
 	public void delete(final Section s) {
 		this.SRepo.delete(s);
