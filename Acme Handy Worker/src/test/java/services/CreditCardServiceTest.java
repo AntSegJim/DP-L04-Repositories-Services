@@ -53,7 +53,7 @@ public class CreditCardServiceTest {
 		creditCard.setCW(202);
 
 		saved = this.CCService.save(creditCard);
-		creditCards = this.CCService.finaAll();
+		creditCards = this.CCService.findAll();
 		Assert.isTrue(creditCards.contains(saved));
 	}
 	@Test
@@ -71,7 +71,7 @@ public class CreditCardServiceTest {
 
 		saved = this.CCService.save(creditCard);
 		this.CCService.delete(saved);
-		creditCards = this.CCService.finaAll();
+		creditCards = this.CCService.findAll();
 		Assert.isTrue(!creditCards.contains(saved));
 	}
 

@@ -24,10 +24,6 @@ public class HandyWorker extends Actor {
 
 	private Collection<Application>	application;
 
-	private Collection<Curricula>	curricula;
-
-	private Collection<Tutorial>	tutorial;
-
 
 	@NotNull
 	@NotBlank
@@ -72,24 +68,6 @@ public class HandyWorker extends Actor {
 
 	public void setApplication(final Collection<Application> application) {
 		this.application = application;
-	}
-	@Valid
-	@OneToMany
-	public Collection<Curricula> getCurricula() {
-		return this.curricula;
-	}
-
-	public void setCurricula(final Collection<Curricula> curricula) {
-		this.curricula = curricula;
-	}
-	@Valid
-	@OneToMany
-	public Collection<Tutorial> getTutorial() {
-		return this.tutorial;
-	}
-
-	public void setTutorial(final Collection<Tutorial> tutorial) {
-		this.tutorial = tutorial;
 	}
 
 }

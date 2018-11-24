@@ -4,6 +4,7 @@ package domain;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -17,18 +18,19 @@ public class Sponsorship extends DomainEntity {
 
 	private String		urlBanner;
 	private String		linkTargetPage;
-	private CreditCard	CreditCard;
+	private CreditCard	creditCard;
+	private Sponsor		sponsor;
 
 
 	@Valid
 	@NotNull
 	@OneToOne(optional = false)
 	public CreditCard getCreditCard() {
-		return this.CreditCard;
+		return this.creditCard;
 	}
 
 	public void setCreditCard(final CreditCard creditCard) {
-		this.CreditCard = creditCard;
+		this.creditCard = creditCard;
 	}
 
 	@NotBlank
@@ -48,8 +50,19 @@ public class Sponsorship extends DomainEntity {
 	public void setUrlBanner(final String url) {
 		this.urlBanner = url;
 	}
+
 	public void setLinkTargetPage(final String link) {
 		this.linkTargetPage = link;
+	}
+
+	@NotNull
+	@ManyToOne(optional = false)
+	public Sponsor getSponsor() {
+		return this.sponsor;
+	}
+
+	public void setSponsor(final Sponsor sponsor) {
+		this.sponsor = sponsor;
 	}
 
 }

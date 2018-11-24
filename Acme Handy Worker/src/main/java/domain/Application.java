@@ -9,7 +9,6 @@ import javax.persistence.AccessType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
@@ -32,8 +31,6 @@ public class Application extends DomainEntity {
 	private CreditCard			creditCard;
 
 	private FixUpTask			fixUpTask;
-
-	private Collection<Phase>	phases;
 
 
 	//Getters and Setters
@@ -101,16 +98,6 @@ public class Application extends DomainEntity {
 
 	public void setFixUpTask(final FixUpTask fixUpTask) {
 		this.fixUpTask = fixUpTask;
-	}
-
-	@OneToMany
-	@Valid
-	public Collection<Phase> getPhases() {
-		return this.phases;
-	}
-
-	public void setPhases(final Collection<Phase> phases) {
-		this.phases = phases;
 	}
 
 }

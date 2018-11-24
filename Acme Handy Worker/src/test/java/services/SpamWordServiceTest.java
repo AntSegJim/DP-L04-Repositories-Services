@@ -55,8 +55,8 @@ public class SpamWordServiceTest extends AbstractTest {
 		spamWord = this.spamWordService.create();
 		spamWord.setName("malhablado");
 		saved = this.spamWordService.save(spamWord);
-		spamWords = this.spamWordService.findAll();
 		this.spamWordService.delete(saved);
+		spamWords = this.spamWordService.findAll();
 		Assert.isTrue(!spamWords.contains(saved));
 	}
 
