@@ -18,6 +18,12 @@ public class AttachmentService {
 	private AttachmentRepository	attachmentRepository;
 
 
+	public Attachment create() {
+		final Attachment res = new Attachment();
+
+		return res;
+	}
+
 	public Attachment create(final String link) {
 		final Attachment attachment = new Attachment();
 		attachment.setLink(link);

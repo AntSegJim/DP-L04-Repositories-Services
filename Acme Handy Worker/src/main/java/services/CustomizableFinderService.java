@@ -18,6 +18,12 @@ public class CustomizableFinderService {
 	private CustomizableFinderRepository	customizableFinderRepository;
 
 
+	public CustomizableFinder create() {
+		final CustomizableFinder res = new CustomizableFinder();
+
+		return res;
+	}
+
 	public CustomizableFinder create(final int resultNumber, final int timeCache) {
 		final CustomizableFinder customizableFinder = new CustomizableFinder();
 		customizableFinder.setResultNumber(resultNumber);
