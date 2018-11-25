@@ -16,4 +16,8 @@ public interface FixUpTaskRepository extends JpaRepository<FixUpTask, Integer> {
 	//Mal	@Query("select max(count(a.fixUpTask)), min(a.fixUpTask.size), avg(a.fixUpTask.size),sqrt(sum(a.fixUpTask.size * a.fixUpTask.size) / count(a.fixUpTask.size) - (avg(a.fixUpTask.size) * avg(a.fixUpTask.size)))  from Customer a")
 	@Query() Acabar
 	public Collection<Double> MinMaxAvDevFixUpTask();
+	
+	@Query("select f.fixUpTask from Finder f where f.id = ?1")
+	public Collection<FixUpTask> fixUpTasksByFinder(Integer finderId);
 }
+//select count(f.customer) from FixUpTask f group by f.customer.id

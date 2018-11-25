@@ -1229,6 +1229,24 @@
 		<property name="customer" ref="customer2" />
 
 	</bean>
+	<bean id="fixUpTask3" class="domain.FixUpTask">
+		<property name="ticker" value="134234ABCP" />
+		<property name="moment" value="01/02/2015 23:59" />
+		<property name="description" value="TAREA3" />
+		<property name="address" value="nose" />
+		<property name="maximunPrice" value="21" />
+		<property name="periodTime" value="1" />
+
+		<property name="category" ref="soonCategory2" />
+		<property name="warranty" ref="warranty2" />
+		<property name="application">
+			<list>
+				<ref bean="application1" />
+				<ref bean="application2" />
+			</list>
+		</property>
+		<property name="customer" ref="customer1" />
+	</bean>
 
 	<!-- <bean id="fixUpTask3" class="domain.FixUpTask"> <property name="ticker" 
 		value="1234ABYZ" /> <property name="moment" value="01/02/2014 23:59" /> <property 
