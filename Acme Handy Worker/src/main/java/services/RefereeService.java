@@ -56,5 +56,9 @@ public class RefereeService {
 	public void delete(final Referee referee) {
 		this.refereeRepository.delete(referee);
 	}
+	//------------------------Other business methods---------------------
+	public Referee refereeByUserAccount(final Integer userAccountId) {
+		return this.refereeRepository.refereeUserAccount(userAccountId);
+	}
 
 }

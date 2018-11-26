@@ -9,7 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import repositories.ComplaintRepository;
+import security.LoginService;
+import security.UserAccount;
 import domain.Complaint;
+import domain.Customer;
 import domain.FixUpTask;
 import domain.Referee;
 
@@ -24,7 +27,7 @@ public class ComplaintService {
 	private RefereeService		refereeService;
 
 	@Autowired
-	private FixUpTaskService	fixUpTaskService;
+	private CustomerService		customerService;
 
 
 	//Metodos CRUD
@@ -63,6 +66,20 @@ public class ComplaintService {
 	//deleting
 	public void delete(final Complaint complaint) {
 		this.complaintRepository.delete(complaint);
+	}
+	//------------------------Other business methods---------------------
+	public Collection<Complaint> findAllByCustomer() {
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		final Customer c = this.customerService.customerByUserAccount(userAccount.getId());
+		return this.complaintRepository.findAllCustomerComplaint(c.getId());
+	}
+
+	public Collection<Complaint> findAllByReferee() {
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		final Referee c = this.refereeService.refereeByUserAccount(userAccount.getId());
+		return this.complaintRepository.findAllCustomerComplaint(c.getId());
 	}
 
 }
