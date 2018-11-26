@@ -18,6 +18,12 @@ public class CustomizableSystemService {
 	private CustomizableSystemRepository	customizableSystemRepository;
 
 
+	public CustomizableSystem create() {
+		final CustomizableSystem res = new CustomizableSystem();
+
+		return res;
+	}
+
 	public CustomizableSystem create(final String name, final String banner, final String messageWelcomePage, final String VATPercentage, final String telephoneCode) {
 		final CustomizableSystem customizableSystem = new CustomizableSystem();
 		customizableSystem.setName(name);

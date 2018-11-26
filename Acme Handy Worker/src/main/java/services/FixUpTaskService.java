@@ -63,4 +63,8 @@ public class FixUpTaskService {
 		Assert.isTrue(this.fixUpTaskRepository.findAll().contains(f));
 		this.fixUpTaskRepository.delete(f);
 	}
+
+	public Collection<FixUpTask> fixUpTasksByFinder(final Integer finderId) {
+		return this.fixUpTasksByFinder(finderId);
+	}
 }

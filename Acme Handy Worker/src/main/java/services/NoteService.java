@@ -18,11 +18,19 @@ public class NoteService {
 	@Autowired
 	private NoteRepository	noteRepository;
 
+	@Autowired
+	private ReportService	refereeService;
 
-	public Note create(final Date moment, final String description, final Collection<String> optionalComments) {
+
+	public Note create() {
+		final Note res = new Note();
+		return res;
+
+	}
+	public Note create(final Date moment, final String comment, final Collection<String> optionalComments) {
 		final Note note = new Note();
 		note.setMoment(moment);
-		note.setComment(description);
+		note.setComment(comment);
 		note.setOptionalComments(optionalComments);
 
 		return note;

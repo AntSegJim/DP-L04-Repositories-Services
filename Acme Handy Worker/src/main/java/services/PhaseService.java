@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import repositories.PhaseRepository;
+import domain.Application;
 import domain.Phase;
 
 @Service
@@ -16,15 +17,25 @@ import domain.Phase;
 public class PhaseService {
 
 	@Autowired
-	private PhaseRepository	phaseRepository;
+	private PhaseRepository		phaseRepository;
+
+	@Autowired
+	private ApplicationService	applicationservice;
 
 
-	public Phase create(final String title, final String description, final Date startMoment, final Date endMoment) {
+	public Phase create() {
+		final Phase res = new Phase();
+
+		return res;
+	}
+
+	public Phase create(final String title, final String description, final Date startMoment, final Date endMoment, final Application application) {
 		final Phase phase = new Phase();
 		phase.setTitle(title);
 		phase.setDescription(description);
 		phase.setStartMoment(startMoment);
 		phase.setEndMoment(endMoment);
+		phase.setApplication(application);
 
 		return phase;
 	}
