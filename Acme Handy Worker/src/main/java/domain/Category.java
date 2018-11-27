@@ -35,6 +35,7 @@ public class Category extends DomainEntity {
 
 	@Valid
 	@ManyToOne(optional = false)
+	@NotNull
 	public Category getParent() {
 		return this.parent;
 	}

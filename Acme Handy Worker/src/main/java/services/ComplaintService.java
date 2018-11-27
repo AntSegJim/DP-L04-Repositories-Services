@@ -79,7 +79,7 @@ public class ComplaintService {
 		UserAccount userAccount;
 		userAccount = LoginService.getPrincipal();
 		final Referee c = this.refereeService.refereeByUserAccount(userAccount.getId());
-		return this.complaintRepository.findAllCustomerComplaint(c.getId());
+		return this.complaintRepository.findAllRefereeComplaint(c.getId());
 	}
 
 }
