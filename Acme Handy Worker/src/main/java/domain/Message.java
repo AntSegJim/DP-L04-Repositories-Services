@@ -21,16 +21,14 @@ import org.hibernate.validator.constraints.Range;
 @Access(AccessType.PROPERTY)
 public class Message extends DomainEntity {
 
-	private Date					moment;
-	private String					subject;
-	private String					body;
-	private int						priority;
-	private String					tag;
+	private Date				moment;
+	private String				subject;
+	private String				body;
+	private int					priority;
+	private String				tag;
 
-	private Actor					sender;
-	private Collection<Actor>		receiver;
-
-	private Collection<MessageBox>	messageBox;
+	private Actor				sender;
+	private Collection<Actor>	receiver;
 
 
 	@NotNull
@@ -94,15 +92,6 @@ public class Message extends DomainEntity {
 
 	public void setReceiver(final Collection<Actor> receiver) {
 		this.receiver = receiver;
-	}
-	@Valid
-	@ManyToMany
-	public Collection<MessageBox> getMessageBox() {
-		return this.messageBox;
-	}
-
-	public void setMessageBox(final Collection<MessageBox> messageBox) {
-		this.messageBox = messageBox;
 	}
 
 }

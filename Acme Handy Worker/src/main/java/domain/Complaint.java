@@ -26,7 +26,7 @@ public class Complaint extends DomainEntity {
 
 
 	@Valid
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = true)
 	public Referee getReferee() {
 		return this.referee;
 	}
