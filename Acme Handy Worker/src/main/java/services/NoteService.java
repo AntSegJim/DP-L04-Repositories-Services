@@ -7,6 +7,7 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import repositories.NoteRepository;
 import domain.Note;
@@ -23,6 +24,9 @@ public class NoteService {
 
 	public Note create() {
 		final Note res = new Note();
+		res.setMoment(new Date());
+		res.setComment("");
+		res.setOptionalComments(null);
 		return res;
 
 	}
@@ -45,6 +49,9 @@ public class NoteService {
 
 	//updating
 	public Note save(final Note note) {
+
+		Assert.isTrue(!(note.getMoment().equals(null)));
+		Assert.isTrue(!(note.getComment().equals("")));
 		return this.noteRepository.save(note);
 	}
 
