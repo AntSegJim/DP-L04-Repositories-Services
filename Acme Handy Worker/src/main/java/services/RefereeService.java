@@ -2,6 +2,8 @@
 package services;
 
 import java.util.Collection;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import repositories.RefereeRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.MessageBox;
 import domain.Referee;
 
 @Service
@@ -20,6 +23,8 @@ public class RefereeService {
 
 	@Autowired
 	private RefereeRepository	refereeRepository;
+	@Autowired
+	private MessageBoxService	messageBoxService;
 
 
 	//Metodos CRUD
@@ -61,18 +66,36 @@ public class RefereeService {
 	}
 
 	//updating
-	public Referee save(final Referee referee) {
+	public Referee save(final Referee r) {
 		final UserAccount ac = LoginService.getPrincipal();
 		Assert.isTrue(ac.getAuthorities().contains(Authority.ADMIN));
-		Assert.isTrue(!(referee.getName().equals("") && !(referee.getName().equals(null))));
-		Assert.isTrue(!(referee.getSurname().equals("") && !(referee.getSurname().equals(null))));
-		return this.refereeRepository.save(referee);
+
+		Referee res = null;
+
+		Assert.isTrue(r.getName() != null && r.getSurname() != null && r.getName() != "" && r.getSurname() != "", "RefereeService.save -> Name or Surname invalid");
+
+		final String regex = "[^@]+@[^@]+\\.[a-zA-Z]{2,}";
+		final Pattern pattern = Pattern.compile(regex);
+		final Matcher matcher = pattern.matcher(r.getEmail());
+		Assert.isTrue(matcher.find() == true, "RefereeService.save -> Correo inválido");
+
+		res = this.refereeRepository.save(r);
+		final MessageBox mb1 = this.messageBoxService.create();
+		mb1.setName("inbox");
+		mb1.setActor(res);
+		final MessageBox mb2 = this.messageBoxService.create();
+		mb2.setName("outbox");
+		mb2.setActor(res);
+		final MessageBox mb3 = this.messageBoxService.create();
+		mb3.setName("spambox");
+		mb3.setActor(res);
+		final MessageBox mb4 = this.messageBoxService.create();
+		mb4.setName("trashbox");
+		mb4.setActor(res);
+
+		return res;
 	}
 
-	//deleting
-	public void delete(final Referee referee) {
-		this.refereeRepository.delete(referee);
-	}
 	//------------------------Other business methods---------------------
 	public Referee refereeByUserAccount(final Integer userAccountId) {
 		return this.refereeRepository.refereeUserAccount(userAccountId);

@@ -16,10 +16,6 @@ public interface HandyWorkerRepository extends JpaRepository<HandyWorker, Intege
 	@Query("select t.handyWorker from Tutorial t where t.id = ?1")
 	public HandyWorker handyWorkerInfo(Integer tutorialId);
 
-	//Como yo creo que está bien
-	@Query("select t.handyWorkers from Tutorial t where t.id = ?1")
-	public Collection<HandyWorker> handyWorkersInfo(Integer tutorialId);
-
 	@Query("select e.name from HandyWorker e where ((select sum(a.application.size)*1.0/(select count(h) from HandyWorker h) from HandyWorker a)) * 0.1 + ((select sum(a.application.size)*1.0/(select count(h) from HandyWorker h) from HandyWorker a)) < e.application.size order by e.application.size ASC;")
 	public Collection<HandyWorker> handyWorkerMoreTentPercentApplicatonsAccepted();
 

@@ -3,16 +3,20 @@ package services;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import repositories.HandyWorkerRepository;
 import domain.Application;
 import domain.Endorsement;
 import domain.HandyWorker;
+import domain.MessageBox;
 import domain.ProfileSocialNetwork;
 
 @Service
@@ -21,6 +25,8 @@ public class HandyWorkerService {
 
 	@Autowired
 	private HandyWorkerRepository	handyWorkerRepository;
+	@Autowired
+	private MessageBoxService		messageBoxService;
 
 
 	public HandyWorker create() {
@@ -52,22 +58,36 @@ public class HandyWorkerService {
 		return this.handyWorkerRepository.findOne(handyWorkerId);
 	}
 
-	public HandyWorker save(final HandyWorker handyWorker) {
-		return this.handyWorkerRepository.save(handyWorker);
-	}
+	public HandyWorker save(final HandyWorker h) {
+		HandyWorker res = null;
 
-	public void delete(final HandyWorker handyWorker) {
-		this.handyWorkerRepository.delete(handyWorker);
+		Assert.isTrue(h.getName() != null && h.getSurname() != null && h.getName() != "" && h.getSurname() != "", "HandyWorkerService.save -> Name or Surname invalid");
+
+		final String regex = "[^@]+@[^@]+\\.[a-zA-Z]{2,}";
+		final Pattern pattern = Pattern.compile(regex);
+		final Matcher matcher = pattern.matcher(h.getEmail());
+		Assert.isTrue(matcher.find() == true, "HandyWorkerService.save -> Correo inválido");
+
+		res = this.handyWorkerRepository.save(h);
+		final MessageBox mb1 = this.messageBoxService.create();
+		mb1.setName("inbox");
+		mb1.setActor(res);
+		final MessageBox mb2 = this.messageBoxService.create();
+		mb2.setName("outbox");
+		mb2.setActor(res);
+		final MessageBox mb3 = this.messageBoxService.create();
+		mb3.setName("spambox");
+		mb3.setActor(res);
+		final MessageBox mb4 = this.messageBoxService.create();
+		mb4.setName("trashbox");
+		mb4.setActor(res);
+
+		return res;
 	}
 
 	//Other bussines methods
-	//como lo tenemos
 	public HandyWorker handyWorkerByTutorial(final Integer tutorialId) {
 		return this.handyWorkerRepository.handyWorkerInfo(tutorialId);
-	}
-	//como yo creo que es
-	public Collection<HandyWorker> handyWorkersByTutorial(final Integer tutorialId) {
-		return this.handyWorkerRepository.handyWorkersInfo(tutorialId);
 	}
 
 	public Collection<HandyWorker> handyWorkerMoreTentPercentApplicatonsAccepted() {
