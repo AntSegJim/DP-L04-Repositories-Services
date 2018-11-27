@@ -51,7 +51,7 @@ public class EducationRecordService {
 	//updating
 	public EducationRecord save(final EducationRecord educationRecord) {
 		EducationRecord res = null;
-		if (educationRecord.getTitleDiploma() != null && educationRecord.getTitleDiploma() != "" && educationRecord.getStartDate() != null && educationRecord.getStartDate().before(Calendar.getInstance().getTime())
+		if (educationRecord != null && educationRecord.getTitleDiploma() != null && educationRecord.getTitleDiploma() != "" && educationRecord.getStartDate() != null && educationRecord.getStartDate().before(Calendar.getInstance().getTime())
 			&& educationRecord.getEndDate().before(Calendar.getInstance().getTime()) && educationRecord.getInstitution() != null && educationRecord.getInstitution() != "" && educationRecord.getCurricula() != null)
 			res = this.ERRepo.save(educationRecord);
 		return res;

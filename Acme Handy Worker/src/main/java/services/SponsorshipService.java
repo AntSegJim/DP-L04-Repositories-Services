@@ -43,7 +43,7 @@ public class SponsorshipService {
 	//updating
 	public Sponsorship save(final Sponsorship sponsorship) {
 		Sponsorship res = null;
-		if (sponsorship.getLinkTargetPage() != null && sponsorship.getLinkTargetPage() != "" && sponsorship.getUrlBanner() != null && sponsorship.getUrlBanner() != "" && sponsorship.getCreditCard() != null)
+		if (sponsorship != null && sponsorship.getLinkTargetPage() != null && sponsorship.getLinkTargetPage() != "" && sponsorship.getUrlBanner() != null && sponsorship.getUrlBanner() != "" && sponsorship.getCreditCard() != null)
 			res = this.SRepo.save(sponsorship);
 		return res;
 		//return this.CRepo.save(curricula);

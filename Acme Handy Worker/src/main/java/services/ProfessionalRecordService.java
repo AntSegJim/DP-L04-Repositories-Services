@@ -51,7 +51,8 @@ public class ProfessionalRecordService {
 	//updating
 	public ProfessionalRecord save(final ProfessionalRecord professionalRecord) {
 		ProfessionalRecord res = null;
-		if (professionalRecord.getStartDate() != null && professionalRecord.getStartDate().before(Calendar.getInstance().getTime()) && professionalRecord.getEndDate().before(Calendar.getInstance().getTime()) && professionalRecord.getCurricula() != null)
+		if (professionalRecord != null && professionalRecord.getStartDate() != null && professionalRecord.getStartDate().before(Calendar.getInstance().getTime()) && professionalRecord.getEndDate().before(Calendar.getInstance().getTime())
+			&& professionalRecord.getCurricula() != null)
 			res = this.PRRepo.save(professionalRecord);
 		return res;
 		//return this.PRRepo.save(professionalRecord);

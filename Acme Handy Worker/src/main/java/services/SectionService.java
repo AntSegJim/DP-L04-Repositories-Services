@@ -37,7 +37,7 @@ public class SectionService {
 	}
 	public Section save(final Section section) {
 		Section res = null;
-		if (section.getTitle() != null && section.getTitle() != "")
+		if (section != null && section.getTitle() != null && section.getTitle() != "")
 			res = this.SRepo.save(section);
 		return res;
 		//return this.SRepo.save(section);

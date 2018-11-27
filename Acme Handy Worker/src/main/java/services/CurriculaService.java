@@ -36,7 +36,7 @@ public class CurriculaService {
 	//updating
 	public Curricula save(final Curricula curricula) {
 		Curricula res = null;
-		if (curricula.getTicker() != null && curricula.getTicker() != "")
+		if (curricula != null && curricula.getTicker() != null && curricula.getTicker() != "")
 			res = this.CRepo.save(curricula);
 		return res;
 		//return this.CRepo.save(curricula);

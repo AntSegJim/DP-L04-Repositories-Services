@@ -28,7 +28,10 @@ public class SectionServiceTest {
 	@Test
 	public void testCreateSection() {
 		Section section;
-		section = this.SSection.create(1, "hola", "Primera pieza de texto");
+		section = this.SSection.create();
+		section.setNumber(1);
+		section.setTitle("hola");
+		section.setPieceOfText("primera pieza de texto");
 		Assert.isTrue(section.getNumber() == 1 && section.getTitle().equals("hola") && section.getPieceOfText().equals("Primera pieza de texto"));
 	}
 
@@ -36,7 +39,10 @@ public class SectionServiceTest {
 	public void testSaveSection() {
 		Section section, saved;
 		Collection<Section> sections;
-		section = this.SSection.create(2, "adios", "segunda pieza de texto");
+		section = this.SSection.create();
+		section.setNumber(2);
+		section.setTitle("adios");
+		section.setPieceOfText("segunda pieza de texto");
 
 		saved = this.SSection.save(section);
 		sections = this.SSection.finaAll();
@@ -47,10 +53,13 @@ public class SectionServiceTest {
 	public void testDeleteSection() {
 		Section section, saved;
 		Collection<Section> sections;
-		section = this.SSection.create(3, "adios", "segunda pieza de texto");
+
+		section = this.SSection.create();
+		section.setNumber(3);
+		section.setTitle("adios");
+		section.setPieceOfText("segunda pieza de texto");
 
 		saved = this.SSection.save(section);
-
 		this.SSection.delete(saved);
 		sections = this.SSection.finaAll();
 		Assert.isTrue(!sections.contains(saved));

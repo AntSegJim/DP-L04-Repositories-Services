@@ -57,7 +57,7 @@ public class TutorialService {
 	//updating
 	public Tutorial save(final Tutorial tutorial) {
 		Tutorial res = null;
-		if (tutorial.getTitle() != null && tutorial.getTitle() != "" && tutorial.getMoment() != null && tutorial.getMoment().before(Calendar.getInstance().getTime()) && tutorial.getSummary() != "" && !tutorial.getSection().isEmpty()
+		if (tutorial != null && tutorial.getTitle() != null && tutorial.getTitle() != "" && tutorial.getMoment() != null && tutorial.getMoment().before(Calendar.getInstance().getTime()) && tutorial.getSummary() != "" && !tutorial.getSection().isEmpty()
 			&& tutorial.getSection() != null)
 			res = this.TRepo.save(tutorial);
 		return res;

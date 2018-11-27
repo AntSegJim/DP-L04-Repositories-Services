@@ -1,8 +1,8 @@
 
 package services;
 
-import java.sql.Date;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 
 import javax.transaction.Transactional;
@@ -41,14 +41,14 @@ public class EducationRecordTest {
 		final Collection<String> comments = new HashSet<>();
 		educationRecord = this.ERService.create();
 		educationRecord.setTitleDiploma("hola");
-		educationRecord.setStartDate(Date.valueOf("2015-03-09"));
+		educationRecord.setStartDate(new Date(02 / 04 / 2017));
 		educationRecord.setEndDate(null);
 		educationRecord.setInstitution("CL");
 		educationRecord.setLink("");
 		educationRecord.setComment(comments);
 		educationRecord.setCurricula(curricula);
 
-		Assert.isTrue(educationRecord.getTitleDiploma().equals("hola") && educationRecord.getStartDate().equals(Date.valueOf("2015-03-09")) && educationRecord.getEndDate().equals(null) && educationRecord.getInstitution().equals("CL")
+		Assert.isTrue(educationRecord.getTitleDiploma().equals("hola") && educationRecord.getStartDate().equals(new Date(02 / 04 / 2017)) && educationRecord.getEndDate().equals(null) && educationRecord.getInstitution().equals("CL")
 			&& educationRecord.getLink().equals("") && educationRecord.getCurricula().equals(curricula));
 	}
 
@@ -75,7 +75,7 @@ public class EducationRecordTest {
 		final Collection<String> comments = new HashSet<>();
 		educationRecord = this.ERService.create();
 		educationRecord.setTitleDiploma("adios");
-		educationRecord.setStartDate(Date.valueOf("2016-03-09"));
+		educationRecord.setStartDate(new Date(02 / 05 / 2017));
 		educationRecord.setEndDate(null);
 		educationRecord.setInstitution("FP");
 		educationRecord.setLink("");

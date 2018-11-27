@@ -2,6 +2,8 @@
 package services;
 
 import java.util.Collection;
+import java.util.Date;
+import java.util.HashSet;
 
 import javax.transaction.Transactional;
 
@@ -13,7 +15,10 @@ import repositories.ApplicationRepository;
 import security.LoginService;
 import security.UserAccount;
 import domain.Application;
+import domain.CreditCard;
 import domain.Customer;
+import domain.FixUpTask;
+import domain.HandyWorker;
 
 @Service
 @Transactional
@@ -21,18 +26,26 @@ public class ApplicationService {
 
 	@Autowired
 	private ApplicationRepository	applicationRepository;
-
 	@Autowired
 	private CustomerService			customerService;
+	@Autowired
+	private CreditCardService		CCService;
+	@Autowired
+	private FixUpTaskService		FUTService;
+	@Autowired
+	private HandyWorkerService		HWService;
 
 
 	public Application create() {
 		final Application a = new Application();
-		a.setComments(null);
-		a.setCreditCard(null);
-		a.setFixUpTask(null);
-		a.setHandyWorker(null);
-		a.setMoment(null);
+		final CreditCard cc = this.CCService.create();
+		final FixUpTask fut = this.FUTService.create();
+		final HandyWorker hw = this.HWService.create();
+		a.setComments(new HashSet<String>());
+		a.setCreditCard(cc);
+		a.setFixUpTask(fut);
+		a.setHandyWorker(hw);
+		a.setMoment(new Date());
 		a.setPrice(0.);
 		a.setStatus(0);
 		return a;

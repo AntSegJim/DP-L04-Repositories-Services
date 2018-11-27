@@ -45,6 +45,7 @@ public class MessageBox extends DomainEntity {
 
 	@Valid
 	@ManyToOne(optional = false)
+	@NotNull
 	public Actor getActor() {
 		return this.actor;
 	}

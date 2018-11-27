@@ -40,7 +40,7 @@ public class CreditCardService {
 	}
 	public CreditCard save(final CreditCard cc) {
 		CreditCard res = null;
-		if (cc.getBrandName() != null && cc.getHolderName() != null && cc.getBrandName() != "" && cc.getHolderName() != "")
+		if (cc != null && cc.getBrandName() != null && cc.getHolderName() != null && cc.getBrandName() != "" && cc.getHolderName() != "")
 			res = this.CCRepo.save(cc);
 		return res;
 		//return this.CCRepo.save(cc);

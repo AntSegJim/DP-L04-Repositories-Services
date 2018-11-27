@@ -46,7 +46,7 @@ public class MiscellaneousRecordService {
 	//updating
 	public MiscellaneousRecord save(final MiscellaneousRecord miscellaneousRecord) {
 		MiscellaneousRecord res = null;
-		if (miscellaneousRecord.getTitle() != null && miscellaneousRecord.getTitle() != "" && miscellaneousRecord.getCurricula() != null)
+		if (miscellaneousRecord != null && miscellaneousRecord.getTitle() != null && miscellaneousRecord.getTitle() != "" && miscellaneousRecord.getCurricula() != null)
 			res = this.MRRepo.save(miscellaneousRecord);
 		return res;
 		//return this.MRRepo.save(miscellaneousRecord);

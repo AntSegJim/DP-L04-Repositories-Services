@@ -46,7 +46,7 @@ public class PersonalRecordService {
 	//updating
 	public PersonalRecord save(final PersonalRecord personalRecord) {
 		PersonalRecord res = null;
-		if (personalRecord.getNameHandyWorker() != null && personalRecord.getNameHandyWorker() != "" && personalRecord.getCurricula() != null)
+		if (personalRecord != null && personalRecord.getNameHandyWorker() != null && personalRecord.getNameHandyWorker() != "" && personalRecord.getCurricula() != null)
 			res = this.PRRepo.save(personalRecord);
 		return res;
 		//return this.PRRepo.save(personalRecord);

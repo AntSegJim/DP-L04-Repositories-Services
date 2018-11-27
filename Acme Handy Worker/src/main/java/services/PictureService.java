@@ -35,7 +35,7 @@ public class PictureService {
 	}
 	public Picture save(final Picture picture) {
 		Picture res = null;
-		if (picture.getPicture() != null && picture.getPicture() != "")
+		if (picture != null && picture.getPicture() != null && picture.getPicture() != "")
 			res = this.PRepo.save(picture);
 		return res;
 		//return this.PRepo.save(picture);

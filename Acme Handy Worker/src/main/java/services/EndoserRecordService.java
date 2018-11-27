@@ -48,7 +48,7 @@ public class EndoserRecordService {
 	//updating
 	public EndoserRecord save(final EndoserRecord endoserRecord) {
 		EndoserRecord res = null;
-		if (endoserRecord.getName() != null && endoserRecord.getName() != "" && endoserRecord.getCurricula() != null)
+		if (endoserRecord != null && endoserRecord.getName() != null && endoserRecord.getName() != "" && endoserRecord.getCurricula() != null)
 			res = this.ERRepo.save(endoserRecord);
 		return res;
 	}
