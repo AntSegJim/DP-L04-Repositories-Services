@@ -9,7 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import repositories.PhaseRepository;
+import security.LoginService;
+import security.UserAccount;
 import domain.Application;
+import domain.HandyWorker;
 import domain.Phase;
 
 @Service
@@ -20,7 +23,7 @@ public class PhaseService {
 	private PhaseRepository		phaseRepository;
 
 	@Autowired
-	private ApplicationService	applicationservice;
+	private HandyWorkerService	handyWorkerService;
 
 
 	public Phase create() {
@@ -56,6 +59,13 @@ public class PhaseService {
 	//deleting
 	public void delete(final Phase phase) {
 		this.phaseRepository.delete(phase);
+	}
+
+	public Collection<Phase> findAllByHandyWorker() {
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		final HandyWorker c = this.handyWorkerService.handyWorkerUserAccount(userAccount.getId());
+		return this.phaseRepository.findAllHandyWorkerPhase(c.getId());
 	}
 
 }

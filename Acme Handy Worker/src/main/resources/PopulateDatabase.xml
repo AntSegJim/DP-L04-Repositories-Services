@@ -300,11 +300,7 @@
 				<ref bean="actor1" />
 			</list>
 		</property>
-		<property name="messageBox">
-			<list>
-				<ref bean="messageBox1" />
-			</list>
-		</property>
+	
 	</bean>
 
 	<bean id="message2" class="domain.Message">
@@ -320,11 +316,7 @@
 				<ref bean="actor3" />
 			</list>
 		</property>
-		<property name="messageBox">
-			<list>
-				<ref bean="messageBox3" />
-			</list>
-		</property>
+	
 	</bean>
 
 
@@ -904,7 +896,7 @@
 		<property name="moment" value="06/06/2018" />
 		<property name="description" value="Primera queja de prueba" />
 		<property name="numberAttachments" value="1" />
-		<property name="referee" ref="referee1"></property>
+		<property name="referee"><null/></property>
 		<property name="fixUpTask" ref="fixUpTask1"></property>
 
 	</bean>

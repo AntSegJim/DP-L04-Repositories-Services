@@ -6,8 +6,12 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import repositories.RefereeRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 import domain.Referee;
 
 @Service
@@ -49,6 +53,8 @@ public class RefereeService {
 
 	//updating
 	public Referee save(final Referee referee) {
+		final UserAccount ac = LoginService.getPrincipal();
+		Assert.isTrue(ac.getAuthorities().contains(Authority.ADMIN));
 		return this.refereeRepository.save(referee);
 	}
 

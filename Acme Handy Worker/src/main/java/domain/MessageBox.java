@@ -34,7 +34,7 @@ public class MessageBox extends DomainEntity {
 		this.name = name;
 	}
 	@Valid
-	@ManyToMany(mappedBy = "messageBox")
+	@ManyToMany
 	public Collection<Message> getMessages() {
 		return this.messages;
 	}

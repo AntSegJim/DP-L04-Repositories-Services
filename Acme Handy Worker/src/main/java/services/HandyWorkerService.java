@@ -71,4 +71,9 @@ public class HandyWorkerService {
 	public Collection<HandyWorker> handyWorkerByUserAccount(final Integer userAccountId) {
 		return this.handyWorkerByUserAccount(userAccountId);
 	}
+
+	//Añadido por jesus para un metodo en phaseService
+	public HandyWorker handyWorkerUserAccount(final Integer id) {
+		return this.handyWorkerRepository.handyWorkerUserAccount(id);
+	}
 }
