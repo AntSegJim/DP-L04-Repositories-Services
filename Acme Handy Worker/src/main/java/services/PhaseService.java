@@ -1,14 +1,17 @@
 
 package services;
 
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import repositories.PhaseRepository;
+import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Application;
@@ -28,7 +31,11 @@ public class PhaseService {
 
 	public Phase create() {
 		final Phase res = new Phase();
-
+		res.setTitle("");
+		res.setDescription("");
+		res.setStartMoment(null);
+		res.setEndMoment(null);
+		res.setApplication(new Application());
 		return res;
 	}
 
@@ -48,16 +55,25 @@ public class PhaseService {
 	}
 
 	public Phase findOne(final int phaseId) {
+		final UserAccount ac = LoginService.getPrincipal();
+		Assert.isTrue(ac.getAuthorities().contains(Authority.HANDYWORKER));
 		return this.phaseRepository.findOne(phaseId);
 	}
 
 	//updating
 	public Phase save(final Phase phase) {
+		final UserAccount ac = LoginService.getPrincipal();
+		Assert.isTrue(ac.getAuthorities().contains(Authority.HANDYWORKER));
+
+		Assert.isTrue(!(phase.getTitle().equals("") && !(phase.getTitle().equals(null))));
+		Assert.isTrue(!(phase.getStartMoment().equals(null) && !(phase.getStartMoment().before(Calendar.getInstance().getTime()))));
 		return this.phaseRepository.save(phase);
 	}
 
 	//deleting
 	public void delete(final Phase phase) {
+		final UserAccount ac = LoginService.getPrincipal();
+		Assert.isTrue(ac.getAuthorities().contains(Authority.HANDYWORKER));
 		this.phaseRepository.delete(phase);
 	}
 

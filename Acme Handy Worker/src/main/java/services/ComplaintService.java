@@ -7,8 +7,10 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import repositories.ComplaintRepository;
+import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Complaint;
@@ -34,6 +36,12 @@ public class ComplaintService {
 
 	public Complaint create() {
 		final Complaint res = new Complaint();
+		res.setTicker("");
+		res.setMoment(new Date());
+		res.setDescription("");
+		res.setNumberAttachments(0);
+		res.setReferee(new Referee());
+		res.setFixUpTask(new FixUpTask());
 		return res;
 	}
 
@@ -60,6 +68,9 @@ public class ComplaintService {
 
 	//updating
 	public Complaint save(final Complaint complaint) {
+
+		Assert.isTrue(!(complaint.getMoment().equals(null)));
+
 		return this.complaintRepository.save(complaint);
 	}
 
@@ -69,26 +80,32 @@ public class ComplaintService {
 	}
 	//------------------------Other business methods---------------------
 	public Collection<Complaint> findAllByCustomer() {
-		UserAccount userAccount;
-		userAccount = LoginService.getPrincipal();
+		final UserAccount userAccount = LoginService.getPrincipal();
+		Assert.isTrue(userAccount.getAuthorities().contains(Authority.CUSTOMER));
+
 		final Customer c = this.customerService.customerByUserAccount(userAccount.getId());
 		return this.complaintRepository.findAllCustomerComplaint(c.getId());
 	}
 
 	public Collection<Complaint> findAllByReferee() {
-		UserAccount userAccount;
-		userAccount = LoginService.getPrincipal();
+		final UserAccount userAccount = LoginService.getPrincipal();
+		Assert.isTrue(userAccount.getAuthorities().contains(Authority.REFEREE));
+
 		final Referee c = this.refereeService.refereeByUserAccount(userAccount.getId());
 		return this.complaintRepository.findAllRefereeComplaint(c.getId());
 	}
 
-	public Collection<Complaint> findAllNoReferre(){
-		final Collection<Complaint> res = 
-		
-		return res;
-//		UserAccount userAccount;
-//		userAccount = LoginService.getPrincipal();
-//		final Referee c = this.refereeService.refereeByUserAccount(userAccount.getId());
-//		return this.complaintRepository.findAllRefereeComplaint(null);
+	public Collection<Complaint> findAllNoReferee() {
+		final UserAccount userAccount = LoginService.getPrincipal();
+		Assert.isTrue(userAccount.getAuthorities().contains(Authority.REFEREE));
+
+		return this.complaintRepository.findAllNoRefereeComplaint();
+
 	}
+
+	//		UserAccount userAccount;
+	//		userAccount = LoginService.getPrincipal();
+	//		final Referee c = this.refereeService.refereeByUserAccount(userAccount.getId());
+	//		return this.complaintRepository.findAllRefereeComplaint(null);
+
 }

@@ -20,7 +20,7 @@ public class AttachmentService {
 
 	public Attachment create() {
 		final Attachment res = new Attachment();
-
+		res.setLink("");
 		return res;
 	}
 

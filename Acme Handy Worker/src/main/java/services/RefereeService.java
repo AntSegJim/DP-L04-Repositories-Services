@@ -26,6 +26,15 @@ public class RefereeService {
 
 	public Referee create() {
 		final Referee res = new Referee();
+
+		res.setName("");
+		res.setMiddleName("");
+		res.setSurname("");
+		res.setPhoto("");
+		res.setEmail("");
+		res.setPhone("");
+		res.setAddress("");
+		res.setNumberSocialProfiles(null);
 		return res;
 	}
 
@@ -55,6 +64,8 @@ public class RefereeService {
 	public Referee save(final Referee referee) {
 		final UserAccount ac = LoginService.getPrincipal();
 		Assert.isTrue(ac.getAuthorities().contains(Authority.ADMIN));
+		Assert.isTrue(!(referee.getName().equals("") && !(referee.getName().equals(null))));
+		Assert.isTrue(!(referee.getSurname().equals("") && !(referee.getSurname().equals(null))));
 		return this.refereeRepository.save(referee);
 	}
 
