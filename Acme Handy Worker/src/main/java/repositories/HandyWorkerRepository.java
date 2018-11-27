@@ -25,4 +25,8 @@ public interface HandyWorkerRepository extends JpaRepository<HandyWorker, Intege
 
 	@Query("select h from HandyWorker h where h.userAccount.id = ?1")
 	public Collection<HandyWorker> handyWorkerByUserAccount(Integer userAccountId);
+
+	//Añadido por jesus para el metodo  findAllByHandyWorker de phaseService
+	@Query("select c from HandyWorker c where c.userAccount.id = ?1")
+	public HandyWorker handyWorkerUserAccount(Integer id);
 }
