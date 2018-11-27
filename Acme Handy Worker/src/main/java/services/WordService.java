@@ -21,10 +21,10 @@ public class WordService {
 
 	//Simple CRUD methods
 
-	public Word create(final String name, final int value) {
+	public Word create() {
 		final Word word = new Word();
-		word.setName(name);
-		word.setValue(value);
+		word.setName("");
+		word.setValue(0);
 		return word;
 	}
 
@@ -37,7 +37,11 @@ public class WordService {
 	}
 
 	public Word save(final Word word) {
-		return this.wordRepository.save(word);
+		Word res = null;
+		if (word != null && word.getName() != null && word.getName() != "" && (word.getValue() == 0 || word.getValue() == 1))
+			res = this.wordRepository.save(word);
+		return res;
+		//return this.wordRepository.save(word);
 	}
 
 	public void delete(final Word word) {

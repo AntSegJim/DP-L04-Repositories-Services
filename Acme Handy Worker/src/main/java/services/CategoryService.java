@@ -34,7 +34,7 @@ public class CategoryService {
 	 * }
 	 */
 
-	public Category create(final String name, final Category parent, final Collection<Category> soon) {
+	public Category create() {
 		final Category category = new Category();
 		category.setName("");
 		category.setParent(null);
@@ -58,7 +58,8 @@ public class CategoryService {
 		Assert.isTrue(!(category.getName().equals(null)));
 		Assert.isTrue(!(category.getName().equals("")));
 		Assert.isTrue(!(category.getParent().equals(null)));
-
+		final Collection<String> names = this.categoryRepository.namesCategory();
+		Assert.isTrue(!names.contains(category.getName().toUpperCase()));
 		return this.categoryRepository.save(category);
 	}
 

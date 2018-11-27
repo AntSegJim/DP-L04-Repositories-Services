@@ -35,6 +35,7 @@ public class CreditCardTypeService {
 	public CreditCardType save(final CreditCardType c) {
 		final Collection<CreditCardType> types = this.creditCardTypeRepository.findAll();
 		Assert.isTrue(!types.contains(c), " CreditCartdTypeService.save -> This type have already exist.");
+		Assert.isTrue(c != null && c.getBrandName() != null && c.getBrandName() != "");
 		return this.creditCardTypeRepository.save(c);
 	}
 	public void delete(final CreditCardType c) {

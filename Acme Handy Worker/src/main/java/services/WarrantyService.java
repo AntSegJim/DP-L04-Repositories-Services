@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 import javax.transaction.Transactional;
 
@@ -23,8 +24,8 @@ public class WarrantyService {
 	public Warranty create() {
 		final Warranty w = new Warranty();
 		w.setDraftMode(0);
-		w.setLaws(null);
-		w.setTerms(null);
+		w.setLaws(new HashSet<String>());
+		w.setTerms(new HashSet<String>());
 		w.setTitle("");
 		return w;
 	}
@@ -36,7 +37,7 @@ public class WarrantyService {
 		return this.warrantyRepository.findOne(id);
 	}
 	public Warranty save(final Warranty w) {
-		Assert.isTrue(w.getDraftMode() == 1);
+		Assert.isTrue(w != null && w.getDraftMode() == 1 && w.getTitle() != null && w.getTitle() != "" && w.getLaws() != null && w.getTerms() != null);
 		return this.warrantyRepository.save(w);
 	}
 	public void delete(final Warranty w) {

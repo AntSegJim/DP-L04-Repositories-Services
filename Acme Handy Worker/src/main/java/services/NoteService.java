@@ -17,7 +17,6 @@ public class NoteService {
 
 	@Autowired
 	private NoteRepository	noteRepository;
-
 	@Autowired
 	private ReportService	refereeService;
 

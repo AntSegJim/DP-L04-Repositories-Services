@@ -22,7 +22,6 @@ public class ProfileSocialNetworkService {
 	//CRUD
 	public ProfileSocialNetwork create() {
 		final ProfileSocialNetwork profile = new ProfileSocialNetwork();
-
 		profile.setNickName("");
 		profile.setNameSocialNetwork("");
 		profile.setLinkProfile("");
@@ -39,7 +38,12 @@ public class ProfileSocialNetworkService {
 	}
 
 	public ProfileSocialNetwork save(final ProfileSocialNetwork profile) {
-		return this.profileSocialNetworkRepository.save(profile);
+		ProfileSocialNetwork res = null;
+		//Falta URL
+		if (profile != null && profile.getNameSocialNetwork() != null && profile.getNameSocialNetwork() != "" && profile.getNickName() != null && profile.getNickName() != null && profile.getLinkProfile() != null && profile.getLinkProfile() != "")
+			res = this.profileSocialNetworkRepository.save(profile);
+		return res;
+		//return this.profileSocialNetworkRepository.save(profile);
 	}
 
 	public void delete(final ProfileSocialNetwork profile) {

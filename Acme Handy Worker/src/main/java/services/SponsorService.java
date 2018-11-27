@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 import javax.transaction.Transactional;
 
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import repositories.SponsorRepository;
+import domain.ProfileSocialNetwork;
 import domain.Sponsor;
 
 @Service
@@ -28,7 +30,7 @@ public class SponsorService {
 		s.setNumberSocialProfiles(0);
 		s.setPhone("");
 		s.setPhoto("");
-		s.setProfileSocialNetwork(null);
+		s.setProfileSocialNetwork(new HashSet<ProfileSocialNetwork>());
 		s.setSurname("");
 		s.setUserAccount(null);
 		return s;

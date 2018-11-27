@@ -35,7 +35,11 @@ public class SpamWordService {
 		return this.spamWordRepository.findOne(spamWordId);
 	}
 	public SpamWord save(final SpamWord spamWord) {
-		return this.spamWordRepository.save(spamWord);
+		SpamWord res = null;
+		if (spamWord != null && spamWord.getName() != null && spamWord.getName() != "")
+			res = this.spamWordRepository.save(spamWord);
+		return res;
+		//return this.spamWordRepository.save(spamWord);
 	}
 	public void delete(final SpamWord spamWord) {
 		this.spamWordRepository.delete(spamWord);

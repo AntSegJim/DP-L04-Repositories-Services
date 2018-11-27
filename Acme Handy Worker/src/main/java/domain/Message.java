@@ -80,12 +80,12 @@ public class Message extends DomainEntity {
 	public Actor getSender() {
 		return this.sender;
 	}
-
 	public void setSender(final Actor sender) {
 		this.sender = sender;
 	}
 	@Valid
 	@ManyToMany
+	@NotNull
 	public Collection<Actor> getReceiver() {
 		return this.receiver;
 	}

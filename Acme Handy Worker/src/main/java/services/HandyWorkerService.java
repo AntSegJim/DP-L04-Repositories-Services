@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 import javax.transaction.Transactional;
 
@@ -9,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import repositories.HandyWorkerRepository;
+import domain.Application;
+import domain.Endorsement;
 import domain.HandyWorker;
+import domain.ProfileSocialNetwork;
 
 @Service
 @Transactional
@@ -23,18 +27,20 @@ public class HandyWorkerService {
 		final HandyWorker h = new HandyWorker();
 		h.setAddress("");
 		h.setEmail("");
-		h.setEndorseHWorker(null);
+		h.setEndorseHWorker(new HashSet<Endorsement>());
 		h.setMiddleName("");
 		h.setName("");
 		h.setNumberSocialProfiles(0);
 		h.setPhone("");
 		h.setPhoto("");
-		h.setProfileSocialNetwork(null);
-		h.setReceiveEndorseFromHWorker(null);
+		h.setProfileSocialNetwork(new HashSet<ProfileSocialNetwork>());
+		h.setReceiveEndorseFromHWorker(new HashSet<Endorsement>());
 		h.setScore(0);
 		h.setSurname("");
+		//PREGUNTAR
 		h.setUserAccount(null);
 		h.setMakeHandyWorker("");
+		h.setApplication(new HashSet<Application>());
 		return h;
 	}
 
