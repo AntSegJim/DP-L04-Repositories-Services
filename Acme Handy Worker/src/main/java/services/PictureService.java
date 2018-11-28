@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import repositories.PictureRepository;
 import domain.Picture;
@@ -34,11 +35,8 @@ public class PictureService {
 		return this.PRepo.findOne(PictureId);
 	}
 	public Picture save(final Picture picture) {
-		Picture res = null;
-		if (picture != null && picture.getPicture() != null && picture.getPicture() != "")
-			res = this.PRepo.save(picture);
-		return res;
-		//return this.PRepo.save(picture);
+		Assert.isTrue(picture != null && picture.getPicture() != null && picture.getPicture() != "");
+		return this.PRepo.save(picture);
 	}
 	public void delete(final Picture picture) {
 		this.PRepo.delete(picture);

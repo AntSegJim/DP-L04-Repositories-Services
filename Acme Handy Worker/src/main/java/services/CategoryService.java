@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 import javax.transaction.Transactional;
 
@@ -37,8 +38,9 @@ public class CategoryService {
 	public Category create() {
 		final Category category = new Category();
 		category.setName("");
+		//PREGUNTAR
 		category.setParent(null);
-		category.setSoon(null);
+		category.setSoon(new HashSet<Category>());
 		return category;
 	}
 

@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.CustomerRepository;
+import security.Authority;
+import security.UserAccount;
 import domain.Customer;
 import domain.Endorsement;
 import domain.MessageBox;
@@ -45,7 +47,13 @@ public class CustomerService {
 		c.setScore(0);
 		c.setSurname("");
 		//PREGUNTAR
-		c.setUserAccount(null);
+		final UserAccount user = new UserAccount();
+		user.setAuthorities(new HashSet<Authority>());
+		final Authority ad = new Authority();
+		ad.setAuthority(Authority.CUSTOMER);
+		user.getAuthorities().add(ad);
+		c.setUserAccount(user);
+
 		return c;
 	}
 	public Collection<Customer> findAll() {
@@ -58,7 +66,7 @@ public class CustomerService {
 	public Customer save(final Customer c) {
 		Customer res = null;
 
-		Assert.isTrue(c.getName() != null && c.getSurname() != null && c.getName() != "" && c.getSurname() != "", "CustomerService.save -> Name or Surname invalid");
+		Assert.isTrue(c != null && c.getName() != null && c.getSurname() != null && c.getName() != "" && c.getSurname() != "" && c.getUserAccount() != null, "CustomerService.save -> Name or Surname invalid");
 
 		final String regex = "[^@]+@[^@]+\\.[a-zA-Z]{2,}";
 		final Pattern pattern = Pattern.compile(regex);

@@ -68,9 +68,7 @@ public class ComplaintService {
 
 	//updating
 	public Complaint save(final Complaint complaint) {
-
-		Assert.isTrue(!(complaint.getMoment().equals(null)));
-
+		Assert.isTrue(complaint != null && complaint.getMoment() != null && complaint.getReferee() != null && complaint.getFixUpTask() != null);
 		return this.complaintRepository.save(complaint);
 	}
 

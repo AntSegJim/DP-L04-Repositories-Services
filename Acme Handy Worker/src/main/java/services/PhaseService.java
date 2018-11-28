@@ -24,18 +24,20 @@ public class PhaseService {
 
 	@Autowired
 	private PhaseRepository		phaseRepository;
-
 	@Autowired
 	private HandyWorkerService	handyWorkerService;
+	@Autowired
+	private ApplicationService	AService;
 
 
 	public Phase create() {
 		final Phase res = new Phase();
+
 		res.setTitle("");
 		res.setDescription("");
-		res.setStartMoment(null);
-		res.setEndMoment(null);
-		res.setApplication(new Application());
+		res.setStartMoment(new Date());
+		res.setEndMoment(new Date());
+		res.setApplication(this.AService.create());
 		return res;
 	}
 
@@ -65,8 +67,9 @@ public class PhaseService {
 		final UserAccount ac = LoginService.getPrincipal();
 		Assert.isTrue(ac.getAuthorities().contains(Authority.HANDYWORKER));
 
-		Assert.isTrue(!(phase.getTitle().equals("") && !(phase.getTitle().equals(null))));
+		Assert.isTrue(phase != null && !(phase.getTitle().equals("") && !(phase.getTitle().equals(null))));
 		Assert.isTrue(!(phase.getStartMoment().equals(null) && !(phase.getStartMoment().before(Calendar.getInstance().getTime()))));
+		Assert.isTrue(phase.getApplication() != null && (phase.getEndMoment().equals(null) || phase.getEndMoment().after(phase.getStartMoment())));
 		return this.phaseRepository.save(phase);
 	}
 

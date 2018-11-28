@@ -10,9 +10,9 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import repositories.ProfessionalRecordRepository;
-import domain.Curricula;
 import domain.ProfessionalRecord;
 
 @Service
@@ -27,16 +27,13 @@ public class ProfessionalRecordService {
 
 	public ProfessionalRecord create() {
 		final ProfessionalRecord professionalRecord = new ProfessionalRecord();
-		final Collection<String> comments = new HashSet<String>();
-		final Curricula c = this.curriS.create();
-
 		professionalRecord.setNameCompany("");
 		professionalRecord.setStartDate(new Date());
 		professionalRecord.setEndDate(new Date());
 		professionalRecord.setLink("");
 		professionalRecord.setRole("");
-		professionalRecord.setComments(comments);
-		professionalRecord.setCurricula(c);
+		professionalRecord.setComments(new HashSet<String>());
+		professionalRecord.setCurricula(this.curriS.create());
 		return professionalRecord;
 	}
 
@@ -50,12 +47,9 @@ public class ProfessionalRecordService {
 
 	//updating
 	public ProfessionalRecord save(final ProfessionalRecord professionalRecord) {
-		ProfessionalRecord res = null;
-		if (professionalRecord != null && professionalRecord.getStartDate() != null && professionalRecord.getStartDate().before(Calendar.getInstance().getTime()) && professionalRecord.getEndDate().before(Calendar.getInstance().getTime())
-			&& professionalRecord.getCurricula() != null)
-			res = this.PRRepo.save(professionalRecord);
-		return res;
-		//return this.PRRepo.save(professionalRecord);
+		Assert.isTrue(professionalRecord != null && professionalRecord.getStartDate() != null && professionalRecord.getStartDate().before(Calendar.getInstance().getTime()) && professionalRecord.getEndDate().before(Calendar.getInstance().getTime())
+			&& professionalRecord.getCurricula() != null);
+		return this.PRRepo.save(professionalRecord);
 	}
 
 	//deleting

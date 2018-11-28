@@ -8,9 +8,9 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import repositories.MiscellaneousRecordRepository;
-import domain.Curricula;
 import domain.MiscellaneousRecord;
 
 @Service
@@ -25,13 +25,10 @@ public class MiscellaneousRecordService {
 
 	public MiscellaneousRecord create() {
 		final MiscellaneousRecord miscellaneousRecord = new MiscellaneousRecord();
-		final Collection<String> comments = new HashSet<String>();
-		final Curricula c = this.curriS.create();
-
 		miscellaneousRecord.setTitle("");
 		miscellaneousRecord.setLink("");
-		miscellaneousRecord.setComments(comments);
-		miscellaneousRecord.setCurricula(c);
+		miscellaneousRecord.setComments(new HashSet<String>());
+		miscellaneousRecord.setCurricula(this.curriS.create());
 		return miscellaneousRecord;
 	}
 
@@ -45,11 +42,8 @@ public class MiscellaneousRecordService {
 
 	//updating
 	public MiscellaneousRecord save(final MiscellaneousRecord miscellaneousRecord) {
-		MiscellaneousRecord res = null;
-		if (miscellaneousRecord != null && miscellaneousRecord.getTitle() != null && miscellaneousRecord.getTitle() != "" && miscellaneousRecord.getCurricula() != null)
-			res = this.MRRepo.save(miscellaneousRecord);
-		return res;
-		//return this.MRRepo.save(miscellaneousRecord);
+		Assert.isTrue(miscellaneousRecord != null && miscellaneousRecord.getTitle() != null && miscellaneousRecord.getTitle() != "" && miscellaneousRecord.getCurricula() != null);
+		return this.MRRepo.save(miscellaneousRecord);
 	}
 
 	//deleting

@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import repositories.SectionRepository;
 import domain.Section;
@@ -36,11 +37,8 @@ public class SectionService {
 		return this.SRepo.findOne(SectionId);
 	}
 	public Section save(final Section section) {
-		Section res = null;
-		if (section != null && section.getTitle() != null && section.getTitle() != "")
-			res = this.SRepo.save(section);
-		return res;
-		//return this.SRepo.save(section);
+		Assert.isTrue(section != null && section.getTitle() != null && section.getTitle() != "");
+		return this.SRepo.save(section);
 	}
 	public void delete(final Section s) {
 		this.SRepo.delete(s);

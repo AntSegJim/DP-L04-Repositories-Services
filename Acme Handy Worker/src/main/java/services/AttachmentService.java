@@ -6,6 +6,7 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import repositories.AttachmentRepository;
 import domain.Attachment;
@@ -41,9 +42,9 @@ public class AttachmentService {
 
 	//updating
 	public Attachment save(final Attachment attachment) {
+		Assert.isTrue(attachment != null && attachment.getLink() != null && attachment.getLink() != "");
 		return this.attachmentRepository.save(attachment);
 	}
-
 	//deleting
 	public void delete(final Attachment attachment) {
 		this.attachmentRepository.delete(attachment);

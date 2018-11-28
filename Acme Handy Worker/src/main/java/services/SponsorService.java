@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.SponsorRepository;
+import security.Authority;
+import security.UserAccount;
 import domain.MessageBox;
 import domain.ProfileSocialNetwork;
 import domain.Sponsor;
@@ -38,7 +40,14 @@ public class SponsorService {
 		s.setPhoto("");
 		s.setProfileSocialNetwork(new HashSet<ProfileSocialNetwork>());
 		s.setSurname("");
-		s.setUserAccount(null);
+		//PREGUNTAR
+		final UserAccount user = new UserAccount();
+		user.setAuthorities(new HashSet<Authority>());
+		final Authority ad = new Authority();
+		ad.setAuthority(Authority.SPONSOR);
+		user.getAuthorities().add(ad);
+		s.setUserAccount(user);
+
 		return s;
 	}
 
@@ -52,7 +61,7 @@ public class SponsorService {
 
 	public Sponsor save(final Sponsor s) {
 		Sponsor res = null;
-		Assert.isTrue(s.getName() != null && s.getSurname() != null && s.getName() != "" && s.getSurname() != "", "SponsorService.save -> Name or Surname invalid");
+		Assert.isTrue(s.getName() != null && s.getSurname() != null && s.getName() != "" && s.getSurname() != "" && s.getUserAccount() != null, "SponsorService.save -> Name or Surname invalid");
 
 		final String regex = "[^@]+@[^@]+\\.[a-zA-Z]{2,}";
 		final Pattern pattern = Pattern.compile(regex);
@@ -75,5 +84,4 @@ public class SponsorService {
 
 		return res;
 	}
-
 }

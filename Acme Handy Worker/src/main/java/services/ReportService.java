@@ -58,7 +58,7 @@ public class ReportService {
 
 	//updating
 	public Report save(final Report report) {
-
+		Assert.isTrue(report != null && report.getComplaint() != null && !report.getAttachment().isEmpty() && (report.getPublished() == 0 || report.getPublished() == 1));
 		Assert.isTrue(!(report.getMoment().equals(null)));
 		Assert.isTrue(!(report.getDescription().equals("")));
 		return this.reportRepository.save(report);

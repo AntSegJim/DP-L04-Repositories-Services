@@ -11,6 +11,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import repositories.TutorialRepository;
 import domain.Picture;
@@ -56,12 +57,9 @@ public class TutorialService {
 
 	//updating
 	public Tutorial save(final Tutorial tutorial) {
-		Tutorial res = null;
-		if (tutorial != null && tutorial.getTitle() != null && tutorial.getTitle() != "" && tutorial.getMoment() != null && tutorial.getMoment().before(Calendar.getInstance().getTime()) && tutorial.getSummary() != "" && !tutorial.getSection().isEmpty()
-			&& tutorial.getSection() != null)
-			res = this.TRepo.save(tutorial);
-		return res;
-		//return this.CRepo.save(curricula);
+		Assert.isTrue(tutorial != null && tutorial.getTitle() != null && tutorial.getTitle() != "" && tutorial.getMoment() != null && tutorial.getMoment().before(Calendar.getInstance().getTime()) && tutorial.getSummary() != ""
+			&& !tutorial.getSection().isEmpty() && tutorial.getSection() != null);
+		return this.TRepo.save(tutorial);
 	}
 
 	//deleting

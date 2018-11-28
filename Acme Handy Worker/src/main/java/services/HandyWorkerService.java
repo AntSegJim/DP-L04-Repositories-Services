@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.HandyWorkerRepository;
+import security.Authority;
+import security.UserAccount;
 import domain.Application;
 import domain.Endorsement;
 import domain.HandyWorker;
@@ -44,7 +46,13 @@ public class HandyWorkerService {
 		h.setScore(0);
 		h.setSurname("");
 		//PREGUNTAR
-		h.setUserAccount(null);
+		final UserAccount user = new UserAccount();
+		user.setAuthorities(new HashSet<Authority>());
+		final Authority ad = new Authority();
+		ad.setAuthority(Authority.HANDYWORKER);
+		user.getAuthorities().add(ad);
+		h.setUserAccount(user);
+
 		h.setMakeHandyWorker("");
 		h.setApplication(new HashSet<Application>());
 		return h;
@@ -61,7 +69,7 @@ public class HandyWorkerService {
 	public HandyWorker save(final HandyWorker h) {
 		HandyWorker res = null;
 
-		Assert.isTrue(h.getName() != null && h.getSurname() != null && h.getName() != "" && h.getSurname() != "", "HandyWorkerService.save -> Name or Surname invalid");
+		Assert.isTrue(h.getName() != null && h.getSurname() != null && h.getName() != "" && h.getSurname() != "" && h.getUserAccount() != null, "HandyWorkerService.save -> Name or Surname invalid");
 
 		final String regex = "[^@]+@[^@]+\\.[a-zA-Z]{2,}";
 		final Pattern pattern = Pattern.compile(regex);

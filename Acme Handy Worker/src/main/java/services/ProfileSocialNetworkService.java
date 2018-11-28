@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import repositories.ProfileSocialNetworkRepository;
 import domain.ProfileSocialNetwork;
@@ -38,12 +39,10 @@ public class ProfileSocialNetworkService {
 	}
 
 	public ProfileSocialNetwork save(final ProfileSocialNetwork profile) {
-		ProfileSocialNetwork res = null;
 		//Falta URL
-		if (profile != null && profile.getNameSocialNetwork() != null && profile.getNameSocialNetwork() != "" && profile.getNickName() != null && profile.getNickName() != null && profile.getLinkProfile() != null && profile.getLinkProfile() != "")
-			res = this.profileSocialNetworkRepository.save(profile);
-		return res;
-		//return this.profileSocialNetworkRepository.save(profile);
+		Assert
+			.isTrue(profile != null && profile.getNameSocialNetwork() != null && profile.getNameSocialNetwork() != "" && profile.getNickName() != null && profile.getNickName() != null && profile.getLinkProfile() != null && profile.getLinkProfile() != "");
+		return this.profileSocialNetworkRepository.save(profile);
 	}
 
 	public void delete(final ProfileSocialNetwork profile) {

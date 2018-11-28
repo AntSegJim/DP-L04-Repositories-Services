@@ -7,9 +7,9 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import repositories.SponsorshipRepository;
-import domain.CreditCard;
 import domain.Sponsorship;
 
 @Service
@@ -24,11 +24,9 @@ public class SponsorshipService {
 
 	public Sponsorship create() {
 		final Sponsorship sponsorship = new Sponsorship();
-		final CreditCard creditCard = this.CCService.create();
-
 		sponsorship.setUrlBanner("");
 		sponsorship.setLinkTargetPage("");
-		sponsorship.setCreditCard(creditCard);
+		sponsorship.setCreditCard(this.CCService.create());
 		return sponsorship;
 	}
 
@@ -42,11 +40,8 @@ public class SponsorshipService {
 
 	//updating
 	public Sponsorship save(final Sponsorship sponsorship) {
-		Sponsorship res = null;
-		if (sponsorship != null && sponsorship.getLinkTargetPage() != null && sponsorship.getLinkTargetPage() != "" && sponsorship.getUrlBanner() != null && sponsorship.getUrlBanner() != "" && sponsorship.getCreditCard() != null)
-			res = this.SRepo.save(sponsorship);
-		return res;
-		//return this.CRepo.save(curricula);
+		Assert.isTrue(sponsorship != null && sponsorship.getLinkTargetPage() != null && sponsorship.getLinkTargetPage() != "" && sponsorship.getUrlBanner() != null && sponsorship.getUrlBanner() != "" && sponsorship.getCreditCard() != null);
+		return this.SRepo.save(sponsorship);
 	}
 
 	//deleting

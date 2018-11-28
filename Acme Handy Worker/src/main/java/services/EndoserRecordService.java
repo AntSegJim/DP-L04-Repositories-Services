@@ -8,9 +8,9 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import repositories.EndoserRecordRepository;
-import domain.Curricula;
 import domain.EndoserRecord;
 
 @Service
@@ -25,15 +25,12 @@ public class EndoserRecordService {
 
 	public EndoserRecord create() {
 		final EndoserRecord endoserRecord = new EndoserRecord();
-		final Collection<String> comments = new HashSet<String>();
-		final Curricula c = this.curriS.create();
-
 		endoserRecord.setName("");
 		endoserRecord.setEmail("");
 		endoserRecord.setPhoneNumber("");
 		endoserRecord.setLinkedln("");
-		endoserRecord.setComments(comments);
-		endoserRecord.setCurricula(c);
+		endoserRecord.setComments(new HashSet<String>());
+		endoserRecord.setCurricula(this.curriS.create());
 		return endoserRecord;
 	}
 
@@ -47,10 +44,8 @@ public class EndoserRecordService {
 
 	//updating
 	public EndoserRecord save(final EndoserRecord endoserRecord) {
-		EndoserRecord res = null;
-		if (endoserRecord != null && endoserRecord.getName() != null && endoserRecord.getName() != "" && endoserRecord.getCurricula() != null)
-			res = this.ERRepo.save(endoserRecord);
-		return res;
+		Assert.isTrue(endoserRecord != null && endoserRecord.getName() != null && endoserRecord.getName() != "" && endoserRecord.getCurricula() != null);
+		return this.ERRepo.save(endoserRecord);
 	}
 
 	//deleting

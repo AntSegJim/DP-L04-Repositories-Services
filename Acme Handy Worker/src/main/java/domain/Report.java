@@ -15,6 +15,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Range;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -45,6 +46,7 @@ public class Report extends DomainEntity {
 		this.description = description;
 	}
 
+	@Range(min = 0, max = 1)
 	public int getPublished() {
 		return this.published;
 	}

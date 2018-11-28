@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,6 +16,7 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.MessageBox;
+import domain.ProfileSocialNetwork;
 import domain.Referee;
 
 @Service
@@ -40,6 +42,15 @@ public class RefereeService {
 		res.setPhone("");
 		res.setAddress("");
 		res.setNumberSocialProfiles(0);
+		//PREGUNTAR
+		final UserAccount user = new UserAccount();
+		user.setAuthorities(new HashSet<Authority>());
+		final Authority ad = new Authority();
+		ad.setAuthority(Authority.REFEREE);
+		user.getAuthorities().add(ad);
+		res.setUserAccount(user);
+
+		res.setProfileSocialNetwork(new HashSet<ProfileSocialNetwork>());
 		return res;
 	}
 
@@ -72,7 +83,7 @@ public class RefereeService {
 
 		Referee res = null;
 
-		Assert.isTrue(r.getName() != null && r.getSurname() != null && r.getName() != "" && r.getSurname() != "", "RefereeService.save -> Name or Surname invalid");
+		Assert.isTrue(r != null && r.getName() != null && r.getSurname() != null && r.getName() != "" && r.getSurname() != "" && r.getUserAccount() != null, "RefereeService.save -> Name or Surname invalid");
 
 		final String regex = "[^@]+@[^@]+\\.[a-zA-Z]{2,}";
 		final Pattern pattern = Pattern.compile(regex);

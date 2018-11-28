@@ -7,9 +7,9 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import repositories.PersonalRecordRepository;
-import domain.Curricula;
 import domain.PersonalRecord;
 
 @Service
@@ -24,14 +24,12 @@ public class PersonalRecordService {
 
 	public PersonalRecord create() {
 		final PersonalRecord personalRecord = new PersonalRecord();
-		final Curricula c = this.curriS.create();
-
 		personalRecord.setNameHandyWorker("");
 		personalRecord.setPhoto("");
 		personalRecord.setEmail("");
 		personalRecord.setPhone("");
 		personalRecord.setLinkedInProfile("");
-		personalRecord.setCurricula(c);
+		personalRecord.setCurricula(this.curriS.create());
 		return personalRecord;
 	}
 
@@ -45,11 +43,8 @@ public class PersonalRecordService {
 
 	//updating
 	public PersonalRecord save(final PersonalRecord personalRecord) {
-		PersonalRecord res = null;
-		if (personalRecord != null && personalRecord.getNameHandyWorker() != null && personalRecord.getNameHandyWorker() != "" && personalRecord.getCurricula() != null)
-			res = this.PRRepo.save(personalRecord);
-		return res;
-		//return this.PRRepo.save(personalRecord);
+		Assert.isTrue(personalRecord != null && personalRecord.getNameHandyWorker() != null && personalRecord.getNameHandyWorker() != "" && personalRecord.getCurricula() != null);
+		return this.PRRepo.save(personalRecord);
 	}
 
 	//deleting
