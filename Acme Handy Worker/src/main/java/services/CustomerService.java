@@ -3,11 +3,14 @@ package services;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import repositories.CustomerRepository;
 import domain.Customer;
@@ -22,7 +25,8 @@ public class CustomerService {
 	//------------------------Managed repository---------------------
 	@Autowired
 	private CustomerRepository	customerRepository;
-	private MessageBoxService MBService;
+	@Autowired
+	private MessageBoxService	messageBoxService;
 
 
 	//------------------------Simple CRUD methods---------------------
@@ -51,28 +55,32 @@ public class CustomerService {
 	public Customer findOne(final int customerId) {
 		return this.customerRepository.findOne(customerId);
 	}
-	public Customer save(final Customer customer) {
-		Customer res=null;
-		res= this.customerRepository.save(customer);
-		MessageBox mb1= this.MBService.create();
+	public Customer save(final Customer c) {
+		Customer res = null;
+
+		Assert.isTrue(c.getName() != null && c.getSurname() != null && c.getName() != "" && c.getSurname() != "", "CustomerService.save -> Name or Surname invalid");
+
+		final String regex = "[^@]+@[^@]+\\.[a-zA-Z]{2,}";
+		final Pattern pattern = Pattern.compile(regex);
+		final Matcher matcher = pattern.matcher(c.getEmail());
+		Assert.isTrue(matcher.find() == true, "CustomerService.save -> Correo inválido");
+
+		res = this.customerRepository.save(c);
+		final MessageBox mb1 = this.messageBoxService.create();
 		mb1.setName("inbox");
 		mb1.setActor(res);
-		MessageBox mb2= this.MBService.create();
+		final MessageBox mb2 = this.messageBoxService.create();
 		mb2.setName("outbox");
 		mb2.setActor(res);
-		MessageBox mb3= this.MBService.create();
+		final MessageBox mb3 = this.messageBoxService.create();
 		mb3.setName("spambox");
 		mb3.setActor(res);
-		MessageBox mb4= this.MBService.create();
+		final MessageBox mb4 = this.messageBoxService.create();
 		mb4.setName("trashbox");
 		mb4.setActor(res);
+
 		return res;
 	}
-
-	public void delete(final Customer customer) {
-		this.customerRepository.delete(customer);
-	}
-
 	//------------------------Other business methods---------------------
 	public Customer customerByUserAccount(final Integer id) {
 		return this.customerRepository.customerUserAccount(id);

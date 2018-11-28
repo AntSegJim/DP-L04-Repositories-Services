@@ -10,6 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.NoteRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 import domain.Note;
 
 @Service
@@ -18,8 +21,6 @@ public class NoteService {
 
 	@Autowired
 	private NoteRepository	noteRepository;
-	@Autowired
-	private ReportService	refereeService;
 
 
 	public Note create() {
@@ -49,15 +50,12 @@ public class NoteService {
 
 	//updating
 	public Note save(final Note note) {
+		final UserAccount userAccount = LoginService.getPrincipal();
+		Assert.isTrue(userAccount.getAuthorities().contains(Authority.ADMIN) || userAccount.getAuthorities().contains(Authority.REFEREE) || userAccount.getAuthorities().contains(Authority.HANDYWORKER), "NoteService.save -> No estás autorizado.");
 
 		Assert.isTrue(!(note.getMoment().equals(null)));
 		Assert.isTrue(!(note.getComment().equals("")));
 		return this.noteRepository.save(note);
-	}
-
-	//deleting
-	public void delete(final Note note) {
-		this.noteRepository.delete(note);
 	}
 
 }

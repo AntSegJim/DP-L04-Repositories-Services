@@ -3,13 +3,17 @@ package services;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import repositories.SponsorRepository;
+import domain.MessageBox;
 import domain.ProfileSocialNetwork;
 import domain.Sponsor;
 
@@ -19,6 +23,8 @@ public class SponsorService {
 
 	@Autowired
 	private SponsorRepository	sponsorRepository;
+	@Autowired
+	private MessageBoxService	messageBoxService;
 
 
 	public Sponsor create() {
@@ -44,11 +50,30 @@ public class SponsorService {
 		return this.sponsorRepository.findOne(sponsorId);
 	}
 
-	public Sponsor save(final Sponsor sponsor) {
-		return this.sponsorRepository.save(sponsor);
+	public Sponsor save(final Sponsor s) {
+		Sponsor res = null;
+		Assert.isTrue(s.getName() != null && s.getSurname() != null && s.getName() != "" && s.getSurname() != "", "SponsorService.save -> Name or Surname invalid");
+
+		final String regex = "[^@]+@[^@]+\\.[a-zA-Z]{2,}";
+		final Pattern pattern = Pattern.compile(regex);
+		final Matcher matcher = pattern.matcher(s.getEmail());
+		Assert.isTrue(matcher.find() == true, "SponsorService.save -> Correo inválido");
+
+		res = this.sponsorRepository.save(s);
+		final MessageBox mb1 = this.messageBoxService.create();
+		mb1.setName("inbox");
+		mb1.setActor(res);
+		final MessageBox mb2 = this.messageBoxService.create();
+		mb2.setName("outbox");
+		mb2.setActor(res);
+		final MessageBox mb3 = this.messageBoxService.create();
+		mb3.setName("spambox");
+		mb3.setActor(res);
+		final MessageBox mb4 = this.messageBoxService.create();
+		mb4.setName("trashbox");
+		mb4.setActor(res);
+
+		return res;
 	}
 
-	public void delete(final Sponsor sponsor) {
-		this.sponsorRepository.delete(sponsor);
-	}
 }
