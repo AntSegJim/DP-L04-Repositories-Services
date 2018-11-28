@@ -34,7 +34,7 @@ public class RefereeService {
 		res.setEmail("");
 		res.setPhone("");
 		res.setAddress("");
-		res.setNumberSocialProfiles(null);
+		res.setNumberSocialProfiles(0);
 		return res;
 	}
 

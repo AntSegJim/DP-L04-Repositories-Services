@@ -3,6 +3,7 @@ package services;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,10 +21,6 @@ public class ReportService {
 
 	@Autowired
 	private ReportRepository	reportRepository;
-
-	@Autowired
-	private AttachmentService	attachmentService;
-
 	@Autowired
 	private ComplaintService	complaintService;
 
@@ -32,11 +29,11 @@ public class ReportService {
 
 	public Report create() {
 		final Report res = new Report();
-		res.setMoment(null);
+		res.setMoment(new Date());
 		res.setDescription("");
 		res.setPublished(0);
-		res.setAttachment(null);
-		res.setComplaint(new Complaint());
+		res.setAttachment(new HashSet<Attachment>());
+		res.setComplaint(this.complaintService.create());
 		return res;
 	}
 

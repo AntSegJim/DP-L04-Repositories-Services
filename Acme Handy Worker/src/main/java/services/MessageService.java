@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,12 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Actor;
+import domain.Customer;
+import domain.HandyWorker;
 import domain.Message;
+import domain.MessageBox;
+import domain.Referee;
+import domain.Sponsor;
 
 @Service
 @Transactional
@@ -31,6 +37,8 @@ public class MessageService {
 	private RefereeService		RService;
 	@Autowired
 	private SponsorService		SService;
+	@Autowired
+	private MessageBoxService	MBService;
 
 
 	public Message create() {
@@ -76,6 +84,61 @@ public class MessageService {
 	}
 	//Delete
 	public void delete(final Message message) {
-		this.MRepo.delete(message);
+		final UserAccount user = LoginService.getPrincipal();
+		if (user.getAuthorities().contains(Authority.CUSTOMER)) {
+			final Customer c = this.CService.create();
+			final List<MessageBox> boxes = this.MBService.findMessageBoxActor(c.getId());
+			for (int i = 0; i < boxes.size(); i++)
+				if (boxes.get(i).getName().toUpperCase().equals("TRASHBOX")) {
+					if (boxes.get(i).getMessages().contains(message))
+						this.MRepo.delete(message);
+				} else {
+					boxes.get(i).getMessages().remove(message);
+					for (int j = i + 1; j < boxes.size(); j++)
+						if (boxes.get(j).getName().toUpperCase().equals("TRASHBOX"))
+							boxes.get(j).getMessages().add(message);
+				}
+		} else if (user.getAuthorities().contains(Authority.HANDYWORKER)) {
+			final HandyWorker hw = this.HWService.create();
+			final List<MessageBox> boxes = this.MBService.findMessageBoxActor(hw.getId());
+			for (int i = 0; i < boxes.size(); i++)
+				if (boxes.get(i).getName().toUpperCase().equals("TRASHBOX")) {
+					if (boxes.get(i).getMessages().contains(message))
+						this.MRepo.delete(message);
+				} else {
+					boxes.get(i).getMessages().remove(message);
+					for (int j = i + 1; j < boxes.size(); j++)
+						if (boxes.get(j).getName().toUpperCase().equals("TRASHBOX"))
+							boxes.get(j).getMessages().add(message);
+				}
+		} else if (user.getAuthorities().contains(Authority.SPONSOR)) {
+			final Sponsor s = this.SService.create();
+			final List<MessageBox> boxes = this.MBService.findMessageBoxActor(s.getId());
+			for (int i = 0; i < boxes.size(); i++)
+				if (boxes.get(i).getName().toUpperCase().equals("TRASHBOX")) {
+					if (boxes.get(i).getMessages().contains(message))
+						this.MRepo.delete(message);
+				} else {
+					boxes.get(i).getMessages().remove(message);
+					for (int j = i + 1; j < boxes.size(); j++)
+						if (boxes.get(j).getName().toUpperCase().equals("TRASHBOX"))
+							boxes.get(j).getMessages().add(message);
+				}
+		} else if (user.getAuthorities().contains(Authority.REFEREE)) {
+			final Referee r = this.RService.create();
+			final List<MessageBox> boxes = this.MBService.findMessageBoxActor(r.getId());
+			for (int i = 0; i < boxes.size(); i++)
+				if (boxes.get(i).getName().toUpperCase().equals("TRASHBOX")) {
+					if (boxes.get(i).getMessages().contains(message))
+						this.MRepo.delete(message);
+				} else {
+					boxes.get(i).getMessages().remove(message);
+					for (int j = i + 1; j < boxes.size(); j++)
+						if (boxes.get(j).getName().toUpperCase().equals("TRASHBOX"))
+							boxes.get(j).getMessages().add(message);
+				}
+		} else {
+			//FALTA ADMINISTRADOR
+		}
 	}
 }
