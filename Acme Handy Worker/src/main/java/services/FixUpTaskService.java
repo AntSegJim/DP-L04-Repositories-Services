@@ -35,10 +35,13 @@ public class FixUpTaskService {
 
 
 	public FixUpTask create() {
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+
 		final FixUpTask f = new FixUpTask();
 		final Category ca = this.CService.create();
 		final Warranty wa = this.WService.create();
-		final Customer cus = this.customerService.create();
+		final Customer cus = this.customerService.customerByUserAccount(userAccount.getId());
 		f.setAddress("");
 		f.setApplication(new HashSet<Application>());
 		f.setCategory(ca);

@@ -45,6 +45,8 @@ public class EndorsementService {
 	public Endorsement save(final Endorsement e) {
 		final Integer userAccountId = LoginService.getPrincipal().getId();
 		Assert.isTrue(e.getCustomerSender().getUserAccount().equals(userAccountId) || e.getHandyWorkerSender().equals(userAccountId));
+		Assert.isTrue((e.getCustomerReceiver() == null && e.getHandyWorkerReceiver() != null) || (e.getHandyWorkerReceiver() == null && e.getCustomerReceiver() != null));
+		Assert.isTrue((e.getCustomerSender() == null && e.getHandyWorkerSender() != null) || (e.getHandyWorkerSender() == null && e.getCustomerSender() != null));
 		return this.endorsementRepository.save(e);
 	}
 	public void delete(final Endorsement endorsement) {

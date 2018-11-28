@@ -72,10 +72,10 @@ public class ComplaintService {
 		return this.complaintRepository.save(complaint);
 	}
 
-	//deleting
-	public void delete(final Complaint complaint) {
-		this.complaintRepository.delete(complaint);
-	}
+	//	//deleting
+	//	public void delete(final Complaint complaint) {
+	//		this.complaintRepository.delete(complaint);
+	//	}
 	//------------------------Other business methods---------------------
 	public Collection<Complaint> findAllByCustomer() {
 		final UserAccount userAccount = LoginService.getPrincipal();
@@ -100,10 +100,5 @@ public class ComplaintService {
 		return this.complaintRepository.findAllNoRefereeComplaint();
 
 	}
-
-	//		UserAccount userAccount;
-	//		userAccount = LoginService.getPrincipal();
-	//		final Referee c = this.refereeService.refereeByUserAccount(userAccount.getId());
-	//		return this.complaintRepository.findAllRefereeComplaint(null);
 
 }

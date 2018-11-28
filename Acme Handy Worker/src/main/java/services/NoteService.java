@@ -3,6 +3,7 @@ package services;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Note;
+import domain.Report;
 
 @Service
 @Transactional
@@ -27,7 +29,8 @@ public class NoteService {
 		final Note res = new Note();
 		res.setMoment(new Date());
 		res.setComment("");
-		res.setOptionalComments(null);
+		res.setOptionalComments(new HashSet<String>());
+		res.setReport(new Report());
 		return res;
 
 	}

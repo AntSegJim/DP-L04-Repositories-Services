@@ -11,8 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.ReportRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 import domain.Attachment;
 import domain.Complaint;
+import domain.Referee;
 import domain.Report;
 
 @Service
@@ -23,6 +27,8 @@ public class ReportService {
 	private ReportRepository	reportRepository;
 	@Autowired
 	private ComplaintService	complaintService;
+	@Autowired
+	private RefereeService		refereeService;
 
 
 	//Metodos CRUD
@@ -67,6 +73,13 @@ public class ReportService {
 	//deleting
 	public void delete(final Report report) {
 		this.reportRepository.delete(report);
+	}
+	//Nose si sirve 
+	public Collection<Report> findAllReportReferee() {
+		final UserAccount userAccount = LoginService.getPrincipal();
+		Assert.isTrue(userAccount.getAuthorities().contains(Authority.REFEREE));
+		final Referee c = this.refereeService.refereeByUserAccount(userAccount.getId());
+		return this.reportRepository.findAllReportReferee(c.getId());
 	}
 
 }
