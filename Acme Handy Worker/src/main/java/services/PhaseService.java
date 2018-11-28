@@ -65,7 +65,9 @@ public class PhaseService {
 	//updating
 	public Phase save(final Phase phase) {
 		final UserAccount ac = LoginService.getPrincipal();
+
 		Assert.isTrue(ac.getAuthorities().contains(Authority.HANDYWORKER));
+		Assert.isTrue(phase.getApplication().getStatus() == 0);
 
 		Assert.isTrue(phase != null && !(phase.getTitle().equals("") && !(phase.getTitle().equals(null))));
 		Assert.isTrue(!(phase.getStartMoment().equals(null) && !(phase.getStartMoment().before(Calendar.getInstance().getTime()))));

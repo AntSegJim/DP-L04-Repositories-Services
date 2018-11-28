@@ -64,6 +64,9 @@ public class ReportService {
 
 	//updating
 	public Report save(final Report report) {
+		final UserAccount ac = LoginService.getPrincipal();
+		Assert.isTrue(ac.getAuthorities().contains(Authority.REFEREE));
+
 		Assert.isTrue(report != null && report.getComplaint() != null && !report.getAttachment().isEmpty() && (report.getPublished() == 0 || report.getPublished() == 1));
 		Assert.isTrue(!(report.getMoment().equals(null)));
 		Assert.isTrue(!(report.getDescription().equals("")));
@@ -71,9 +74,9 @@ public class ReportService {
 	}
 
 	//deleting
-	public void delete(final Report report) {
-		this.reportRepository.delete(report);
-	}
+	//	public void delete(final Report report) {
+	//		this.reportRepository.delete(report);
+	//	}
 	//Nose si sirve 
 	public Collection<Report> findAllReportReferee() {
 		final UserAccount userAccount = LoginService.getPrincipal();

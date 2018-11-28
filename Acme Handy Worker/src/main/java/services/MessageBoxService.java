@@ -77,10 +77,10 @@ public class MessageBoxService {
 
 	//delete
 	public void delete(final MessageBox messageBox) {
-		Assert.isTrue(messageBox.getName().toUpperCase() != "INBOX");
-		Assert.isTrue(messageBox.getName().toUpperCase() != "OUTBOX");
-		Assert.isTrue(messageBox.getName().toUpperCase() != "TRASHBOX");
-		Assert.isTrue(messageBox.getName().toUpperCase() != "SPAMBOX");
+		Assert.isTrue(messageBox.getName().trim().toUpperCase() != "INBOX");
+		Assert.isTrue(messageBox.getName().trim().toUpperCase() != "OUTBOX");
+		Assert.isTrue(messageBox.getName().trim().toUpperCase() != "TRASHBOX");
+		Assert.isTrue(messageBox.getName().trim().toUpperCase() != "SPAMBOX");
 		this.messageRepositoryBox.delete(messageBox);
 	}
 

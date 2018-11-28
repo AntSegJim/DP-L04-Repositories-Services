@@ -11,11 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.FilterRepository;
+import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Category;
 import domain.Filter;
-import domain.HandyWorker;
 import domain.Warranty;
 
 @Service
@@ -56,15 +56,18 @@ public class FilterService {
 	public Filter save(final Filter filter) {
 		UserAccount userAccount;
 		userAccount = LoginService.getPrincipal();
-		final Collection<HandyWorker> handyWorker = this.handyWorkerService.handyWorkerByUserAccount(userAccount.getId());
-		Assert.isTrue(!handyWorker.isEmpty());
+		Assert.isTrue(userAccount.getAuthorities().contains(Authority.HANDYWORKER));
+		//		final Collection<HandyWorker> handyWorker = this.handyWorkerService.handyWorkerByUserAccount(userAccount.getId());
+		//		Assert.isTrue(!handyWorker.isEmpty());
+
 		return this.filterRepository.save(filter);
 	}
 	public void delete(final Filter filter) {
 		UserAccount userAccount;
 		userAccount = LoginService.getPrincipal();
-		final Collection<HandyWorker> handyWorker = this.handyWorkerService.handyWorkerByUserAccount(userAccount.getId());
-		Assert.isTrue(!handyWorker.isEmpty());
+		Assert.isTrue(userAccount.getAuthorities().contains(Authority.HANDYWORKER));
+		//		final Collection<HandyWorker> handyWorker = this.handyWorkerService.handyWorkerByUserAccount(userAccount.getId());
+		//		Assert.isTrue(!handyWorker.isEmpty());
 		this.filterRepository.delete(filter);
 	}
 }
