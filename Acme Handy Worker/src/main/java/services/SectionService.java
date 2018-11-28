@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -42,5 +43,10 @@ public class SectionService {
 	}
 	public void delete(final Section s) {
 		this.SRepo.delete(s);
+	}
+
+	//Lista con las secciones de un tutorial
+	public List<Section> sectionsFromTutorial(final int tutorialId) {
+		return this.SRepo.sectionsFromTutorial(tutorialId);
 	}
 }

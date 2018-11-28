@@ -32,6 +32,8 @@ public class MessageBoxService {
 	private RefereeService			RService;
 	@Autowired
 	private SponsorService			SService;
+	@Autowired
+	private AdministratorService	AService;
 
 
 	public MessageBox create() {
@@ -48,9 +50,8 @@ public class MessageBoxService {
 			box.setActor(this.RService.create());
 		else if (user.getAuthorities().contains(Authority.SPONSOR))
 			box.setActor(this.SService.create());
-		else {
-			//Falta administrador
-		}
+		else
+			box.setActor(this.AService.create());
 		return box;
 	}
 

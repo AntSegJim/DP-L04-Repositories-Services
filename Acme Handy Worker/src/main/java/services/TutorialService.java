@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -64,6 +65,11 @@ public class TutorialService {
 
 	//deleting
 	public void delete(final Tutorial tutorial) {
+		//Borramos primero mas secciones del tutorial
+		final List<Section> sectionsFromTutorial = this.SService.sectionsFromTutorial(tutorial.getId());
+		for (int i = 0; i < sectionsFromTutorial.size(); i++)
+			this.SService.delete(sectionsFromTutorial.get(i));
+		//Borramos el tutorial
 		this.TRepo.delete(tutorial);
 	}
 }

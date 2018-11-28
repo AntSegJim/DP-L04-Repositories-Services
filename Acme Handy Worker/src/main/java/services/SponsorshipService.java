@@ -20,6 +20,8 @@ public class SponsorshipService {
 	private SponsorshipRepository	SRepo;
 	@Autowired
 	private CreditCardService		CCService;
+	@Autowired
+	private SponsorService			sponsorService;
 
 
 	public Sponsorship create() {
@@ -27,6 +29,8 @@ public class SponsorshipService {
 		sponsorship.setUrlBanner("");
 		sponsorship.setLinkTargetPage("");
 		sponsorship.setCreditCard(this.CCService.create());
+		sponsorship.setSponsor(this.sponsorService.create());
+
 		return sponsorship;
 	}
 
@@ -40,7 +44,8 @@ public class SponsorshipService {
 
 	//updating
 	public Sponsorship save(final Sponsorship sponsorship) {
-		Assert.isTrue(sponsorship != null && sponsorship.getLinkTargetPage() != null && sponsorship.getLinkTargetPage() != "" && sponsorship.getUrlBanner() != null && sponsorship.getUrlBanner() != "" && sponsorship.getCreditCard() != null);
+		Assert.isTrue(sponsorship != null && sponsorship.getLinkTargetPage() != null && sponsorship.getLinkTargetPage() != "" && sponsorship.getUrlBanner() != null && sponsorship.getUrlBanner() != "" && sponsorship.getCreditCard() != null
+			&& sponsorship.getSponsor() != null);
 		return this.SRepo.save(sponsorship);
 	}
 

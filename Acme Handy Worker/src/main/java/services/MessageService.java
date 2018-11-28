@@ -16,6 +16,7 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Actor;
+import domain.Administrator;
 import domain.Customer;
 import domain.HandyWorker;
 import domain.Message;
@@ -28,17 +29,19 @@ import domain.Sponsor;
 public class MessageService {
 
 	@Autowired
-	private MessageRepository	MRepo;
+	private MessageRepository		MRepo;
 	@Autowired
-	private CustomerService		CService;
+	private CustomerService			CService;
 	@Autowired
-	private HandyWorkerService	HWService;
+	private HandyWorkerService		HWService;
 	@Autowired
-	private RefereeService		RService;
+	private RefereeService			RService;
 	@Autowired
-	private SponsorService		SService;
+	private SponsorService			SService;
 	@Autowired
-	private MessageBoxService	MBService;
+	private MessageBoxService		MBService;
+	@Autowired
+	private AdministratorService	AService;
 
 
 	public Message create() {
@@ -58,9 +61,8 @@ public class MessageService {
 			message.setSender(this.RService.create());
 		else if (user.getAuthorities().contains(Authority.SPONSOR))
 			message.setSender(this.SService.create());
-		else {
-			//Falta administrador
-		}
+		else
+			message.setSender(this.AService.create());
 		message.setReceiver(new HashSet<Actor>());
 		return message;
 	}
@@ -138,7 +140,19 @@ public class MessageService {
 							boxes.get(j).getMessages().add(message);
 				}
 		} else {
-			//FALTA ADMINISTRADOR
+			final Administrator admin = this.AService.create();
+			final List<MessageBox> boxes = this.MBService.findMessageBoxActor(admin.getId());
+			for (int i = 0; i < boxes.size(); i++)
+				if (boxes.get(i).getName().toUpperCase().equals("TRASHBOX")) {
+					if (boxes.get(i).getMessages().contains(message))
+						this.MRepo.delete(message);
+				} else {
+					boxes.get(i).getMessages().remove(message);
+					for (int j = i + 1; j < boxes.size(); j++)
+						if (boxes.get(j).getName().toUpperCase().equals("TRASHBOX"))
+							boxes.get(j).getMessages().add(message);
+				}
+
 		}
 	}
 }
