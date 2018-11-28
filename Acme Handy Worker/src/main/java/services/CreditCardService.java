@@ -1,14 +1,16 @@
 
 package services;
 
-import java.util.Collection;
-
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import repositories.CreditCardRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 import domain.CreditCard;
 
 @Service
@@ -32,13 +34,15 @@ public class CreditCardService {
 	}
 
 	//Metodo findAll
-	public Collection<CreditCard> findAll() {
-		return this.CCRepo.findAll();
-	}
-	public CreditCard findOne(final int CreditCardId) {
-		return this.CCRepo.findOne(CreditCardId);
-	}
+	//	public Collection<CreditCard> findAll() {
+	//		return this.CCRepo.findAll();
+	//	}
+	//	public CreditCard findOne(final int CreditCardId) {
+	//		return this.CCRepo.findOne(CreditCardId);
+	//	}
 	public CreditCard save(final CreditCard cc) {
+		final UserAccount user = LoginService.getPrincipal();
+		Assert.isTrue(user.getAuthorities().contains(Authority.CUSTOMER));
 		CreditCard res = null;
 		if (cc != null && cc.getBrandName() != null && cc.getHolderName() != null && cc.getBrandName() != "" && cc.getHolderName() != "")
 			res = this.CCRepo.save(cc);
@@ -46,8 +50,8 @@ public class CreditCardService {
 		//return this.CCRepo.save(cc);
 
 	}
-	public void delete(final CreditCard cc) {
-		this.CCRepo.delete(cc);
-	}
+	//	public void delete(final CreditCard cc) {
+	//		this.CCRepo.delete(cc);
+	//	}
 
 }

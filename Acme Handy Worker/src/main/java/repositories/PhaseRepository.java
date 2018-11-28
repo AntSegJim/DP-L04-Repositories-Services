@@ -14,4 +14,5 @@ public interface PhaseRepository extends JpaRepository<Phase, Integer> {
 
 	@Query("select c from Phase c join c.Application f where f.handyWorker.id = ?1")
 	public Collection<Phase> findAllHandyWorkerPhase(Integer id);
+
 }

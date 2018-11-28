@@ -1,7 +1,10 @@
 
 package repositories;
 
+import java.util.Collection;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import domain.Report;
@@ -9,4 +12,6 @@ import domain.Report;
 @Repository
 public interface ReportRepository extends JpaRepository<Report, Integer> {
 
+	@Query("select r from Report r join r.Complaint c where c.Referee.id=?1")
+	public Collection<Report> findAllReportReferee(int i);
 }

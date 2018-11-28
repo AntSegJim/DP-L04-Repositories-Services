@@ -102,9 +102,9 @@ public class HandyWorkerService {
 		return this.handyWorkerMoreTentPercentApplicatonsAccepted();
 	}
 
-	public Collection<HandyWorker> handyWorkerByUserAccount(final Integer userAccountId) {
-		return this.handyWorkerByUserAccount(userAccountId);
-	}
+	//	public Collection<HandyWorker> handyWorkerByUserAccount(final Integer userAccountId) {
+	//		return this.handyWorkerByUserAccount(userAccountId);
+	//	}
 
 	//Añadido por jesus para un metodo en phaseService
 	public HandyWorker handyWorkerUserAccount(final Integer id) {
