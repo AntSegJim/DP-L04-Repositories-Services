@@ -15,7 +15,6 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Application;
-import domain.HandyWorker;
 import domain.Phase;
 
 @Service
@@ -24,8 +23,7 @@ public class PhaseService {
 
 	@Autowired
 	private PhaseRepository		phaseRepository;
-	@Autowired
-	private HandyWorkerService	handyWorkerService;
+
 	@Autowired
 	private ApplicationService	AService;
 
@@ -59,9 +57,9 @@ public class PhaseService {
 	public Phase findOne(final int phaseId) {
 		final UserAccount ac = LoginService.getPrincipal();
 		Assert.isTrue(ac.getAuthorities().contains(Authority.HANDYWORKER));
+		Assert.isTrue(this.phaseRepository.findOne(phaseId).getApplication().getStatus() == 0);
 		return this.phaseRepository.findOne(phaseId);
 	}
-
 	//updating
 	public Phase save(final Phase phase) {
 		final UserAccount ac = LoginService.getPrincipal();
@@ -79,14 +77,15 @@ public class PhaseService {
 	public void delete(final Phase phase) {
 		final UserAccount ac = LoginService.getPrincipal();
 		Assert.isTrue(ac.getAuthorities().contains(Authority.HANDYWORKER));
+		Assert.isTrue(phase.getApplication().getStatus() == 0);
 		this.phaseRepository.delete(phase);
 	}
-
-	public Collection<Phase> findAllByHandyWorker() {
-		UserAccount userAccount;
-		userAccount = LoginService.getPrincipal();
-		final HandyWorker c = this.handyWorkerService.handyWorkerUserAccount(userAccount.getId());
-		return this.phaseRepository.findAllHandyWorkerPhase(c.getId());
-	}
+	//No piden que listemos las phases
+	//	public Collection<Phase> findAllByHandyWorker() {
+	//		UserAccount userAccount;
+	//		userAccount = LoginService.getPrincipal();
+	//		final HandyWorker c = this.handyWorkerService.handyWorkerUserAccount(userAccount.getId());
+	//		return this.phaseRepository.findAllHandyWorkerPhase(c.getId());
+	//	}
 
 }

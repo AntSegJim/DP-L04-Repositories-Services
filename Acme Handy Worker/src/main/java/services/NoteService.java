@@ -55,9 +55,10 @@ public class NoteService {
 
 	//updating
 	public Note save(final Note note) {
+		final int a = note.getReport().getComplaint().getReferee().getId();
 		final UserAccount userAccount = LoginService.getPrincipal();
-		Assert.isTrue(userAccount.getAuthorities().contains(Authority.ADMIN) || userAccount.getAuthorities().contains(Authority.REFEREE) || userAccount.getAuthorities().contains(Authority.HANDYWORKER), "NoteService.save -> No estás autorizado.");
-
+		Assert.isTrue(userAccount.getAuthorities().contains(Authority.CUSTOMER) && this.RService.findAllReportRefereeId(a).contains(note.getReport()) || userAccount.getAuthorities().contains(Authority.REFEREE)
+			&& this.reportService.findAllReportReferee().contains(note.getReport()) && note.getReport().getPublished() == 1 || userAccount.getAuthorities().contains(Authority.HANDYWORKER), "NoteService.save -> No estás autorizado.");
 		Assert.isTrue(!(note.getMoment().equals(null)));
 		Assert.isTrue(note != null && note.getReport() != null && note.getMoment().before(Calendar.getInstance().getTime()) && !(note.getComment().equals("")));
 		return this.noteRepository.save(note);

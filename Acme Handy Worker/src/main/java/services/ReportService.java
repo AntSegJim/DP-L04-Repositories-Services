@@ -59,13 +59,15 @@ public class ReportService {
 	}
 
 	public Report findOne(final int reportId) {
+		final UserAccount ac = LoginService.getPrincipal();
+		Assert.isTrue(ac.getAuthorities().contains(Authority.HANDYWORKER) && this.reportRepository.findOne(reportId).getPublished() == 1);
+
 		return this.reportRepository.findOne(reportId);
 	}
-
 	//updating
 	public Report save(final Report report) {
 		final UserAccount ac = LoginService.getPrincipal();
-		Assert.isTrue(ac.getAuthorities().contains(Authority.REFEREE));
+		Assert.isTrue(ac.getAuthorities().contains(Authority.REFEREE) && this.complaintService.findAllByReferee().contains(report.getComplaint()) && report.getPublished() == 0);
 
 		Assert.isTrue(report != null && report.getComplaint() != null && !report.getAttachment().isEmpty() && (report.getPublished() == 0 || report.getPublished() == 1));
 		Assert.isTrue(!(report.getMoment().equals(null)));
@@ -74,15 +76,20 @@ public class ReportService {
 	}
 
 	//deleting
-	//	public void delete(final Report report) {
-	//		this.reportRepository.delete(report);
-	//	}
-	//Nose si sirve 
+	public void delete(final Report report) {
+		final UserAccount ac = LoginService.getPrincipal();
+		Assert.isTrue(ac.getAuthorities().contains(Authority.REFEREE) && report.getPublished() == 0);
+		this.reportRepository.delete(report);
+	}
 	public Collection<Report> findAllReportReferee() {
 		final UserAccount userAccount = LoginService.getPrincipal();
 		Assert.isTrue(userAccount.getAuthorities().contains(Authority.REFEREE));
 		final Referee c = this.refereeService.refereeByUserAccount(userAccount.getId());
 		return this.reportRepository.findAllReportReferee(c.getId());
+	}
+	public Collection<Report> findAllReportRefereeId(final int i) {
+
+		return this.reportRepository.findAllReportReferee(i);
 	}
 
 }
