@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.ProfessionalRecordRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 import domain.ProfessionalRecord;
 
 @Service
@@ -47,6 +50,8 @@ public class ProfessionalRecordService {
 
 	//updating
 	public ProfessionalRecord save(final ProfessionalRecord professionalRecord) {
+		final UserAccount user = LoginService.getPrincipal();
+		Assert.isTrue(user.getAuthorities().contains(Authority.HANDYWORKER));
 		Assert.isTrue(professionalRecord != null && professionalRecord.getStartDate() != null && professionalRecord.getStartDate().before(Calendar.getInstance().getTime()) && professionalRecord.getEndDate().before(Calendar.getInstance().getTime())
 			&& professionalRecord.getCurricula() != null);
 		return this.PRRepo.save(professionalRecord);

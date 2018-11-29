@@ -15,6 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.TutorialRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 import domain.Picture;
 import domain.Section;
 import domain.Sponsorship;
@@ -58,6 +61,8 @@ public class TutorialService {
 
 	//updating
 	public Tutorial save(final Tutorial tutorial) {
+		final UserAccount user = LoginService.getPrincipal();
+		Assert.isTrue(user.getAuthorities().contains(Authority.HANDYWORKER));
 		Assert.isTrue(tutorial != null && tutorial.getTitle() != null && tutorial.getTitle() != "" && tutorial.getMoment() != null && tutorial.getMoment().before(Calendar.getInstance().getTime()) && tutorial.getSummary() != ""
 			&& !tutorial.getSection().isEmpty() && tutorial.getSection() != null);
 		return this.TRepo.save(tutorial);

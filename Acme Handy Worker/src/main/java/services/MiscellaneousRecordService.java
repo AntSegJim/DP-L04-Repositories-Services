@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.MiscellaneousRecordRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 import domain.MiscellaneousRecord;
 
 @Service
@@ -42,6 +45,8 @@ public class MiscellaneousRecordService {
 
 	//updating
 	public MiscellaneousRecord save(final MiscellaneousRecord miscellaneousRecord) {
+		final UserAccount user = LoginService.getPrincipal();
+		Assert.isTrue(user.getAuthorities().contains(Authority.HANDYWORKER));
 		Assert.isTrue(miscellaneousRecord != null && miscellaneousRecord.getTitle() != null && miscellaneousRecord.getTitle() != "" && miscellaneousRecord.getCurricula() != null);
 		return this.MRRepo.save(miscellaneousRecord);
 	}

@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.SponsorshipRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 import domain.Sponsorship;
 
 @Service
@@ -44,6 +47,8 @@ public class SponsorshipService {
 
 	//updating
 	public Sponsorship save(final Sponsorship sponsorship) {
+		final UserAccount user = LoginService.getPrincipal();
+		Assert.isTrue(user.getAuthorities().contains(Authority.SPONSOR));
 		Assert.isTrue(sponsorship != null && sponsorship.getLinkTargetPage() != null && sponsorship.getLinkTargetPage() != "" && sponsorship.getUrlBanner() != null && sponsorship.getUrlBanner() != "" && sponsorship.getCreditCard() != null
 			&& sponsorship.getSponsor() != null);
 		return this.SRepo.save(sponsorship);

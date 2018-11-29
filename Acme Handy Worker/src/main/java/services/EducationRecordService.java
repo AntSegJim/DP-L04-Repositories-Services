@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.EducationRecordRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 import domain.EducationRecord;
 
 @Service
@@ -47,6 +50,8 @@ public class EducationRecordService {
 
 	//updating
 	public EducationRecord save(final EducationRecord educationRecord) {
+		final UserAccount user = LoginService.getPrincipal();
+		Assert.isTrue(user.getAuthorities().contains(Authority.HANDYWORKER));
 		Assert.isTrue(educationRecord != null && educationRecord.getTitleDiploma() != null && educationRecord.getTitleDiploma() != "" && educationRecord.getStartDate() != null && educationRecord.getStartDate().before(Calendar.getInstance().getTime())
 			&& educationRecord.getEndDate().before(Calendar.getInstance().getTime()) && educationRecord.getInstitution() != null && educationRecord.getInstitution() != "" && educationRecord.getCurricula() != null);
 		return this.ERRepo.save(educationRecord);

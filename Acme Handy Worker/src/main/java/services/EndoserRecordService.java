@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.EndoserRecordRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 import domain.EndoserRecord;
 
 @Service
@@ -44,6 +47,8 @@ public class EndoserRecordService {
 
 	//updating
 	public EndoserRecord save(final EndoserRecord endoserRecord) {
+		final UserAccount user = LoginService.getPrincipal();
+		Assert.isTrue(user.getAuthorities().contains(Authority.HANDYWORKER));
 		Assert.isTrue(endoserRecord != null && endoserRecord.getName() != null && endoserRecord.getName() != "" && endoserRecord.getCurricula() != null);
 		return this.ERRepo.save(endoserRecord);
 	}

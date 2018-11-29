@@ -7,8 +7,12 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import repositories.WordRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 import domain.Word;
 
 @Service
@@ -37,11 +41,10 @@ public class WordService {
 	}
 
 	public Word save(final Word word) {
-		Word res = null;
-		if (word != null && word.getName() != null && word.getName() != "" && (word.getValue() == 0 || word.getValue() == 1))
-			res = this.wordRepository.save(word);
-		return res;
-		//return this.wordRepository.save(word);
+		final UserAccount user = LoginService.getPrincipal();
+		Assert.isTrue(user.getAuthorities().contains(Authority.ADMIN));
+		Assert.isTrue(word != null && word.getName() != null && word.getName() != "" && (word.getValue() == 0 || word.getValue() == 1));
+		return this.wordRepository.save(word);
 	}
 
 	public void delete(final Word word) {

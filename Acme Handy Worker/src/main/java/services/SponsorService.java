@@ -68,6 +68,18 @@ public class SponsorService {
 		final Matcher matcher = pattern.matcher(s.getEmail());
 		Assert.isTrue(matcher.find() == true, "SponsorService.save -> Correo inválido");
 
+		final String regexEmail2 = "^[A-z0-9]+\\s*[A-z0-9\\s]*\\s\\<[A-z0-9]+\\@[A-z0-9]+\\.[A-z0-9.]+\\>";
+		final Pattern patternEmail2 = Pattern.compile(regexEmail2);
+		final Matcher matcherEmail2 = patternEmail2.matcher(s.getEmail());
+		Assert.isTrue(matcherEmail2.find() == true && matcherEmail2.find() == true, "CustomerService.save -> Correo inválido");
+
+		if (s.getPhone() != "" || s.getPhone() != null) {
+			final String regexTelefono = "^\\+[1-9][0-9]{0,2}\\ \\([1-9][0-9]{0,2}\\)\\ [0-9]{4,}$|^\\+[1-9][0-9]{0,2}\\ [0-9]{4,}$|^[0-9]{4,}$";
+			final Pattern patternTelefono = Pattern.compile(regexTelefono);
+			final Matcher matcherTelefono = patternTelefono.matcher(s.getEmail());
+			Assert.isTrue(matcherTelefono.find() == true, "CustomerService.save -> Correo inválido");
+		}
+
 		res = this.sponsorRepository.save(s);
 		final MessageBox mb1 = this.messageBoxService.create();
 		mb1.setName("inbox");

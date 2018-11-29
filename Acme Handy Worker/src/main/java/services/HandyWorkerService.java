@@ -76,6 +76,18 @@ public class HandyWorkerService {
 		final Matcher matcher = pattern.matcher(h.getEmail());
 		Assert.isTrue(matcher.find() == true, "HandyWorkerService.save -> Correo inválido");
 
+		final String regexEmail2 = "^[A-z0-9]+\\s*[A-z0-9\\s]*\\s\\<[A-z0-9]+\\@[A-z0-9]+\\.[A-z0-9.]+\\>";
+		final Pattern patternEmail2 = Pattern.compile(regexEmail2);
+		final Matcher matcherEmail2 = patternEmail2.matcher(h.getEmail());
+		Assert.isTrue(matcherEmail2.find() == true && matcherEmail2.find() == true, "CustomerService.save -> Correo inválido");
+
+		if (h.getPhone() != "" || h.getPhone() != null) {
+			final String regexTelefono = "^\\+[1-9][0-9]{0,2}\\ \\([1-9][0-9]{0,2}\\)\\ [0-9]{4,}$|^\\+[1-9][0-9]{0,2}\\ [0-9]{4,}$|^[0-9]{4,}$";
+			final Pattern patternTelefono = Pattern.compile(regexTelefono);
+			final Matcher matcherTelefono = patternTelefono.matcher(h.getEmail());
+			Assert.isTrue(matcherTelefono.find() == true, "CustomerService.save -> Correo inválido");
+		}
+
 		res = this.handyWorkerRepository.save(h);
 		final MessageBox mb1 = this.messageBoxService.create();
 		mb1.setName("inbox");

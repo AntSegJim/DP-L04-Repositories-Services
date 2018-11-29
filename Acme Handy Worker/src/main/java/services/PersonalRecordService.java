@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.PersonalRecordRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 import domain.PersonalRecord;
 
 @Service
@@ -43,6 +46,8 @@ public class PersonalRecordService {
 
 	//updating
 	public PersonalRecord save(final PersonalRecord personalRecord) {
+		final UserAccount user = LoginService.getPrincipal();
+		Assert.isTrue(user.getAuthorities().contains(Authority.HANDYWORKER));
 		Assert.isTrue(personalRecord != null && personalRecord.getNameHandyWorker() != null && personalRecord.getNameHandyWorker() != "" && personalRecord.getCurricula() != null);
 		return this.PRRepo.save(personalRecord);
 	}

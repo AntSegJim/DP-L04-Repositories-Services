@@ -90,6 +90,18 @@ public class RefereeService {
 		final Matcher matcher = pattern.matcher(r.getEmail());
 		Assert.isTrue(matcher.find() == true, "RefereeService.save -> Correo inválido");
 
+		final String regexEmail2 = "^[A-z0-9]+\\s*[A-z0-9\\s]*\\s\\<[A-z0-9]+\\@[A-z0-9]+\\.[A-z0-9.]+\\>";
+		final Pattern patternEmail2 = Pattern.compile(regexEmail2);
+		final Matcher matcherEmail2 = patternEmail2.matcher(r.getEmail());
+		Assert.isTrue(matcherEmail2.find() == true && matcherEmail2.find() == true, "CustomerService.save -> Correo inválido");
+
+		if (r.getPhone() != "" || r.getPhone() != null) {
+			final String regexTelefono = "^\\+[1-9][0-9]{0,2}\\ \\([1-9][0-9]{0,2}\\)\\ [0-9]{4,}$|^\\+[1-9][0-9]{0,2}\\ [0-9]{4,}$|^[0-9]{4,}$";
+			final Pattern patternTelefono = Pattern.compile(regexTelefono);
+			final Matcher matcherTelefono = patternTelefono.matcher(r.getEmail());
+			Assert.isTrue(matcherTelefono.find() == true, "CustomerService.save -> Correo inválido");
+		}
+
 		res = this.refereeRepository.save(r);
 		final MessageBox mb1 = this.messageBoxService.create();
 		mb1.setName("inbox");
