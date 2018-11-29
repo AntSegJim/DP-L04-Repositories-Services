@@ -56,23 +56,5 @@ public class CreditCardServiceTest {
 		creditCards = this.CCService.findAll();
 		Assert.isTrue(creditCards.contains(saved));
 	}
-	@Test
-	public void testDeleteCreditCard() {
-		CreditCard creditCard, saved;
-		Collection<CreditCard> creditCards;
-		creditCard = this.CCService.create();
-
-		creditCard.setBrandName("VISA");
-		creditCard.setHolderName("cristian");
-		creditCard.setNumber(103);
-		creditCard.setExpirationMonth(1);
-		creditCard.setExpirationYear(2019);
-		creditCard.setCW(203);
-
-		saved = this.CCService.save(creditCard);
-		this.CCService.delete(saved);
-		creditCards = this.CCService.findAll();
-		Assert.isTrue(!creditCards.contains(saved));
-	}
 
 }

@@ -74,7 +74,7 @@ public class TutorialServiceTest {
 		section.setPieceOfText("segunda seccion");
 		savedS = this.SSection.save(section);
 		//devuelvo todos las secciones
-		sections = this.SSection.finaAll();
+		sections = this.SSection.findAll();
 		//crear y guardar un tutorial
 		final Collection<Section> sectionsTutorial = new HashSet<>();
 		Collections.addAll(sectionsTutorial, section);

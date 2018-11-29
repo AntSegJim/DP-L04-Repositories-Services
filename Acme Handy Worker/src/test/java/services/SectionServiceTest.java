@@ -45,7 +45,7 @@ public class SectionServiceTest {
 		section.setPieceOfText("segunda pieza de texto");
 
 		saved = this.SSection.save(section);
-		sections = this.SSection.finaAll();
+		sections = this.SSection.findAll();
 		Assert.isTrue(sections.contains(saved));
 	}
 
@@ -61,7 +61,7 @@ public class SectionServiceTest {
 
 		saved = this.SSection.save(section);
 		this.SSection.delete(saved);
-		sections = this.SSection.finaAll();
+		sections = this.SSection.findAll();
 		Assert.isTrue(!sections.contains(saved));
 	}
 }

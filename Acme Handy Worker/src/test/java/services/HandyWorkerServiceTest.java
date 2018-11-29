@@ -43,7 +43,7 @@ public class HandyWorkerServiceTest {
 	@Autowired
 	private ApplicationService	applicationService;
 	@Autowired
-	private CreditCardService	crediCardService;
+	private CreditCardService	creditCardService;
 	@Autowired
 	private SponsorshipService	sponsorshipService;
 	@Autowired
@@ -164,14 +164,14 @@ public class HandyWorkerServiceTest {
 		saved = this.sponsorService.save(sponsor);
 
 		CreditCard creditCard, savedCreditCard;
-		creditCard = this.crediCardService.create();
+		creditCard = this.creditCardService.create();
 		creditCard.setBrandName("Tarjeta1");
 		creditCard.setCW(200);
 		creditCard.setExpirationMonth(2);
 		creditCard.setExpirationYear(1);
 		creditCard.setNumber(12321321);
 		creditCard.setHolderName("holdername");
-		savedCreditCard = this.crediCardService.save(creditCard);
+		savedCreditCard = this.creditCardService.save(creditCard);
 
 		Sponsorship sponsorship;
 		//final Sponsorship savedship;
@@ -204,13 +204,13 @@ public class HandyWorkerServiceTest {
 		final UserAccount uaCustomer = new UserAccount();
 		uaCustomer.setPassword("hola");
 		uaCustomer.setUsername("Antonio");
-		uaCustomer.setAuthorities(h.getUserAccount().getAuthorities());
+		uaCustomer.setAuthorities(customer.getUserAccount().getAuthorities());
 		customer.setName("Antonio");
 		customer.setAddress("calle Arahal");
 		customer.setEmail("antonio@us.es");
 		customer.setPhone("654321123");
 		customer.setSurname("surnaeCustomer");
-		customer.setUserAccount(ua);
+		customer.setUserAccount(uaCustomer);
 		customer.setScore(10);
 		savedCustomer = this.customerService.save(customer);
 
