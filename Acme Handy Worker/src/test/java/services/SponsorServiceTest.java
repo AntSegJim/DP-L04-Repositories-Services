@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
 import security.UserAccount;
+import utilities.AbstractTest;
 import domain.Sponsor;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -20,7 +21,7 @@ import domain.Sponsor;
 	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
 })
 @Transactional
-public class SponsorServiceTest {
+public class SponsorServiceTest extends AbstractTest {
 
 	@Autowired
 	private SponsorService	sponsorService;

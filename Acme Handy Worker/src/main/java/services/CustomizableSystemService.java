@@ -1,6 +1,8 @@
 
 package services;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,14 +38,14 @@ public class CustomizableSystemService {
 
 		return customizableSystem;
 	}
-	//listing
-	//	public Collection<CustomizableSystem> findAll() {
-	//		return this.customizableSystemRepository.findAll();
-	//	}
-	//
-	//	public CustomizableSystem findOne(final int customizableSystemId) {
-	//		return this.customizableSystemRepository.findOne(customizableSystemId);
-	//	}
+
+	public Collection<CustomizableSystem> findAll() {
+		return this.customizableSystemRepository.findAll();
+	}
+
+	//		public CustomizableSystem findOne(final int customizableSystemId) {
+	//			return this.customizableSystemRepository.findOne(customizableSystemId);
+	//		}
 
 	//updating
 	public CustomizableSystem save(final CustomizableSystem customizableSystem) {

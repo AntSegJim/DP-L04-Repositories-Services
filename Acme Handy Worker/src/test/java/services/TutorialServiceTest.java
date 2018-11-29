@@ -15,6 +15,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
+import utilities.AbstractTest;
 import domain.Picture;
 import domain.Section;
 import domain.Sponsorship;
@@ -25,7 +26,7 @@ import domain.Tutorial;
 	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
 })
 @Transactional
-public class TutorialServiceTest {
+public class TutorialServiceTest extends AbstractTest {
 
 	@Autowired
 	private TutorialService	TService;

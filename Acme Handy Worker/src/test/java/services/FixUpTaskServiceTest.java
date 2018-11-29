@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
 import security.UserAccount;
+import utilities.AbstractTest;
 import domain.Application;
 import domain.Category;
 import domain.CreditCard;
@@ -28,7 +29,7 @@ import domain.Warranty;
 	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
 })
 @Transactional
-public class FixUpTaskServiceTest {
+public class FixUpTaskServiceTest extends AbstractTest {
 
 	@Autowired
 	private ApplicationService	applicationService;

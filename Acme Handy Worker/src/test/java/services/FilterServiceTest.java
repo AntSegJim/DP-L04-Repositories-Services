@@ -13,6 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
+import utilities.AbstractTest;
 import domain.Category;
 import domain.Filter;
 import domain.Warranty;
@@ -22,7 +23,7 @@ import domain.Warranty;
 	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
 })
 @Transactional
-public class FilterServiceTest {
+public class FilterServiceTest extends AbstractTest {
 
 	@Autowired
 	private FilterService	filterService;

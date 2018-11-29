@@ -40,7 +40,7 @@ public class CustomizableFinderServiceTest extends AbstractTest {
 
 	@Test
 	public void testSaveCustomizableFinder() {
-		super.authenticate("Cristian");
+		super.authenticate("admin");
 		CustomizableFinder customizableFinder, saved;
 		Collection<CustomizableFinder> customizableFinders;
 		customizableFinder = this.customizableFinderService.create();

@@ -40,7 +40,7 @@ public class WordServiceTest extends AbstractTest {
 
 	@Test
 	public void testSaveWord() {
-		super.authenticate("Cristian");
+		super.authenticate("admin");
 		Word word, saved;
 		Collection<Word> words;
 		word = this.wordService.create();
@@ -55,7 +55,7 @@ public class WordServiceTest extends AbstractTest {
 
 	@Test
 	public void testDeleteWord() {
-		super.authenticate("Cristian");
+		super.authenticate("admin");
 		Word word, saved;
 		final Collection<Word> words;
 		word = this.wordService.create();

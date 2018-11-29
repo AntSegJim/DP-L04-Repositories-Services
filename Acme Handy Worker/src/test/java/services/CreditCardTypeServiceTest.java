@@ -12,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
+import utilities.AbstractTest;
 import domain.CreditCardType;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -19,7 +20,7 @@ import domain.CreditCardType;
 	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
 })
 @Transactional
-public class CreditCardTypeServiceTest {
+public class CreditCardTypeServiceTest extends AbstractTest {
 
 	@Autowired
 	private CreditCardTypeService	creditCardTypeService;
