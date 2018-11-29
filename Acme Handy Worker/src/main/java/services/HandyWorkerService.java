@@ -99,7 +99,7 @@ public class HandyWorkerService {
 	}
 
 	public Collection<HandyWorker> handyWorkerMoreTentPercentApplicatonsAccepted() {
-		return this.handyWorkerMoreTentPercentApplicatonsAccepted();
+		return this.handyWorkerRepository.handyWorkerMoreTentPercentApplicatonsAccepted();
 	}
 
 	//	public Collection<HandyWorker> handyWorkerByUserAccount(final Integer userAccountId) {

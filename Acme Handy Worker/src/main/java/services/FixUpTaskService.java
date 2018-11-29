@@ -4,6 +4,8 @@ package services;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -80,5 +82,24 @@ public class FixUpTaskService {
 
 	public Collection<FixUpTask> fixUpTasksByFinder(final Integer finderId) {
 		return this.fixUpTasksByFinder(finderId);
+	}
+	public Collection<Double> maxMinAvgDevFixUpTask() {
+		final Collection<Double> res = new LinkedList<Double>();
+		final Collection<Integer> x = this.fixUpTaskRepository.maxMinAvgDevFixUpTask();
+		final List<Integer> lista = (List<Integer>) x;
+		res.add(lista.get(lista.size() - 1) * 1.0);
+		res.add(lista.get(0) * 1.0);
+		Double suma = 0.;
+		for (int i = 0; i < lista.size(); i++)
+			suma += lista.get(i);
+		final Double media = suma / lista.size();
+		res.add(media);
+		Double sum = 0.;
+		for (int i = 0; i < lista.size(); i++)
+			sum += (lista.get(i) * lista.get(i)) / (lista.size() - media * media);
+		Double dev = 0.;
+		dev = Math.sqrt(sum);
+		res.add(dev);
+		return res;
 	}
 }

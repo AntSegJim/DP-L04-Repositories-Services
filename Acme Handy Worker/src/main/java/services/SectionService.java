@@ -31,7 +31,7 @@ public class SectionService {
 	}
 
 	//Metodo findAll
-	public Collection<Section> finaAll() {
+	public Collection<Section> findAll() {
 		return this.SRepo.findAll();
 	}
 	public Section findOne(final int SectionId) {
