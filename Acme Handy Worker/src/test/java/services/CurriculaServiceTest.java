@@ -12,7 +12,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
+import security.UserAccount;
 import domain.Curricula;
+import domain.HandyWorker;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -23,39 +25,58 @@ public class CurriculaServiceTest {
 
 	@Autowired
 	private CurriculaService	curriS;
+	@Autowired
+	private HandyWorkerService	handyWorkerService;
 
 
 	@Test
 	public void testCreateCurricula() {
 		Curricula curricula;
 		curricula = this.curriS.create();
-		curricula.setTicker("12345p");
-		Assert.isTrue(curricula.getTicker().equals("12345p"));
-	}
+		HandyWorker h;
+		final HandyWorker saved;
+		h = this.handyWorkerService.create();
+		final UserAccount ua = new UserAccount();
+		ua.setPassword("hola");
+		ua.setUsername("Antonio");
+		ua.setAuthorities(h.getUserAccount().getAuthorities());
 
+		h.setName("Antonio");
+		h.setAddress("calle Arahal");
+		h.setEmail("antonio@us.es");
+		h.setPhone("654321123");
+		h.setUserAccount(ua);
+		h.setSurname("SurnameHandy");
+		saved = this.handyWorkerService.save(h);
+
+		curricula.setHandyWorker(saved);
+		Assert.isTrue(curricula.getTicker() != null);
+	}
 	@Test
 	public void testSaveCurricula() {
-		Curricula curricula, saved;
-		final Collection<Curricula> curriculas;
+		Curricula curricula, savedC;
+		Collection<Curricula> cs;
 		curricula = this.curriS.create();
+		HandyWorker h;
+		final HandyWorker savedH;
+		h = this.handyWorkerService.create();
+		final UserAccount ua = new UserAccount();
+		ua.setPassword("hola");
+		ua.setUsername("Antonio");
+		ua.setAuthorities(h.getUserAccount().getAuthorities());
 
-		curricula.setTicker("12345o");
+		h.setName("Antonio");
+		h.setAddress("calle Arahal");
+		h.setEmail("antonio@us.es");
+		h.setPhone("654321123");
+		h.setUserAccount(ua);
+		h.setSurname("SurnameHandy");
+		savedH = this.handyWorkerService.save(h);
 
-		saved = this.curriS.save(curricula);
-		curriculas = this.curriS.findAll();
-		Assert.isTrue(curriculas.contains(saved));
+		curricula.setHandyWorker(savedH);
+		savedC = this.curriS.save(curricula);
+		cs = this.curriS.findAll();
+		Assert.isTrue(cs.contains(savedC));
 	}
-	@Test
-	public void testDeleteCurricula() {
-		Curricula curricula, saved;
-		final Collection<Curricula> curriculas;
-		curricula = this.curriS.create();
 
-		curricula.setTicker("12345l");
-
-		saved = this.curriS.save(curricula);
-		this.curriS.delete(saved);
-		curriculas = this.curriS.findAll();
-		Assert.isTrue(!curriculas.contains(saved));
-	}
 }

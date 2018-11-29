@@ -2,7 +2,6 @@
 package services;
 
 import java.util.Collection;
-import java.util.HashSet;
 
 import javax.transaction.Transactional;
 
@@ -28,38 +27,40 @@ public class CategoryServiceTest extends AbstractTest {
 
 
 	@Test
+	public void testCreateCategory() {
+		Category c;
+		c = this.categoryService.create();
+		c.setName("Hijo");
+		c.setParent(c);
+		Assert.isTrue(c.getParent() != null && c.getName().equals("Hijo"));
+	}
+
+	@Test
 	public void testSaveCategory() {
-		Category category, saved;
+		Category saved;
 		Collection<Category> categories;
 
-		//Creando categoria
-		final Collection<Category> collection = new HashSet<>();
-		category = this.categoryService.create("Silla", this.categoryService.findOne(396), collection);
+		Category c;
+		c = this.categoryService.create();
+		c.setName("Hijo");
+		c.setParent(c);
 
-		saved = this.categoryService.save(category);
+		saved = this.categoryService.save(c);
 		categories = this.categoryService.findAll();
 		Assert.isTrue(categories.contains(saved));
 
 	}
 
 	@Test
-	public void testCategoryById() {
-		Category category;
-		category = this.categoryService.findOne(397);
-
-		Assert.notNull(category);
-
-	}
-
-	@Test
 	public void testDeleteCategory() {
-		final Category category, saved;
+		final Category saved;
 		Collection<Category> categories;
 
-		final Collection<Category> collection = new HashSet<>();
-		category = this.categoryService.create("Sillón", this.categoryService.findOne(396), collection);
-
-		saved = this.categoryService.save(category);
+		Category c;
+		c = this.categoryService.create();
+		c.setName("Hijo");
+		c.setParent(c);
+		saved = this.categoryService.save(c);
 		this.categoryService.delete(saved);
 
 		categories = this.categoryService.findAll();
