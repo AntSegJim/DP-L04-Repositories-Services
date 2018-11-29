@@ -2,15 +2,12 @@
 package services;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 
 import javax.transaction.Transactional;
 
-import org.joda.time.LocalDateTime;
-import org.joda.time.format.DateTimeFormatter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +63,7 @@ public class PhaseServiceTest extends AbstractTest {
 
 	@Test
 	public void testCreatePhase() {
-		super.authenticate("handyWorker");
+
 		Phase phase;
 		final Phase saved;
 		final Collection<Phase> phases;
@@ -234,9 +231,8 @@ public class PhaseServiceTest extends AbstractTest {
 		phase.setEndMoment(null);
 		phase.setApplication(a);
 
-		Assert.isTrue(phase.getTitle() != null && phase.getTitle() != "" && phase.getDescription() != null && phase.getStartMoment() != null
-			&& !(phase.getStartMoment().before(Calendar.getInstance().getTime()) && (phase.getEndMoment().equals(null) || phase.getEndMoment().after(phase.getStartMoment()))));
-		super.authenticate(null);
+		Assert.isTrue(phase.getTitle() == "Primera" && phase.getDescription() == "Description" && phase.getStartMoment() == moment && (phase.getEndMoment() == moment));
+
 	}
 
 	@Test
@@ -307,13 +303,8 @@ public class PhaseServiceTest extends AbstractTest {
 		final Customer c = this.customerService.create();
 		final Customer c2 = this.customerService.create();
 
-//		final SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy hh:mm");
-//		final Date moment = format.parse("03/11/2018 14:00");
-//		
-//		final SimpleDateFormat format2 = new SimpleDateFormat("dd/MM/yyyy hh:mm");
-//		final Date moment2 = format.parse("03/11/2018 14:00");
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern(formato);
-		
+		final SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+		final Date moment = format.parse("03/11/2018 14:00");
 
 		//Endorsement
 		e.setComments(comments);

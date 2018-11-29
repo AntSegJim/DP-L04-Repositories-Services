@@ -60,4 +60,9 @@ public class SpamWordServiceTest extends AbstractTest {
 		Assert.isTrue(!spamWords.contains(saved));
 	}
 
+	@Test
+	public void testSaveReferee() {
+		super.authenticate("handyWorker");
+
+
 }
