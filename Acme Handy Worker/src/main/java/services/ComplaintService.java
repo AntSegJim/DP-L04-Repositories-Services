@@ -32,6 +32,8 @@ public class ComplaintService {
 	private CustomerService		customerService;
 	@Autowired
 	private FixUpTaskService	FUTService;
+	@Autowired
+	private CurriculaService	curriculaService;
 
 
 	//Metodos CRUD
@@ -64,22 +66,15 @@ public class ComplaintService {
 		return this.complaintRepository.findAll();
 	}
 
-	public Complaint findOne(final int complaintId) {
-
-		final UserAccount userAccount = LoginService.getPrincipal();
-		final Customer c = this.customerService.customerByUserAccount(userAccount.getId());
-		Assert.isTrue(userAccount.getAuthorities().contains(Authority.CUSTOMER) && this.complaintRepository.findAllCustomerComplaint(c.getId()).contains(this.complaintRepository.findOne(complaintId)));
-
-		return this.complaintRepository.findOne(complaintId);
-	}
-
 	//updating
 	public Complaint save(final Complaint complaint) {
-		final Collection<String> tickers = this.complaintRepository.tickerByComplaint();
+		final Collection<String> allTickerComplaint = this.complaintRepository.tickerByComplaint();
+		final Collection<String> allTickerFix = this.FUTService.allTickersFix();
+		final Collection<String> allTickerCurricula = this.curriculaService.allTickersCurricula();
 		Assert.isTrue(complaint != null && complaint.getMoment() != null && complaint.getFixUpTask() != null);
+		Assert.isTrue(!allTickerComplaint.contains(complaint.getTicker()) && !allTickerFix.contains(complaint.getTicker()) && !allTickerCurricula.contains(complaint.getTicker()));
 		return this.complaintRepository.save(complaint);
 	}
-
 	//	//deleting
 	//	public void delete(final Complaint complaint) {
 	//		this.complaintRepository.delete(complaint);
@@ -108,6 +103,14 @@ public class ComplaintService {
 		return this.complaintRepository.findAllNoRefereeComplaint();
 
 	}
+	public Complaint findOne(final int complaintId) {
+
+		final UserAccount userAccount = LoginService.getPrincipal();
+		final Customer c = this.customerService.customerByUserAccount(userAccount.getId());
+		Assert.isTrue(userAccount.getAuthorities().contains(Authority.CUSTOMER) && this.complaintRepository.findAllCustomerComplaint(c.getId()).contains(this.complaintRepository.findOne(complaintId)));
+
+		return this.complaintRepository.findOne(complaintId);
+	}
 
 	public static String generar(final Date date) {
 		final int tam = 6;
@@ -126,6 +129,9 @@ public class ComplaintService {
 
 		return d + ticker;
 
+	}
+	public Collection<String> allTickersComplaint() {
+		return this.allTickersComplaint();
 	}
 
 }

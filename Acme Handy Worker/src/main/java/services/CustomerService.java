@@ -68,11 +68,21 @@ public class CustomerService {
 
 		Assert.isTrue(c != null && c.getName() != null && c.getSurname() != null && c.getName() != "" && c.getSurname() != "" && c.getUserAccount() != null, "CustomerService.save -> Name or Surname invalid");
 
-		final String regex = "[^@]+@[^@]+\\.[a-zA-Z]{2,}";
-		final Pattern pattern = Pattern.compile(regex);
-		final Matcher matcher = pattern.matcher(c.getEmail());
-		Assert.isTrue(matcher.find() == true, "CustomerService.save -> Correo inválido");
+		final String regexEmail1 = "[^@]+@[^@]+\\.[a-zA-Z]{2,}";
+		final Pattern patternEmail1 = Pattern.compile(regexEmail1);
+		final Matcher matcherEmail1 = patternEmail1.matcher(c.getEmail());
 
+		final String regexEmail2 = "^[A-z0-9]+\\s*[A-z0-9\\s]*\\s\\<[A-z0-9]+\\@[A-z0-9]+\\.[A-z0-9.]+\\>";
+		final Pattern patternEmail2 = Pattern.compile(regexEmail2);
+		final Matcher matcherEmail2 = patternEmail2.matcher(c.getEmail());
+		Assert.isTrue(matcherEmail1.find() == true && matcherEmail2.find() == true, "CustomerService.save -> Correo inválido");
+
+		if (c.getPhone() != "" || c.getPhone() != null) {
+			final String regexTelefono = "^\\+[1-9][0-9]{0,2}\\ \\([1-9][0-9]{0,2}\\)\\ [0-9]{4,}$|^\\+[1-9][0-9]{0,2}\\ [0-9]{4,}$|^[0-9]{4,}$";
+			final Pattern patternTelefono = Pattern.compile(regexTelefono);
+			final Matcher matcherTelefono = patternTelefono.matcher(c.getEmail());
+			Assert.isTrue(matcherTelefono.find() == true, "CustomerService.save -> Correo inválido");
+		}
 		res = this.customerRepository.save(c);
 		final MessageBox mb1 = this.messageBoxService.create();
 		mb1.setName("inbox");

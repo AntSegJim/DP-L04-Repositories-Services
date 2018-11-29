@@ -18,4 +18,7 @@ public interface FixUpTaskRepository extends JpaRepository<FixUpTask, Integer> {
 
 	@Query("select count(f.customer) from FixUpTask f group by f.customer.id order by count(f.customer) ASC")
 	public Collection<Integer> maxMinAvgDevFixUpTask();
+
+	@Query("select f.ticker from FixUpTask f")
+	public Collection<String> allTickerInFixUpTask();
 }

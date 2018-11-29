@@ -25,6 +25,10 @@ public class CurriculaService {
 
 	@Autowired
 	private HandyWorkerService	handyWorkerService;
+	@Autowired
+	private ComplaintService	complaintService;
+	@Autowired
+	private FixUpTaskService	fixUpTaskService;
 
 
 	public Curricula create() {
@@ -46,13 +50,14 @@ public class CurriculaService {
 	//updating
 	public Curricula save(final Curricula curricula) {
 		final UserAccount user = LoginService.getPrincipal();
-		final Collection<String> tickers = this.CRepo.tickerByCurricula();
+		final Collection<String> allTickerCurricula = this.CRepo.tickerByCurricula();
+		final Collection<String> allTickerFix = this.fixUpTaskService.allTickersFix();
+		final Collection<String> allTickerComplaint = this.complaintService.allTickersComplaint();
 		Assert.isTrue(user.getAuthorities().contains(Authority.HANDYWORKER));
-
 		Assert.isTrue(curricula != null && curricula.getTicker() != null && curricula.getTicker() != "");
+		Assert.isTrue(!allTickerComplaint.contains(curricula.getTicker()) && !allTickerFix.contains(curricula.getTicker()) && !allTickerCurricula.contains(curricula.getTicker()));
 		return this.CRepo.save(curricula);
 	}
-
 	//deleting
 	//	public void delete(final Curricula curricula) {
 	//		this.CRepo.delete(curricula);
@@ -75,6 +80,9 @@ public class CurriculaService {
 
 		return d + ticker;
 
+	}
+	public Collection<String> allTickersCurricula() {
+		return this.CRepo.tickerByCurricula();
 	}
 
 }

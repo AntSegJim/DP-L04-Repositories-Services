@@ -73,7 +73,7 @@ public class HandyWorkerServiceTest {
 		s.setEmail("antonio@us.es");
 		s.setPhone("654321123");
 		s.setUserAccount(ua);
-
+		s.setSurname("SurnameHandy");
 		Assert.isTrue(s.getUserAccount().getId() == ua.getId());
 	}
 	@Test
@@ -106,6 +106,7 @@ public class HandyWorkerServiceTest {
 		ua.setUsername("Antonio");
 		ua.setAuthorities(h.getUserAccount().getAuthorities());
 
+		h.setSurname("surnamehandyWorker");
 		h.setName("Antonio");
 		h.setAddress("calle Arahal");
 		h.setEmail("antonio@us.es");
@@ -130,7 +131,6 @@ public class HandyWorkerServiceTest {
 		final HandyWorker h2 = this.handyWorkerService.handyWorkerByTutorial(tsaved.getId());
 		Assert.isTrue(h2.getId() == h.getId(), "HandyWorkerServiceTest.handyWorkerByTutorial -> Los handy Workers no son iguales y deberian");
 	}
-
 	@Test
 	public void handyWorkerMoreTentPercentApplicatonsAccepted() {
 
@@ -143,6 +143,7 @@ public class HandyWorkerServiceTest {
 		h.setAddress("calle Arahal");
 		h.setEmail("antonio@us.es");
 		h.setPhone("654321123");
+		h.setSurname("surname");
 		h.setUserAccount(ua);
 		h.setScore(10);
 		h.setMakeHandyWorker("makehandyworker");
@@ -208,15 +209,17 @@ public class HandyWorkerServiceTest {
 		customer.setAddress("calle Arahal");
 		customer.setEmail("antonio@us.es");
 		customer.setPhone("654321123");
+		customer.setSurname("surnaeCustomer");
 		customer.setUserAccount(ua);
 		customer.setScore(10);
 		savedCustomer = this.customerService.save(customer);
 
 		FixUpTask fix;
-		final FixUpTask savedFix;
+		FixUpTask savedFix;
 		fix = this.fixUpTaskService.create();
+		final Collection<Application> appList = new HashSet<Application>();
 		fix.setAddress("adressFix");
-		fix.setApplication(new HashSet<Application>());
+		fix.setApplication(appList);
 		fix.setCategory(savedCategory);
 		fix.setCustomer(savedCustomer);
 		fix.setDescription("Descripcion en fixUpTask");
@@ -236,9 +239,11 @@ public class HandyWorkerServiceTest {
 		app.setMoment(new Date());
 		app.setPrice(12.);
 		savedApp = this.applicationService.save(app);
+		savedFix = this.fixUpTaskService.save(fix);
+		appList.add(savedApp);
 
 		final Collection<HandyWorker> handyWorkers = this.handyWorkerService.handyWorkerMoreTentPercentApplicatonsAccepted();
 
-		Assert.isTrue(handyWorkers.size() == 0, "HandyWorkerServiceTest.handyWorkerMoreTentPercentApplicatonsAccepted -> Los handy Workers no son iguales y deberian");
+		Assert.isTrue(handyWorkers.size() == 1, "HandyWorkerServiceTest.handyWorkerMoreTentPercentApplicatonsAccepted -> Los handy Workers no son iguales y deberian");
 	}
 }

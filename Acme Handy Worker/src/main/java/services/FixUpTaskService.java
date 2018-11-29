@@ -35,6 +35,10 @@ public class FixUpTaskService {
 	private CategoryService		CService;
 	@Autowired
 	private WarrantyService		WService;
+	@Autowired
+	private CurriculaService	curriculaService;
+	@Autowired
+	private ComplaintService	complaintService;
 
 
 	public FixUpTask create() {
@@ -53,7 +57,7 @@ public class FixUpTaskService {
 		f.setMaximunPrice(0.);
 		f.setMoment(new Date());
 		f.setPeriodTime(0);
-		f.setTicker(FixUpTaskService.generar(new Date()));
+		f.setTicker("");
 		f.setWarranty(wa);
 		return f;
 	}
@@ -68,10 +72,14 @@ public class FixUpTaskService {
 		return this.fixUpTaskRepository.findOne(id);
 	}
 	public FixUpTask save(final FixUpTask f) {
+		final Collection<String> allTickerFix = this.fixUpTaskRepository.allTickerInFixUpTask();
+		final Collection<String> allTickerComplaint = this.complaintService.allTickersComplaint();
+		final Collection<String> allTickerCurricula = this.curriculaService.allTickersCurricula();
 		UserAccount userAccount;
 		userAccount = LoginService.getPrincipal();
 		Assert.isTrue(f.getCustomer().getUserAccount().equals(userAccount));
 		Assert.isTrue(f.getTicker() != null && f.getTicker() != "" && f.getMoment() != null && f.getMoment().before(Calendar.getInstance().getTime()) && f.getCategory() != null && f.getCustomer() != null);
+		Assert.isTrue(!allTickerComplaint.contains(f.getTicker()) && !allTickerFix.contains(f.getTicker()) && !allTickerCurricula.contains(f.getTicker()));
 		return this.fixUpTaskRepository.save(f);
 	}
 	public void delete(final FixUpTask f) {
@@ -84,6 +92,9 @@ public class FixUpTaskService {
 
 	public Collection<FixUpTask> fixUpTasksByFinder(final Integer finderId) {
 		return this.fixUpTasksByFinder(finderId);
+	}
+	public Collection<String> allTickersFix() {
+		return this.fixUpTaskRepository.allTickerInFixUpTask();
 	}
 	public Collection<Double> maxMinAvgDevFixUpTask() {
 		final Collection<Double> res = new LinkedList<Double>();
@@ -104,24 +115,4 @@ public class FixUpTaskService {
 		res.add(dev);
 		return res;
 	}
-
-	public static String generar(final Date date) {
-		final int tam = 6;
-		final Integer ano = date.getYear() + 1900;
-		final Integer mes = date.getMonth() + 1;
-		final Integer dia = date.getDate();
-		final String d = ano.toString().substring(ano.toString().length() - 2, ano.toString().length()) + mes.toString() + dia.toString();
-
-		String ticker = "-";
-		final String a = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-		for (int i = 0; i < tam; i++) {
-			final Integer random = (int) (Math.floor(Math.random() * a.length()) % a.length());
-			ticker = ticker + a.charAt(random);
-		}
-
-		return d + ticker;
-
-	}
-
 }
