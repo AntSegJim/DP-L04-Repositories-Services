@@ -12,7 +12,6 @@ import org.springframework.util.Assert;
 
 import security.UserAccount;
 import utilities.AbstractTest;
-import domain.Phase;
 import domain.ProfileSocialNetwork;
 import domain.Referee;
 
@@ -30,7 +29,6 @@ public class RefereeServiceTest extends AbstractTest {
 	public void testCreateReferee() {
 
 		Referee referee;
-		final Collection<Phase> phases;
 		referee = this.refereeService.create();
 		final ProfileSocialNetwork profile = this.profileSocialNetworkService.create();
 
