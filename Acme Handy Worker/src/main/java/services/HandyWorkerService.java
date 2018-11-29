@@ -122,4 +122,12 @@ public class HandyWorkerService {
 	public HandyWorker handyWorkerUserAccount(final Integer id) {
 		return this.handyWorkerRepository.handyWorkerUserAccount(id);
 	}
+
+	public static Double score(final Integer palabrasBuenas, final Integer palabrasMalas) {
+		final Double x = (1.0 / ((double) palabrasBuenas + (double) palabrasMalas));
+		final Double res = palabrasBuenas * x - palabrasMalas * x;
+		return res;
+
+	}
+
 }

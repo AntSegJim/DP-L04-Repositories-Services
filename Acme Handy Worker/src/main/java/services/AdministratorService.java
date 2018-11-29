@@ -3,6 +3,8 @@ package services;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.transaction.Transactional;
 
@@ -64,7 +66,31 @@ public class AdministratorService {
 	public Administrator save(final Administrator admin) {
 		Administrator res = null;
 		Assert.isTrue(admin.getName() != null && admin.getName() != "" && admin.getSurname() != null && admin.getSurname() != "" && admin.getUserAccount() != null);
-		//Restriccion de email,telefono
+
+		final String regexEmail1 = "[^@]+@[^@]+\\.[a-zA-Z]{2,}";
+		final Pattern patternEmail1 = Pattern.compile(regexEmail1);
+		final Matcher matcherEmail1 = patternEmail1.matcher(admin.getEmail());
+
+		final String regexEmail2 = "^[A-z0-9]+\\s*[A-z0-9\\s]*\\s\\<[A-z0-9]+\\@[A-z0-9]+\\.[A-z0-9.]+\\>";
+		final Pattern patternEmail2 = Pattern.compile(regexEmail2);
+		final Matcher matcherEmail2 = patternEmail2.matcher(admin.getEmail());
+
+		final String regexEmail3 = "^[A-z0-9]+\\@$";
+		final Pattern patternEmail3 = Pattern.compile(regexEmail3);
+		final Matcher matcherEmail3 = patternEmail3.matcher(admin.getEmail());
+
+		final String regexEmail4 = "^[A-z0-9]+\\s*[A-z0-9\\s]*\\s\\<[A-z0-9]+\\@\\>$";
+		final Pattern patternEmail4 = Pattern.compile(regexEmail4);
+		final Matcher matcherEmail4 = patternEmail4.matcher(admin.getEmail());
+
+		Assert.isTrue(matcherEmail1.find() == true && matcherEmail2.find() == true && matcherEmail3.find() == true && matcherEmail4.find() == true, "CustomerService.save -> Correo inválido");
+
+		if (admin.getPhone() != "" || admin.getPhone() != null) {
+			final String regexTelefono = "^\\+[1-9][0-9]{0,2}\\ \\([1-9][0-9]{0,2}\\)\\ [0-9]{4,}$|^\\+[1-9][0-9]{0,2}\\ [0-9]{4,}$|^[0-9]{4,}$";
+			final Pattern patternTelefono = Pattern.compile(regexTelefono);
+			final Matcher matcherTelefono = patternTelefono.matcher(admin.getEmail());
+			Assert.isTrue(matcherTelefono.find() == true, "CustomerService.save -> Correo inválido");
+		}
 
 		res = this.adminRepo.save(admin);
 		final MessageBox mb1 = this.messageBoxService.create();
@@ -81,7 +107,6 @@ public class AdministratorService {
 		mb4.setActor(res);
 		return res;
 	}
-
 	//Delete
 	public void delete(final Administrator admin) {
 		this.adminRepo.delete(admin);

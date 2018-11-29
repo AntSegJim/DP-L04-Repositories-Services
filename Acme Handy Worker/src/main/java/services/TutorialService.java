@@ -72,9 +72,7 @@ public class TutorialService {
 	public void delete(final Tutorial tutorial) {
 		//Borramos primero mas secciones del tutorial
 		final List<Section> sectionsFromTutorial = this.SService.sectionsFromTutorial(tutorial.getId());
-		for (int i = 0; i < sectionsFromTutorial.size(); i++)
-			this.SService.delete(sectionsFromTutorial.get(i));
-		//Borramos el tutorial
+		Assert.isTrue(sectionsFromTutorial != null);
 		this.TRepo.delete(tutorial);
 	}
 }
