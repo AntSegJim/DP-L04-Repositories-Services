@@ -1,9 +1,8 @@
 
 package services;
 
-import java.text.SimpleDateFormat;
+import java.sql.Date;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashSet;
 
 import javax.transaction.Transactional;
@@ -65,8 +64,6 @@ public class PhaseServiceTest extends AbstractTest {
 	public void testCreatePhase() {
 
 		Phase phase;
-		final Phase saved;
-		final Collection<Phase> phases;
 
 		final Application a = this.applicationService.create();
 
@@ -129,16 +126,13 @@ public class PhaseServiceTest extends AbstractTest {
 		final Customer c = this.customerService.create();
 		final Customer c2 = this.customerService.create();
 
-		final SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy hh:mm");
-		final Date moment = format.parse("03/11/2018 14:00");
-
 		//Endorsement
 		e.setComments(comments);
 		e.setCustomerReceiver(c);
 		e.setCustomerSender(c2);
 		e.setHandyWorkerReceiver(s);
 		e.setHandyWorkerSender(s1);
-		e.setMoment(moment);
+		e.setMoment(Date.valueOf("2017-12-12"));
 
 		final ProfileSocialNetwork profile = this.profileSocialNetworkService.create();
 
@@ -194,7 +188,7 @@ public class PhaseServiceTest extends AbstractTest {
 		e2.setCustomerSender(c2);
 		e2.setHandyWorkerReceiver(s1);
 		e2.setHandyWorkerSender(s);
-		e2.setMoment(moment);
+		e2.setMoment(Date.valueOf("2018-12-12"));
 
 		final Warranty ws = this.warrantyService.create();
 
@@ -210,7 +204,7 @@ public class PhaseServiceTest extends AbstractTest {
 		f.setCustomer(c);
 		f.setDescription("Descripcion Prueba FixUpTask");
 		f.setMaximunPrice(50.0);
-		f.setMoment(moment);
+		f.setMoment(Date.valueOf("2018-10-10"));
 		f.setPeriodTime(10);
 		f.setTicker("Cambiar a formato del Pattern");
 		f.setWarranty(ws);
@@ -220,18 +214,18 @@ public class PhaseServiceTest extends AbstractTest {
 		a.setCreditCard(cc);
 		a.setFixUpTask(f);
 		a.setHandyWorker(s);
-		a.setMoment(moment);
+		a.setMoment(Date.valueOf("2018-10-10"));
 		a.setPrice(3.9);
 		a.setStatus(0);
 
 		phase = this.phaseService.create();
 		phase.setTitle("Primera");
 		phase.setDescription("Descripcion");
-		phase.setStartMoment(moment);
+		phase.setStartMoment(Date.valueOf("2018-11-11"));
 		phase.setEndMoment(null);
 		phase.setApplication(a);
 
-		Assert.isTrue(phase.getTitle() == "Primera" && phase.getDescription() == "Description" && phase.getStartMoment() == moment && (phase.getEndMoment() == moment));
+		Assert.isTrue(phase.getTitle() == "Primera" && phase.getDescription() == "Description" && phase.getStartMoment() == Date.valueOf("2018-11-11") && (phase.getEndMoment() == null));
 
 	}
 
@@ -303,16 +297,13 @@ public class PhaseServiceTest extends AbstractTest {
 		final Customer c = this.customerService.create();
 		final Customer c2 = this.customerService.create();
 
-		final SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy hh:mm");
-		final Date moment = format.parse("03/11/2018 14:00");
-
 		//Endorsement
 		e.setComments(comments);
 		e.setCustomerReceiver(c);
 		e.setCustomerSender(c2);
 		e.setHandyWorkerReceiver(s);
 		e.setHandyWorkerSender(s1);
-		e.setMoment(moment);
+		e.setMoment(Date.valueOf("2018-10-10"));
 
 		final ProfileSocialNetwork profile = this.profileSocialNetworkService.create();
 
@@ -368,7 +359,7 @@ public class PhaseServiceTest extends AbstractTest {
 		e2.setCustomerSender(c2);
 		e2.setHandyWorkerReceiver(s1);
 		e2.setHandyWorkerSender(s);
-		e2.setMoment(moment);
+		e2.setMoment(Date.valueOf("2018-10-10"));
 
 		final Warranty ws = this.warrantyService.create();
 
@@ -384,7 +375,7 @@ public class PhaseServiceTest extends AbstractTest {
 		f.setCustomer(c);
 		f.setDescription("Descripcion Prueba FixUpTask");
 		f.setMaximunPrice(50.0);
-		f.setMoment(moment);
+		f.setMoment(Date.valueOf("2018-10-10"));
 		f.setPeriodTime(10);
 		f.setTicker("Cambiar a formato del Pattern");
 		f.setWarranty(ws);
@@ -394,14 +385,14 @@ public class PhaseServiceTest extends AbstractTest {
 		a.setCreditCard(cc);
 		a.setFixUpTask(f);
 		a.setHandyWorker(s);
-		a.setMoment(moment);
+		a.setMoment(Date.valueOf("2018-10-10"));
 		a.setPrice(3.9);
 		a.setStatus(0);
 
 		phase = this.phaseService.create();
 		phase.setTitle("Primera");
 		phase.setDescription("Descripcion");
-		phase.setStartMoment(moment);
+		phase.setStartMoment(Date.valueOf("2018-10-10"));
 		phase.setEndMoment(null);
 		phase.setApplication(a);
 
@@ -479,16 +470,13 @@ public class PhaseServiceTest extends AbstractTest {
 		final Customer c = this.customerService.create();
 		final Customer c2 = this.customerService.create();
 
-		final SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy hh:mm");
-		final Date moment = format.parse("03/11/2018 14:00");
-
 		//Endorsement
 		e.setComments(comments);
 		e.setCustomerReceiver(c);
 		e.setCustomerSender(c2);
 		e.setHandyWorkerReceiver(s);
 		e.setHandyWorkerSender(s1);
-		e.setMoment(moment);
+		e.setMoment(Date.valueOf("2018-10-10"));
 
 		final ProfileSocialNetwork profile = this.profileSocialNetworkService.create();
 
@@ -544,7 +532,7 @@ public class PhaseServiceTest extends AbstractTest {
 		e2.setCustomerSender(c2);
 		e2.setHandyWorkerReceiver(s1);
 		e2.setHandyWorkerSender(s);
-		e2.setMoment(moment);
+		e2.setMoment(Date.valueOf("2018-10-10"));
 
 		final Warranty ws = this.warrantyService.create();
 
@@ -560,7 +548,7 @@ public class PhaseServiceTest extends AbstractTest {
 		f.setCustomer(c);
 		f.setDescription("Descripcion Prueba FixUpTask");
 		f.setMaximunPrice(50.0);
-		f.setMoment(moment);
+		f.setMoment(Date.valueOf("2018-10-10"));
 		f.setPeriodTime(10);
 		f.setTicker("Cambiar a formato del Pattern");
 		f.setWarranty(ws);
@@ -570,14 +558,14 @@ public class PhaseServiceTest extends AbstractTest {
 		a.setCreditCard(cc);
 		a.setFixUpTask(f);
 		a.setHandyWorker(s);
-		a.setMoment(moment);
+		a.setMoment(Date.valueOf("2018-10-10"));
 		a.setPrice(3.9);
 		a.setStatus(0);
 
 		phase = this.phaseService.create();
 		phase.setTitle("Primera");
 		phase.setDescription("Descripcion");
-		phase.setStartMoment(moment);
+		phase.setStartMoment(Date.valueOf("2018-10-10"));
 		phase.setEndMoment(null);
 		phase.setApplication(a);
 
