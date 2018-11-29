@@ -1,6 +1,8 @@
 
 package services;
 
+import java.util.Collection;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ public class CreditCardService {
 	private CreditCardRepository	CCRepo;
 
 
+	public Collection<CreditCard> findAll() {
+		return this.CCRepo.findAll();
+	}
 	//Metodo create
 	public CreditCard create() {
 		final CreditCard cc = new CreditCard();
