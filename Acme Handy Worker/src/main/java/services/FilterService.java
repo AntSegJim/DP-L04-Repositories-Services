@@ -24,8 +24,8 @@ public class FilterService {
 
 	@Autowired
 	private FilterRepository	filterRepository;
-	@Autowired
-	private HandyWorkerService	handyWorkerService;
+	//	@Autowired
+	//	private HandyWorkerService	handyWorkerService;
 	@Autowired
 	private CategoryService		CService;
 	@Autowired

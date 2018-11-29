@@ -1,6 +1,8 @@
 
 package services;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,11 +35,11 @@ public class CustomizableFinderService {
 
 		return customizableFinder;
 	}
-	//	//listing
-	//	public Collection<CustomizableFinder> findAll() {
-	//		return this.customizableFinderRepository.findAll();
-	//	}
-	//
+	//listing
+	public Collection<CustomizableFinder> findAll() {
+		return this.customizableFinderRepository.findAll();
+	}
+
 	//	public CustomizableFinder findOne(final int customizableFinderId) {
 	//		return this.customizableFinderRepository.findOne(customizableFinderId);
 	//	}
