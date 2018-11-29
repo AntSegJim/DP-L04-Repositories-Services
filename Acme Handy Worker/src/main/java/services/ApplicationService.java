@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -62,6 +63,11 @@ public class ApplicationService {
 		userAccount = LoginService.getPrincipal();
 		final Customer c = this.customerService.customerByUserAccount(userAccount.getId());
 		Assert.isTrue(Integer.valueOf(a.getFixUpTask().getCustomer().getId()).equals(c.getId()));
+		Assert.isTrue(a.getMoment() != null && a.getMoment().before(Calendar.getInstance().getTime()) && a.getStatus() >= 0 && a.getStatus() <= 2 && a.getHandyWorker() != null && a.getFixUpTask() != null);
+		if (a.getStatus() == 1)
+			Assert.isTrue(a.getCreditCard() != null);
+		else
+			Assert.isTrue(a.getCreditCard().equals(null));
 		return this.applicationRepository.save(a);
 	}
 }

@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -70,6 +71,7 @@ public class FixUpTaskService {
 		UserAccount userAccount;
 		userAccount = LoginService.getPrincipal();
 		Assert.isTrue(f.getCustomer().getUserAccount().equals(userAccount));
+		Assert.isTrue(f.getTicker() != null && f.getTicker() != "" && f.getMoment() != null && f.getMoment().before(Calendar.getInstance().getTime()) && f.getCategory() != null && f.getCustomer() != null);
 		return this.fixUpTaskRepository.save(f);
 	}
 	public void delete(final FixUpTask f) {

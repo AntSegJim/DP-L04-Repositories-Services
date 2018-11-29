@@ -3,6 +3,7 @@ package services;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 
 import javax.transaction.Transactional;
 
@@ -215,7 +216,7 @@ public class HandyWorkerServiceTest {
 		final FixUpTask savedFix;
 		fix = this.fixUpTaskService.create();
 		fix.setAddress("adressFix");
-		fix.setApplication(savedApp);
+		fix.setApplication(new HashSet<Application>());
 		fix.setCategory(savedCategory);
 		fix.setCustomer(savedCustomer);
 		fix.setDescription("Descripcion en fixUpTask");
@@ -224,6 +225,7 @@ public class HandyWorkerServiceTest {
 		fix.setPeriodTime(12);
 		fix.setWarranty(savedWarranty);
 		fix.setTicker("123qweqwe2132");
+		savedFix = this.fixUpTaskService.save(fix);
 
 		final Application app, savedApp;
 		app = this.applicationService.create();
@@ -233,7 +235,10 @@ public class HandyWorkerServiceTest {
 		app.setHandyWorker(savedHandyWorker);
 		app.setMoment(new Date());
 		app.setPrice(12.);
+		savedApp = this.applicationService.save(app);
+
 		final Collection<HandyWorker> handyWorkers = this.handyWorkerService.handyWorkerMoreTentPercentApplicatonsAccepted();
+
 		Assert.isTrue(handyWorkers.size() == 0, "HandyWorkerServiceTest.handyWorkerMoreTentPercentApplicatonsAccepted -> Los handy Workers no son iguales y deberian");
 	}
 }

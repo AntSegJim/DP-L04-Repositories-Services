@@ -30,6 +30,8 @@ public class ComplaintService {
 
 	@Autowired
 	private CustomerService		customerService;
+	@Autowired
+	private FixUpTaskService	FUTService;
 
 
 	//Metodos CRUD
@@ -40,8 +42,8 @@ public class ComplaintService {
 		res.setMoment(new Date());
 		res.setDescription("");
 		res.setNumberAttachments(0);
-		res.setReferee(new Referee());
-		res.setFixUpTask(new FixUpTask());
+		res.setReferee(this.refereeService.create());
+		res.setFixUpTask(this.FUTService.create());
 		return res;
 	}
 

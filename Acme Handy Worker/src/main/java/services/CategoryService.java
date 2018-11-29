@@ -56,6 +56,7 @@ public class CategoryService {
 	//updating
 	public Category save(final Category category) {
 		final UserAccount user = LoginService.getPrincipal();
+		Assert.isTrue(category.getName() != null && category.getName() != "");
 		Assert.isTrue(user.getAuthorities().contains(Authority.ADMIN));
 		Assert.isTrue(!(category.getName().equals(null)));
 		Assert.isTrue(!(category.getName().equals("")));

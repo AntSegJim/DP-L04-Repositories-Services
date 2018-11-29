@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -15,7 +16,6 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Note;
-import domain.Report;
 
 @Service
 @Transactional
@@ -23,6 +23,8 @@ public class NoteService {
 
 	@Autowired
 	private NoteRepository	noteRepository;
+	@Autowired
+	private ReportService	RService;
 
 
 	public Note create() {
@@ -30,7 +32,7 @@ public class NoteService {
 		res.setMoment(new Date());
 		res.setComment("");
 		res.setOptionalComments(new HashSet<String>());
-		res.setReport(new Report());
+		res.setReport(this.RService.create());
 		return res;
 
 	}
@@ -57,7 +59,7 @@ public class NoteService {
 		Assert.isTrue(userAccount.getAuthorities().contains(Authority.ADMIN) || userAccount.getAuthorities().contains(Authority.REFEREE) || userAccount.getAuthorities().contains(Authority.HANDYWORKER), "NoteService.save -> No estás autorizado.");
 
 		Assert.isTrue(!(note.getMoment().equals(null)));
-		Assert.isTrue(!(note.getComment().equals("")));
+		Assert.isTrue(note != null && note.getReport() != null && note.getMoment().before(Calendar.getInstance().getTime()) && !(note.getComment().equals("")));
 		return this.noteRepository.save(note);
 	}
 
