@@ -32,26 +32,11 @@ public class CreditCardService {
 		cc.setCW(0);
 		return cc;
 	}
-
-	//Metodo findAll
-	//	public Collection<CreditCard> findAll() {
-	//		return this.CCRepo.findAll();
-	//	}
-	//	public CreditCard findOne(final int CreditCardId) {
-	//		return this.CCRepo.findOne(CreditCardId);
-	//	}
 	public CreditCard save(final CreditCard cc) {
 		final UserAccount user = LoginService.getPrincipal();
 		Assert.isTrue(user.getAuthorities().contains(Authority.CUSTOMER));
-		CreditCard res = null;
-		if (cc != null && cc.getBrandName() != null && cc.getHolderName() != null && cc.getBrandName() != "" && cc.getHolderName() != "")
-			res = this.CCRepo.save(cc);
-		return res;
-		//return this.CCRepo.save(cc);
+		Assert.isTrue(cc != null && cc.getBrandName() != null && cc.getHolderName() != null && cc.getBrandName() != "" && cc.getHolderName() != "");
+		return this.CCRepo.save(cc);
 
 	}
-	//	public void delete(final CreditCard cc) {
-	//		this.CCRepo.delete(cc);
-	//	}
-
 }

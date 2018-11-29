@@ -12,6 +12,9 @@ import domain.Complaint;
 @Repository
 public interface ComplaintRepository extends JpaRepository<Complaint, Integer> {
 
+	@Query("select c.ticker from Complaint c")
+	public Collection<String> tickerByComplaint();
+
 	@Query("select c from Complaint c join c.fixUpTask f where f.customer.id = ?1")
 	public Collection<Complaint> findAllCustomerComplaint(Integer id);
 

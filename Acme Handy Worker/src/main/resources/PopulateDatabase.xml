@@ -862,15 +862,15 @@
 
 	<!-- Curricula -->
 	<bean id="curricula1" class="domain.Curricula">
-		<property name="ticker" value="123456"></property>
+		<property name="ticker" value="234567-ayh89f"></property>
 		<property name="handyWorker" ref="handyWorker1"></property>
 	</bean>
 	<bean id="curricula2" class="domain.Curricula">
-		<property name="ticker" value="123457"></property>
+		<property name="ticker" value="123457-gtcd76"></property>
 		<property name="handyWorker" ref="handyWorker2"></property>
 	</bean>
 	<bean id="curricula3" class="domain.Curricula">
-		<property name="ticker" value="123458"></property>
+		<property name="ticker" value="123458-12wsxc"></property>
 		<property name="handyWorker" ref="handyWorker2"></property>
 	</bean>
 
@@ -1160,7 +1160,7 @@
 
 	<!-- Filter -->
 	<bean id="filter1" class="domain.Filter">
-		<property name="ticker" value="1234ABC" />
+		<property name="ticker" value="123412-09pplm" />
 		<property name="description" value="lo describo" />
 		<property name="address" value="pongo direccion" />
 		<property name="startDate" value="01/02/2015 23:59" />
@@ -1184,7 +1184,7 @@
 
 	<!-- FixUpTask -->
 	<bean id="fixUpTask1" class="domain.FixUpTask">
-		<property name="ticker" value="1234ABCD" />
+		<property name="ticker" value="091278-mknjbh" />
 		<property name="moment" value="01/02/2015 23:59" />
 		<property name="description" value="lo describo2" />
 		<property name="address" value="pongo direccion2" />
@@ -1203,7 +1203,7 @@
 
 	</bean>
 	<bean id="fixUpTask2" class="domain.FixUpTask">
-		<property name="ticker" value="1234ABCP" />
+		<property name="ticker" value="787856-0998se" />
 		<property name="moment" value="01/02/2014 23:59" />
 		<property name="description" value="lo" />
 		<property name="address" value="pono" />
@@ -1222,7 +1222,7 @@
 
 	</bean>
 	<bean id="fixUpTask3" class="domain.FixUpTask">
-		<property name="ticker" value="134234ABCP" />
+		<property name="ticker" value="131212-2345de" />
 		<property name="moment" value="01/02/2015 23:59" />
 		<property name="description" value="TAREA3" />
 		<property name="address" value="nose" />

@@ -56,7 +56,7 @@ public class CategoryService {
 	//updating
 	public Category save(final Category category) {
 		final UserAccount user = LoginService.getPrincipal();
-		Assert.isTrue(category.getName() != null && category.getName() != "");
+		Assert.isTrue(category.getName() != null && category.getName() != "" && !category.getSoon().contains(category.getParent()));
 		Assert.isTrue(user.getAuthorities().contains(Authority.ADMIN));
 		Assert.isTrue(!(category.getName().equals(null)));
 		Assert.isTrue(!(category.getName().equals("")));
@@ -71,7 +71,15 @@ public class CategoryService {
 		final UserAccount user = LoginService.getPrincipal();
 		Assert.isTrue(user.getAuthorities().contains(Authority.ADMIN));
 		Assert.isTrue(!((category.getName() == "CATEGORY")));
+
+		//if (category.getSoon().isEmpty())
 		this.categoryRepository.delete(category);
+		//else {
+		//final List<Category> soons = this.categoryRepository.categorySoonFromParent(category.getId());
+		//for (int i = 0; i < soons.size(); i++)
+		//this.categoryRepository.delete(soons.get(i));
+		//this.delete(category);
+		//}
 	}
 
 }

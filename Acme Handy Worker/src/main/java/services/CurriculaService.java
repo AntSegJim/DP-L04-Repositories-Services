@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.transaction.Transactional;
 
@@ -29,8 +30,7 @@ public class CurriculaService {
 	public Curricula create() {
 		final Curricula curricula = new Curricula();
 		final UserAccount user = LoginService.getPrincipal();
-
-		curricula.setTicker("");
+		curricula.setTicker(CurriculaService.generateTicker(new Date()));
 		curricula.setHandyWorker(this.handyWorkerService.handyWorkerUserAccount(user.getId()));
 		return curricula;
 	}
@@ -46,6 +46,7 @@ public class CurriculaService {
 	//updating
 	public Curricula save(final Curricula curricula) {
 		final UserAccount user = LoginService.getPrincipal();
+		final Collection<String> tickers = this.CRepo.tickerByCurricula();
 		Assert.isTrue(user.getAuthorities().contains(Authority.HANDYWORKER));
 
 		Assert.isTrue(curricula != null && curricula.getTicker() != null && curricula.getTicker() != "");
@@ -56,4 +57,24 @@ public class CurriculaService {
 	//	public void delete(final Curricula curricula) {
 	//		this.CRepo.delete(curricula);
 	//	}
+
+	public static String generateTicker(final Date date) {
+		final int tam = 6;
+		final Integer ano = date.getYear() + 1900;
+		final Integer mes = date.getMonth() + 1;
+		final Integer dia = date.getDate();
+		final String d = ano.toString().substring(ano.toString().length() - 2, ano.toString().length()) + mes.toString() + dia.toString();
+
+		String ticker = "-";
+		final String a = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+		for (int i = 0; i < tam; i++) {
+			final Integer random = (int) (Math.floor(Math.random() * a.length()) % a.length());
+			ticker = ticker + a.charAt(random);
+		}
+
+		return d + ticker;
+
+	}
+
 }

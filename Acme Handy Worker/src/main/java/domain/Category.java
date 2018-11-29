@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -34,7 +35,7 @@ public class Category extends DomainEntity {
 	}
 
 	@Valid
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false, cascade = CascadeType.REMOVE)
 	@NotNull
 	public Category getParent() {
 		return this.parent;

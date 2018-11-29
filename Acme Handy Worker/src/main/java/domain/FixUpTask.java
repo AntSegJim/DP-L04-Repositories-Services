@@ -15,6 +15,7 @@ import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -38,7 +39,7 @@ public class FixUpTask extends DomainEntity {
 
 	//Getters and Setters
 
-	//@Pattern(regexp = "(^[0-9]{6}[-][A-Z0-9] {6}$)")
+	@Pattern(regexp = "^[0-9]{6}\\-[A-z0-9]{6}$")
 	@Column(unique = true)
 	@NotNull
 	@NotBlank

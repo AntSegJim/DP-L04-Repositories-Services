@@ -53,7 +53,7 @@ public class FixUpTaskService {
 		f.setMaximunPrice(0.);
 		f.setMoment(new Date());
 		f.setPeriodTime(0);
-		f.setTicker("");
+		f.setTicker(FixUpTaskService.generar(new Date()));
 		f.setWarranty(wa);
 		return f;
 	}
@@ -104,4 +104,24 @@ public class FixUpTaskService {
 		res.add(dev);
 		return res;
 	}
+
+	public static String generar(final Date date) {
+		final int tam = 6;
+		final Integer ano = date.getYear() + 1900;
+		final Integer mes = date.getMonth() + 1;
+		final Integer dia = date.getDate();
+		final String d = ano.toString().substring(ano.toString().length() - 2, ano.toString().length()) + mes.toString() + dia.toString();
+
+		String ticker = "-";
+		final String a = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+		for (int i = 0; i < tam; i++) {
+			final Integer random = (int) (Math.floor(Math.random() * a.length()) % a.length());
+			ticker = ticker + a.charAt(random);
+		}
+
+		return d + ticker;
+
+	}
+
 }

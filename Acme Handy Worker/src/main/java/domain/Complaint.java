@@ -12,6 +12,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -34,7 +35,7 @@ public class Complaint extends DomainEntity {
 	public void setReferee(final Referee referee) {
 		this.referee = referee;
 	}
-	//	@Pattern(regexp = "^[0-9]{6}[-][A-Z0-9] {6}$)")
+	@Pattern(regexp = "^[0-9]{6}\\-[A-z0-9]{6}$")
 	@Column(unique = true)
 	public String getTicker() {
 		return this.ticker;
@@ -67,6 +68,7 @@ public class Complaint extends DomainEntity {
 	}
 	@Valid
 	@ManyToOne(optional = false)
+	@NotNull
 	public FixUpTask getFixUpTask() {
 		return this.fixUpTask;
 	}

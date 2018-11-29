@@ -38,7 +38,7 @@ public class ComplaintService {
 
 	public Complaint create() {
 		final Complaint res = new Complaint();
-		res.setTicker("");
+		res.setTicker(ComplaintService.generar(new Date()));
 		res.setMoment(new Date());
 		res.setDescription("");
 		res.setNumberAttachments(0);
@@ -70,7 +70,8 @@ public class ComplaintService {
 
 	//updating
 	public Complaint save(final Complaint complaint) {
-		Assert.isTrue(complaint != null && complaint.getMoment() != null && complaint.getReferee() != null && complaint.getFixUpTask() != null);
+		final Collection<String> tickers = this.complaintRepository.tickerByComplaint();
+		Assert.isTrue(complaint != null && complaint.getMoment() != null && complaint.getFixUpTask() != null);
 		return this.complaintRepository.save(complaint);
 	}
 
@@ -100,6 +101,25 @@ public class ComplaintService {
 		Assert.isTrue(userAccount.getAuthorities().contains(Authority.REFEREE));
 
 		return this.complaintRepository.findAllNoRefereeComplaint();
+
+	}
+
+	public static String generar(final Date date) {
+		final int tam = 6;
+		final Integer ano = date.getYear() + 1900;
+		final Integer mes = date.getMonth() + 1;
+		final Integer dia = date.getDate();
+		final String d = ano.toString().substring(ano.toString().length() - 2, ano.toString().length()) + mes.toString() + dia.toString();
+
+		String ticker = "-";
+		final String a = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+		for (int i = 0; i < tam; i++) {
+			final Integer random = (int) (Math.floor(Math.random() * a.length()) % a.length());
+			ticker = ticker + a.charAt(random);
+		}
+
+		return d + ticker;
 
 	}
 
